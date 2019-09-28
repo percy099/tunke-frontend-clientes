@@ -1,0 +1,29 @@
+nav{
+    background-color: rgba(0,203,138,0.66);
+    text-transform: uppercase;
+}
+
+a{
+    font-weight: 600;
+}
+
+footer{
+    position: fixed;
+    left : 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0,203,138,0.66);;
+    height: 5vh;
+}
+
+.img-carousel{
+    width: auto;
+    height: 525px;
+}
+
+.home{
+    font-family : 'Montserrat';
+}
+
+
+
