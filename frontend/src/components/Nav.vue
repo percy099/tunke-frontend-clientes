@@ -9,10 +9,10 @@
         <ul class="mr-auto"></ul>
         <ul class="navbar-right nav navbar-nav mr-5">
           <li class="nav-item mr-5">
-            <a class="text-white nav-link" href="#">APERTURA TU CUENTA</a>
+            <router-link class="text-white nav-link" to ="/accountOpening">APERTURA TU CUENTA</router-link>
           </li>
           <li class="nav-item mr-5">
-            <a class="text-white nav-link mr-2" href="#">CAMPAÑAS</a>
+            <router-link class="text-white nav-link" to ="/moneyLending">CAMPAÑAS</router-link>
           </li>
         </ul>
       </div>

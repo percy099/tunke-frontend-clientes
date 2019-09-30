@@ -1,14 +1,17 @@
 <template>
   <div id="app">
-    <!--Nav></Nav>-->
-    <router-view/>
-
+    <Nav></Nav>>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 
+
 import Nav from '@/components/Nav.vue'
+import Account from '@/views/AccountOpening.vue'
+import Money from '@/views/moneyLending.vue'
+
 
 export default {
     name: 'App',
