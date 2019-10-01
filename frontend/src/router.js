@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import AccountOpening from './views/AccountOpening.vue'
+import OpeningDNI from './components/OpeningDNI.vue'
+
+
 
 Vue.use(Router)
 
@@ -18,6 +21,11 @@ export default new Router({
       path: '/accountOpening',
       name: 'accountOpening',
       component: AccountOpening
+    },
+    {
+      path: '/openingDNI',
+      name: 'openingDNI',
+      component: OpeningDNI
     }
   ]
 })

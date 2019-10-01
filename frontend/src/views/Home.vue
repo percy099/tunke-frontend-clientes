@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <!--NAVBAR-->
-    <Nav></Nav>
+    <!--Nav></Nav-->
     <!--END NAVBAR-->
 
     <!--CAROUSEL-->
