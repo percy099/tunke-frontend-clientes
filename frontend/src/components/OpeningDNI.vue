@@ -29,7 +29,7 @@
                                 </label>
                             </div>
                             
-                            <button @click='login' class="mb-4 mt-3 text-white btn" style="position: absolute">Empieza ahora</button>
+                            <button @click='enterDni' class="mb-4 mt-3 text-white btn" style="position: absolute">Empieza ahora</button>
                         </div>
                     </div>
                 </div>
@@ -38,11 +38,29 @@
             
         </div>
     </div>
-
-
 </template>
 
 
 <style src="@/styles/OpeningDNI.css" scoped>
 
 </style>
+
+<script>
+    
+    export default {
+      name: 'openingDNI',
+      data(){
+        return {
+          
+        };
+      },
+      computed:{
+        
+      },
+      methods:{
+          enterDni(){
+              this.$router.push('accountOpening');
+          }
+      }
+    }
+</script>

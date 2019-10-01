@@ -11,7 +11,7 @@
         <ul class="mr-auto"></ul>
         <ul class="navbar-right nav navbar-nav mr-5">
           <li class="nav-item mr-5">
-            <router-link class="text-white nav-link" to ="/accountOpening" href="#">APERTURA TU CUENTA</router-link>
+            <router-link class="text-white nav-link" to ="/OpeningDNI" href="#">APERTURA TU CUENTA</router-link>
           </li>
           <li class="nav-item mr-5">
             <router-link class="text-white nav-link" to ="/moneyLending" href="#">CAMPAÑAS</router-link>
