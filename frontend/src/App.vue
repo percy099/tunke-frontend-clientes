@@ -12,7 +12,11 @@
 
 <script>
 
+
 import Nav from '@/components/Nav.vue'
+import Account from '@/views/AccountOpening.vue'
+import Money from '@/views/moneyLending.vue'
+
 
 export default {
     name: 'App',
