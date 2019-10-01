@@ -17,3 +17,7 @@ export default {
   }
 }
 </script>
+
+<style src="@/styles/AccountOpening.css" scoped>
+
+</style>

@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import AccountOpening from './views/AccountOpening.vue'
 import moneyLending from './views/moneyLending.vue'
+import OpeningDNI from './components/OpeningDNI.vue'
+
 
 Vue.use(Router)
 
@@ -24,6 +26,11 @@ export default new Router({
       path: '/moneyLending',
       name: 'moneyLending',
       component: moneyLending
+    },
+    {
+      path: '/openingDNI',
+      name: 'openingDNI',
+      component: OpeningDNI
     }
   ]
 })

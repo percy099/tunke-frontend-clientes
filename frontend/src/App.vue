@@ -1,7 +1,12 @@
 <template>
   <div id="app">
-    <Nav></Nav>>
-    <router-view></router-view>
+    <!--NAVBAR-->
+    <Nav></Nav>
+    <!--END NAVBAR-->
+    <router-view/>
+    <!--FOOTER-->
+    <footer></footer>
+    <!--END FOOTER-->
   </div>
 </template>
 
@@ -33,4 +38,13 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+footer{
+    position: fixed;
+    left : 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0,203,138,0.66);;
+    height: 5vh;
+}
+
 </style>

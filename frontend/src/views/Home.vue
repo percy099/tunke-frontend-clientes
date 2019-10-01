@@ -1,8 +1,5 @@
 <template>
   <div class="home">
-    <!--NAVBAR-->
-    <Nav></Nav>
-    <!--END NAVBAR-->
 
     <!--CAROUSEL-->
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -32,10 +29,6 @@
       </a>
     </div>
     <!--END CAROUSEL-->
-
-    <!--FOOTER-->
-    <footer></footer>
-    <!--END FOOTER-->
   </div>
 </template>
 
