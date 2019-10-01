@@ -1,8 +1,5 @@
 <template>
   <div class="home">
-    <!--NAVBAR-->
-    <Nav></Nav>
-    <!--END NAVBAR-->
 
     <!--CAROUSEL-->
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -16,10 +13,10 @@
           <img class="d-block image-fluid img-carousel" src="@/images/llamasAjustado.jpg" alt="First slide">
         </div>
         <div class="carousel-item">
-          <img class="d-block image-fluid img-carousel" src="@/images/niñoMujer.jpg" alt="Second slide">
+          <img class="d-block image-fluid img-carousel" src="@/images/adult.jpg" alt="Second slide">
         </div>
         <div class="carousel-item">
-          <img class="d-block image-fluid img-carousel" src="@/images/cordillera.jpg" alt="Third slide">
+          <img class="d-block image-fluid img-carousel" src="@/images/calmAjustado.jpg" alt="Third slide">
         </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -32,10 +29,6 @@
       </a>
     </div>
     <!--END CAROUSEL-->
-
-    <!--FOOTER-->
-    <footer></footer>
-    <!--END FOOTER-->
   </div>
 </template>
 
@@ -44,10 +37,7 @@
 import Nav from '@/components/Nav.vue'
 
 export default {
-  name: 'home',
-  components: {
-    Nav
-  }
+  name: 'home'
 }
 </script>
 

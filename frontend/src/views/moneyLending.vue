@@ -1,7 +1,8 @@
 <template>
-    <div>
-      <Wizard1></Wizard1>
-      <div><h1>Hola esto es abre tu cuenta</h1></div>  
+    <div>   
+        <Wizard1></Wizard1>     
+        <div><h1>Hola esto es prestamos</h1></div>
+        
     </div>
 </template>
 
@@ -10,14 +11,13 @@
 import Nav from '@/components/Nav.vue'
 import Wizard1 from '@/components/Wizard1.vue'
 
+
+
 export default {
-  name: 'accountOpening',
+  name: 'moneyLending',
   components: {
     Wizard1
   }
 }
 </script>
 
-<style src="@/styles/AccountOpening.css" scoped>
-
-</style>

@@ -1,14 +1,22 @@
 <template>
   <div id="app">
-    <!--Nav></Nav>-->
+    <!--NAVBAR-->
+    <Nav></Nav>
+    <!--END NAVBAR-->
     <router-view/>
-
+    <!--FOOTER-->
+    <footer></footer>
+    <!--END FOOTER-->
   </div>
 </template>
 
 <script>
 
+
 import Nav from '@/components/Nav.vue'
+import Account from '@/views/AccountOpening.vue'
+import Money from '@/views/moneyLending.vue'
+
 
 export default {
     name: 'App',
@@ -30,4 +38,13 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+footer{
+    position: fixed;
+    left : 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0,203,138,0.66);;
+    height: 5vh;
+}
+
 </style>
