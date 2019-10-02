@@ -1,0 +1,27 @@
+.inputs{
+    width: 35%;
+    margin-top: 7px;
+}
+
+.tab2{
+    margin: auto;
+}
+
+#form2{
+    font-family: 'Montserrat';
+    margin-left:120px;
+}
+
+#IngDatos{
+    color: #35A7C3;
+}
+
+#forms{
+    margin-left:60px;
+    width: 1000px;
+}
+
+.labels{
+    font-weight: bold;
+    margin-left:0px;
+}

@@ -1,0 +1,133 @@
+#step3{
+  font-family: 'Montserrat';
+}
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    /*border: 1px solid #ccc;
+    background-color: #f1f1f1;*/
+  }
+  
+  /* Style the buttons that are used to open the tab content */
+.tab button {
+    float: left;
+    border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    border: 0px solid #000000;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-weight: 600;
+    margin:3.3%;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: #ddd;
+  }
+  
+  .inactive{
+    background-color: #F5F5F7;
+  }
+
+  /* Create an active/current tablink class */
+  .active {
+    background-color: #ddd;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    /*border: 1px solid #ccc;*/
+    border-top: none;
+  }
+
+.box{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h3{
+    font-weight: bold;
+}
+
+p{
+    font-weight: 600;
+}
+
+li h5{
+  font-weight: bold;
+  margin: 0;
+}
+
+li h6{
+  margin-left: 20px;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li:before {
+  content: '✓';
+  color : #2CCC2C;
+  float: left;
+  margin-right: 10px;
+}
+
+.radio {
+  position: relative;
+  cursor: pointer;
+  line-height: 20px;
+  font-size: 14px;
+  margin: 15px;
+}
+
+.radio .label {
+  position: relative;
+  display: block;
+  float: left;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #c8ccd4;
+  border-radius: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.radio .label:after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background: #2CFFBA;
+  transform: scale(0);
+  transition: all 0.2s ease;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.radio:hover .label:after {
+  transform: scale(3.6);
+}
+
+input[type="radio"]:checked + .label {
+  border-color: #25D49C;
+}
+
+input[type="radio"]:checked + .label:after {
+  transform: scale(1);
+  transition: all 0.2s cubic-bezier(0.35, 0.9, 0.4, 0.9);
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
+}

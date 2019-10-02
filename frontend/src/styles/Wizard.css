@@ -3,3 +3,10 @@ form-wizard{
     text-transform: uppercase;
     font-family: 'Montserrat';
 }
+
+#container {
+    position: relative;
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
