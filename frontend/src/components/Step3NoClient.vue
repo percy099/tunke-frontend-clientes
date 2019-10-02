@@ -1,9 +1,9 @@
 <template>
     <div id="step3">
         <div class="tab">
-            <button class="tablinks" v-on:click="openAccount('simpleAccount')">Cuenta Simple  <img width="25" src="@/images/credit-cards.png"></button>
-            <button class="tablinks" v-on:click="openAccount('millionaireAccount')">Cuenta Millonaria <img width="25" src="@/images/credit-cards.png"></button>
-            <button class="tablinks" v-on:click="openAccount('superRate')">Cuenta Supertasa <img width="25" src="@/images/credit-cards.png"></button>
+            <button id="btnSimple" class="tablinks inactive" v-on:click="openAccount('simpleAccount')">Cuenta Simple  <img width="25" src="@/images/credit-cards.png"></button>
+            <button id="btnMillionaire" class="tablinks inactive" v-on:click="openAccount('millionaireAccount')">Cuenta Millonaria <img width="25" src="@/images/credit-cards.png"></button>
+            <button id="btnSuperRate" class="tablinks inactive" v-on:click="openAccount('superRate')">Cuenta Supertasa <img width="25" src="@/images/credit-cards.png"></button>
         </div>
         <!-- Tab content -->
         <div id="simpleAccount" class="tabcontent">
@@ -83,8 +83,16 @@ export default {
     methods:{
         openAccount: function(accountType){
         
-        var i, tabcontent, tablinks;
-
+        var i, tabcontent, tablinks, btn, buttons;
+        if(accountType === 'simpleAccount'){
+            btn = 'btnSimple';
+        }
+        else if(accountType === 'millionaireAccount'){
+            btn = 'btnMillionaire'
+        }
+        else if(accountType === 'superRate'){
+            btn = 'btnSuperRate';
+        }
         
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
@@ -94,15 +102,16 @@ export default {
        
         tablinks = document.getElementsByClassName("tablinks");
         for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
+            tablinks[i].classList.remove("active");
         }
 
-     
         document.getElementById(accountType).style.display = "block";
+        document.getElementById(btn).classList.add('active');
         }
     },
     mounted() {
         document.getElementById('simpleAccount').style.display = "block";   
+        document.getElementById('btnSimple').classList.add('active');
     }
     
 }
