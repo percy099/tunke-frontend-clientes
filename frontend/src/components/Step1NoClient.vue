@@ -17,16 +17,16 @@
                         <input type="radio" name="option1" value="option1"> SEP-345
                     </span>
                     <span class="mr-5">
-                        <input type="radio" name="option2" value="option2"> KEC-345
+                        <input type="radio" name="option1" value="option2"> KEC-345
                     </span>
                     <span class="mr-5">
-                        <input type="radio" name="option3" value="option3"> LAH-345
+                        <input type="radio" name="option1" value="option3"> LAH-345
                     </span>
                     <span class="mr-5">
-                        <input type="radio" name="option4" value="option4"> RRT-345
+                        <input type="radio" name="option1" value="option4"> RRT-345
                     </span>
                     <span class="mr-5">
-                        <input type="radio" name="option5" value="option5"> N.A.
+                        <input type="radio" name="option1" value="option5"> N.A.
                     </span>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 <hr>
                 <div class="d-flex justify-content-center flex-column ml-5 mt-3">
                     <span>
-                        <input type="radio" name="option1" value="option1"> Sí
+                        <input type="radio" name="option2" value="option1"> Sí
                     </span>
                     <span>
                         <input type="radio" name="option2" value="option2"> No
@@ -47,19 +47,19 @@
         <hr width="45%">
         <div class="d-flex justify-content-center align-items-center flex-column">
             <span>
-                <input class="mr-2" type="radio" name="option1" value="option1">Callali
+                <input class="mr-2" type="radio" name="option3" value="option1">Callali
             </span>
             <span>
-                <input class="mr-2" type="radio" name="option2" value="option2">Meza 
+                <input class="mr-2" type="radio" name="option3" value="option2">Meza 
             </span>
             <span>
                 <input class="mr-2" type="radio" name="option3" value="option3">Concha
             </span>
             <span>
-                <input class="mr-2" type="radio" name="option4" value="option4">Guerrero
+                <input class="mr-2" type="radio" name="option3" value="option4">Guerrero
             </span>
             <span>
-                <input class="mr-2" type="radio" name="option5" value="option5">N.A.
+                <input class="mr-2" type="radio" name="option3" value="option5">N.A.
             </span>
         </div>
     </div>
