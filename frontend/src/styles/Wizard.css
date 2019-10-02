@@ -3,7 +3,6 @@ form-wizard{
     text-transform: uppercase;
     font-family: 'Montserrat';
 }
-
 .inputs{
     width: 40%
 }
@@ -18,4 +17,11 @@ form-wizard{
 
 #IngDatos{
     color: #35A7C3;
+}
+
+#container {
+    position: relative;
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
 }

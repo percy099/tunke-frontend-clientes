@@ -1,11 +1,13 @@
 <template>
-    <div>
+    <div class="">
         
-        <form-wizard next-button-text="Siguiente" title="" subtitle="" color="#2CFFBA" shape="circle" back-button-text="Atrás" finish-button-text="Finalizar" @on-complete="onComplete">
+        <form-wizard next-button-text="Siguiente" title="" subtitle="" color="#2CFFBA" shape="circle" 
+        back-button-text="Atrás" finish-button-text="Abrir cuenta" @on-complete="onComplete"
+        step-size="sm" id="container>
             <tab-content title="Identifícate">
                 Primer paso
             </tab-content>
-            <tab-content title="Elige tu cuenta">
+            <tab-content title="Permítenos conocerte">
                 <div id="form2">
                     <h2 id="IngDatos">INGRESA TUS DATOS</h2>
                     <h6>Nos interesa conocerte para poder brindarte nuestros servicios a tu medida</h6>
@@ -38,8 +40,8 @@
                     </form>
                 </div>
             </tab-content>
-            <tab-content title="Términos y condiciones">
-                Tercer paso
+            <tab-content title="Elige tu cuenta" class="">
+                <Step3NoClient></Step3NoClient>
             </tab-content>
         </form-wizard>
     </div>
@@ -48,3 +50,19 @@
 <style src="@/styles/Wizard.css" scoped>S
 
 </style>
+
+<script>
+
+import Step3NoClient from '@/components/Step3NoClient.vue'
+
+export default {
+    methods:{
+        onComplete: function(){
+            alert('Creaste tu cuenta');
+        }
+    },
+    components:{
+        Step3NoClient
+    }
+}
+</script>
