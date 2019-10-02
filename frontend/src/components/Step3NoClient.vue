@@ -22,8 +22,8 @@
                             type and scrambled it to make a <br>
                             type specimen book.</p>
                         <img src="@/images/piggy.png" width="25%">
-                        <img src="@/images/planta.png" width="25%">
-                        <img src="@/images/protection.png" width="25%">
+                        <img src="@/images/planta.png" width="25%" class="ml-4">
+                        <img src="@/images/protection.png" width="25%" class="ml-4">
                     </div>
                 </div>
                 <div class="col-6">
