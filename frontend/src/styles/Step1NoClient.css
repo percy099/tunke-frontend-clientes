@@ -1,0 +1,22 @@
+#step1{
+    font-family: 'Montserrat';
+}
+
+.vue-form-wizard a {
+    text-decoration: underline;
+}
+
+a{
+    color: #40D487;
+    font-style: italic;
+}
+
+h2{
+    color: rgba(18, 161, 176,1);
+    font-size: 25px;
+}
+
+input[type=radio] {
+    width: 15px;
+    height: 15px;
+}
