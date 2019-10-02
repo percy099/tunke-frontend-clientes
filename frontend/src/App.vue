@@ -39,7 +39,6 @@ export default {
   color: #42b983;
 }
 footer{
-    position: fixed;
     left : 0;
     bottom: 0;
     width: 100%;

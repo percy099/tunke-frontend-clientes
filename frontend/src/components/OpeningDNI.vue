@@ -1,10 +1,9 @@
 <template>
     <div id="Opening">
-        <!--img class="d-block image-fluid img-carousel" src="@/images/paisaje-lago_bosque.jpg"-->
         <div class="row">
             <div class="col-6" >
                 <h1 class="text-center">Abre tu cuenta</h1> 
-                <h5>En 5 minutos</h5>
+                <h5 class="pl-4">En 5 minutos</h5>
             </div>
             
             <form id="form_backgroundOpenAcount">
@@ -47,6 +46,8 @@
 
 <script>
     
+    import router from '@/router.js'
+
     export default {
       name: 'openingDNI',
       data(){
@@ -59,7 +60,7 @@
       },
       methods:{
           enterDni(){
-              this.$router.push('accountOpening');
+              router.push('accountOpening');
           }
       }
     }
