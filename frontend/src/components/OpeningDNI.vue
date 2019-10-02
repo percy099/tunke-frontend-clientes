@@ -17,7 +17,7 @@
                             <input align="center" type="text" class="ml-5 mt-2" placeholder="DNI">
                             <br>
                             <br>
-                             <div class="form-check mb-2">
+                            <div class="form-check mb-2">
                                 <input  class="form-check-input" type="checkbox" id="autoSizingCheck">
                                 <label class="form-check-label" for="autoSizingCheck">
                                 <h6>He leído y acepto la 

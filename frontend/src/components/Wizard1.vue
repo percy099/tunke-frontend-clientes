@@ -1,6 +1,5 @@
 <template>
     <div class="">
-        
         <form-wizard next-button-text="Siguiente" title="" subtitle="" color="#2CFFBA" shape="circle" 
         back-button-text="Atrás" finish-button-text="Abrir cuenta" @on-complete="onComplete"
         step-size="sm" id="container">
