@@ -3,3 +3,19 @@ form-wizard{
     text-transform: uppercase;
     font-family: 'Montserrat';
 }
+
+.inputs{
+    width: 40%
+}
+
+.tab2{
+    margin: auto;
+}
+
+#form2{
+    margin-left: 28%;
+}
+
+#IngDatos{
+    color: #35A7C3;
+}
