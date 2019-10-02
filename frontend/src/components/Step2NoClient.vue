@@ -34,6 +34,6 @@
     </div>
 </template>
 
-<style src="@/styles/Step3NoClient.css" scoped>
+<style src="@/styles/Step2NoClient.css" scoped>
 
 </style>
