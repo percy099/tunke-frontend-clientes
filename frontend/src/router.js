@@ -15,22 +15,32 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: () => import('./views/Home.vue')
     },
     {
       path: '/accountOpening',
       name: 'accountOpening',
-      component: AccountOpening
+      component: () => import('./views/AccountOpening.vue')
     },
     {
       path: '/moneyLending',
       name: 'moneyLending',
-      component: moneyLending
+      component: () => import('./views/moneyLending.vue')
     },
     {
       path: '/openingDNI',
       name: 'openingDNI',
-      component: OpeningDNI
+      component: () => import('./components/OpeningDNI.vue')
+    },
+    {
+      path: '/blackList',
+      name: 'blackList',
+      component: () => import('./views/BlackList.vue')
+    },
+    {
+      path: '/summarySale',
+      name: 'summarySale',
+      component: () => import('./components/SummarySale.vue')
     }
   ]
 })

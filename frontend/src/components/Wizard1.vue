@@ -1,7 +1,8 @@
 <template>
     <div>
         
-        <form-wizard next-button-text="Siguiente" title="" subtitle="" color="#2CFFBA" shape="circle" back-button-text="Atrás" finish-button-text="Finalizar" @on-complete="onComplete">
+        <form-wizard next-button-text="Siguiente" title="" subtitle="" color="#2CFFBA" shape="circle" back-button-text="Atrás" finish-button-text="Finalizar" @on-complete="onComplete"
+        >
             <tab-content title="Identifícate">
                 Primer paso
             </tab-content>

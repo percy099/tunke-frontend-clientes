@@ -1,0 +1,60 @@
+h1{
+    color: #2FA2D7;
+    font: bold;
+    font-weight: 550;
+    font-size: 35px;
+    font-family: 'Monserrat';
+}
+
+pre{
+    font-weight: 550;
+    font-size: 24px;
+    font-family: 'Monserrat';    
+}
+
+h3{
+    font-size: 20px;
+    font-family: 'Monserrat';    
+}
+
+h4{
+    font-weight: 550;
+    font-size: 20px;
+    font-family: 'Monserrat';     
+}
+
+h5{
+    color: #1F8686; 
+    font-weight: 550;
+    font-size: 20px;
+    font-family: 'Monserrat';
+}
+
+h6{
+    color: #56C3C3;
+    font-weight: 550;
+    font-size: 18px;    
+    font-family: 'Monserrat';
+}
+
+.box{
+    height: 40vh;
+    width: 78vh;
+    background-color: rgba(200, 200, 200, 0.2);
+}
+
+b{
+    margin-left: 55vh;
+}
+button{
+    background-color: #090d4d;
+    margin-left: 120vh;
+    margin-bottom: 1.5vh;
+    position: relative;
+}
+
+img{
+    width: 60vh;
+    height: 45vh;
+    margin-bottom: 2vh;
+}
