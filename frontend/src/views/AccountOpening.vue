@@ -1,9 +1,10 @@
 <template>
     <div>
       <Wizard1></Wizard1>
-      <div><h1>Hola esto es abre tu cuenta</h1></div>  
     </div>
+ 
 </template>
+
 
 <script>
 // @ is an alias to /src
@@ -17,6 +18,7 @@ export default {
   }
 }
 </script>
+
 
 <style src="@/styles/AccountOpening.css" scoped>
 
