@@ -14,7 +14,7 @@
                             <h2 class="text-center mt-4">Ingresa tu DNI</h2>
                             <br>
                             <h6 class="ml-5">Número de DNI</h6>
-                            <input align="center" type="text" class="ml-5 mt-2" placeholder="DNI">
+                            <input v-model="dni" align="center" type="text" class="ml-5 mt-2" placeholder="DNI">
                             <br>
                             <br>
                             <div class="form-check mb-2">
@@ -46,22 +46,49 @@
 
 <script>
     
+    import {mapState} from 'vuex'
+    import {mapActions} from 'vuex'
     import router from '@/router.js'
+    import * as personDA from '@/dataAccess/personDA.js'
+    import Swal from 'sweetalert2'
 
     export default {
       name: 'openingDNI',
       data(){
         return {
-          
+          dni : ''
         };
       },
       computed:{
-        
+        ...mapState(['person'])
       },
       methods:{
+          //...mapActions(['fill']),
           enterDni(){
-              router.push('accountOpening');
+              personDA.doDniValidation(this.dni).then((res) =>{
+                  let person_data = res.data;
+                  if(person_data.type==1){ //CLIENT
+                    alert('Cliente');
+                  }
+                  else if(person_data.type==2){//NO CLIENT
+                    console.log(person_data);
+                    this.$store.dispatch('fill',person_data);
+                    router.push('/accountOpening');
+                  }
+                  else if(person_data.type==3){//BLACK LIST
+                    router.push('/blackList');
+                  }
+              }).catch(error=>
+              {
+                  Swal.fire({
+                  title: 'Error',
+                  type: 'error',
+                  text: 'Gaaaaaa'
+                  },
+                  alert(error))
+              })
           }
       }
     }
+
 </script>

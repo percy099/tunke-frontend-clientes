@@ -1,8 +1,8 @@
 <template>
     <div id=step1>
         <div class="text-center" >
-            <h1>¡Hola Solange Palomino!</h1> 
-            <h2>74779981</h2>
+            <h1>¡Hola {{person.firstName}} {{person.middleName}}!</h1> 
+            <h2>{{person.documentNumber}}</h2>
         </div>
         <div class="text-center"> 
             <router-link :to="{path : '/'}" href="#">¿Este no es tu DNI?</router-link>
@@ -68,3 +68,18 @@
 <style src="@/styles/Step1NoClient.css" scoped>
 
 </style>
+
+<script>
+
+import {mapState} from 'vuex'
+
+export default {
+    name : 'Step1NoClient',
+    computed:{
+        ...mapState(['person'])
+    },
+    methods:{
+
+    }
+}
+</script>
