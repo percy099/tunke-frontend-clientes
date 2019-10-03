@@ -29,7 +29,8 @@ import Step3NoClient from '@/components/Step3NoClient.vue'
 export default {
     methods:{
         onComplete: function(){
-            alert('Creaste tu cuenta');
+            //TODO Lógica de crear cuenta
+            this.$router.push('/summarySale');
         }
     },
     components:{
