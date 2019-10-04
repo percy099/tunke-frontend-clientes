@@ -7,7 +7,7 @@
             </div>
             
             <form id="form_backgroundOpenAcount">
-            <form id="form_openAcount">
+            <form id="form_openAcount" @submit.prevent='enterDni'>
                 <div class="form-row mt-5">
                     <div class="col-6">
                         <div class="box">
@@ -28,7 +28,7 @@
                                 </label>
                             </div>
                             
-                            <button @click='enterDni' class="mb-4 mt-3 text-white btn" style="position: absolute">Empieza ahora</button>
+                            <button class="mb-4 mt-3 text-white btn" style="position: absolute">Empieza ahora</button>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
         ...mapState(['person'])
       },
       methods:{
-          //...mapActions(['fill']),
+          ...mapActions(['fill']),
           enterDni(){
               personDA.doDniValidation(this.dni).then((res) =>{
                   let person_data = res.data;
@@ -72,7 +72,7 @@
                   }
                   else if(person_data.type==2){//NO CLIENT
                     console.log(person_data);
-                    this.$store.dispatch('fill',person_data);
+                    this.fill(person_data);
                     router.push('/accountOpening');
                   }
                   else if(person_data.type==3){//BLACK LIST
