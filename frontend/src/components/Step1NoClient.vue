@@ -9,31 +9,31 @@
         </div>
         <p class="mt-3 text-center">Para tu seguridad, por favor responde estas preguntas para ayudarnos a evitar fraudes.</p>
         <div class="mt-3 row justify-content-between">
-            <div class="col-6">
-                <h6>1) ¿Qué número de placa tiene tu auto?</h6>
+            <div class="col-xs-6" id="boxQuestion1">
+                <h6 id="question1">1) ¿Qué número de placa tiene tu auto?</h6>
                 <hr>
-                <div class="d-flex justify-content-center align-items-center flex-column pr-5 mr-5 mt-3">
-                    <span class="mr-5">
+                <div class="d-flex justify-content-center align-items-center flex-column pr-1 mr-md-5 mt-3">
+                    <span class="mr-xs-6">
                         <input type="radio" name="option1" value="option1"> SEP-345
                     </span>
-                    <span class="mr-5">
+                    <span class="mr-xs-6">
                         <input type="radio" name="option1" value="option2"> KEC-345
                     </span>
-                    <span class="mr-5">
+                    <span class="mr-xs-6">
                         <input type="radio" name="option1" value="option3"> LAH-345
                     </span>
-                    <span class="mr-5">
+                    <span class="mr-xs-6">
                         <input type="radio" name="option1" value="option4"> RRT-345
                     </span>
-                    <span class="mr-5">
+                    <span class="mr-xs-6">
                         <input type="radio" name="option1" value="option5"> N.A.
                     </span>
                 </div>
             </div>
-            <div class="col-6">
-                <h6>2) ¿Tu RUC está activo?</h6>
+            <div class="col-xs-6" id="boxQuestion2">
+                <h6 id="question2">2) ¿Tu RUC está activo?</h6>
                 <hr>
-                <div class="d-flex justify-content-center flex-column ml-5 mt-3">
+                <div id="checkQuestions2" class="d-flex justify-content-center align-items-center flex-column pl-2 ml-md-5 mt-3">
                     <span>
                         <input type="radio" name="option2" value="option1"> Sí
                     </span>
@@ -43,8 +43,9 @@
                 </div>
             </div>
         </div>
-        <h6 class="text-center">3) ¿Cuál es el segundo apellido de tu papá?</h6>
-        <hr width="45%">
+        <br>
+        <h6 id="question3" class="text-center">3) ¿Cuál es el segundo apellido de tu papá?</h6>
+        <hr>
         <div class="d-flex justify-content-center align-items-center flex-column">
             <span>
                 <input class="mr-2" type="radio" name="option3" value="option1">Callali
