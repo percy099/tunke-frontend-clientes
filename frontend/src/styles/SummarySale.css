@@ -1,60 +1,272 @@
 h1{
     color: #2FA2D7;
-    font: bold;
     font-weight: 550;
     font-size: 35px;
-    font-family: 'Monserrat';
+    font-family: 'Montserrat';
 }
 
 pre{
     font-weight: 550;
     font-size: 24px;
-    font-family: 'Monserrat';    
+    font-family: 'Montserrat';    
 }
 
 h3{
     font-size: 20px;
-    font-family: 'Monserrat';    
+    font-family: 'Montserrat';    
 }
 
 h4{
     font-weight: 550;
     font-size: 20px;
-    font-family: 'Monserrat';     
+    font-family: 'Montserrat';     
 }
 
 h5{
     color: #1F8686; 
     font-weight: 550;
     font-size: 20px;
-    font-family: 'Monserrat';
+    font-family: 'Montserrat';
 }
 
 h6{
     color: #56C3C3;
-    font-weight: 550;
     font-size: 18px;    
-    font-family: 'Monserrat';
+    font-family: 'Montserrat';
 }
 
 .box{
-    height: 40vh;
+    height: 37vh;
     width: 78vh;
     background-color: rgba(200, 200, 200, 0.2);
 }
 
 b{
-    margin-left: 55vh;
+    font-family: 'Montserrat';
+    margin-left: auto;
+    margin-right: auto;    
 }
 button{
-    background-color: #090d4d;
-    margin-left: 120vh;
-    margin-bottom: 1.5vh;
+    background-color: rgba(0,203,138,0.66);
     position: relative;
+    margin-left: auto;
+    margin-right: auto; 
+    margin-bottom: 2vh;     
 }
 
 img{
     width: 60vh;
-    height: 45vh;
+    height: 40vh;
     margin-bottom: 2vh;
+}
+
+.a{    
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Montserrat';  
+}
+
+@media screen and (min-width: 991px) and (max-width: 1125px){
+    .box{
+        height: 37vh;
+        width: 160%;
+    } 
+    h3{
+        font-size: 21px;  
+    }
+    h4{
+        font-size: 21px;
+    }
+    img{
+        width: 60vh;
+        height: 40vh;            
+        margin-left: 28vh;    
+    }    
+}
+
+@media screen and (min-width: 767px) and (max-width: 991px){
+    .box{
+        height: 34vh;
+        width: 90%;
+    } 
+    h3{
+        font-size: 18px;  
+    }
+    h4{
+        font-size: 18px;
+    }
+    img{
+        width: 60vh;
+        height: 40vh; 
+        margin-top: 1vh;   
+        margin-left: 23vh; 
+        margin-top: 1vh;    
+    }    
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px){
+    .box{
+        height: 32vh;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }   
+    h3{
+        font-size: 15px;  
+    }
+    h4{
+        font-size: 15px;
+    }
+    img{
+        margin-right: auto;
+        margin-left: auto;
+        width: 45vh;
+        height: 30vh; 
+        margin-top: 1vh;       
+    }
+    b{
+        margin-left: 35vh;
+    }
+    button{
+        background-color: rgba(0,203,138,0.66);;       
+        margin-bottom: 1.5vh;
+        position: relative;
+    } 
+}
+
+@media screen and (min-width: 498px) and (max-width: 576px){
+    .box{
+        height: 24vh;
+        width: 75%;        
+    } 
+    h3{
+        font-size: 10px;
+    }
+    h4{
+        font-size: 10px;
+    } 
+    img{        
+        margin-right: auto;
+        margin-left: auto;
+        width: 35vh;
+        height: 20vh; 
+        margin-top: 1vh; 
+    }    
+}
+
+@media screen and (min-width: 380px) and (max-width: 498px){
+    .box{
+        height: 24vh;
+        width: 75%;        
+    }
+    h3{
+        font-size: 10px;
+    }
+    h4{
+        font-size: 10px;
+    }
+    img{        
+        margin-right: auto;
+        margin-left: auto;
+        width: 35vh;
+        height: 20vh; 
+        margin-top: 1vh; 
+    }
+    pre{
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 380px){
+    .box{
+        height: 20vh;
+        width: 65%;       
+    }
+    h3{
+        font-size: 6px;
+        margin-right: -4vh;
+    }
+    h4{
+        font-size: 6px; 
+        margin-left: -2vh;           
+    }
+    img{
+        width: 22vh;
+        height: 15vh;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 1vh; 
+    }
+    pre{
+        font-size: 9px;
+    }
+    h1{
+        font-size: 20px;
+    }
+    h6{
+        font-size: 8px;
+    }
+    h5{
+        font-size: 14px;
+    }
+    button{
+        width: 12vh;
+        height: 2vh;        
+        font-size: 10px;
+        padding-top: -1vh;
+        padding-bottom: 4vh; 
+    }  
+    .a{
+        font-size: 11px;
+    }
+    b{
+        font-size: 11px;
+    }      
+}
+
+@media screen and (width: 320px) and (height: 576px){
+    .box{
+        height: 28vh;
+        width: 65%;    
+    }
+    h3{
+        font-size: 6px;
+        margin-right: -4vh;
+    }
+    h4{
+        font-size: 6px; 
+        margin-left: -2vh;           
+    }
+    img{
+        width: 22vh;
+        height: 15vh;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 1vh; 
+    }
+    pre{
+        font-size: 9px;
+    }
+    h1{
+        font-size: 20px;
+    }
+    h6{
+        font-size: 8px;
+    }
+    h5{
+        font-size: 14px;
+    } 
+    .a{
+        font-size: 11px;
+    }
+    b{
+        font-size: 11px;
+    }
+    button{
+        width: 12vh;
+        height: 2vh;        
+        font-size: 10px;
+        padding-top: -1vh;
+        padding-bottom: 4vh; 
+    }
 }
