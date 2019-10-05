@@ -12,7 +12,7 @@
             <div class="col-xs-6" id="boxQuestion1">
                 <h6 id="question1">1) ¿Qué número de placa tiene tu auto?</h6>
                 <hr>
-                <div class="d-flex justify-content-center align-items-center flex-column pr-1 mr-md-5 mt-3">
+                <div id="checkQuestions1" class="d-flex justify-content-center align-items-center flex-column pr-1 mr-md-5 mt-3">
                     <span class="mr-xs-6">
                         <input type="radio" name="option1" value="option1"> SEP-345
                     </span>
