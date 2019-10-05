@@ -11,7 +11,7 @@ export default new Vuex.Store({
       enterCount : -1,
       email1 : '',
       email2 : '',
-      cellphone1 : '67238',
+      cellphone1 : '',
       cellphone2 : '',
       idPerson : -1,
       documentType : '',
