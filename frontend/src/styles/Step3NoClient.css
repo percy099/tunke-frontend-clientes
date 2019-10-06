@@ -38,6 +38,10 @@
     background-color: #ddd;
   }
   
+  .icons{
+    margin: 0;
+  }
+
   /* Style the tab content */
   .tabcontent {
     display: none;
@@ -45,11 +49,6 @@
     /*border: 1px solid #ccc;*/
     border-top: none;
   }
-
-.box{
-    margin-left: auto;
-    margin-right: auto;
-}
 
 h3{
     font-weight: bold;
@@ -130,4 +129,101 @@ input[type="radio"]:checked + .label:after {
 
 .hidden {
   display: none;
+}
+
+@media screen and (min-width: 0) and (max-width: 320px){
+  #secondBlock{
+      margin-top: 30px;
+  }
+
+  #benefits{
+    margin : 0;
+    padding : 0;
+  }
+
+}
+
+@media screen and (min-width: 321px) and (max-width: 425px){
+  #benefits{
+    padding : 0;
+  }
+
+  #secondBlock{
+    margin-top : 30px;
+  }
+
+  .tablinks{
+    padding : 0;
+    height: 45px;
+    width: 95px;
+    font-size : 11px;
+  }
+
+  .tab button{
+    padding : 0px;
+    margin : 1.5%;
+  }
+
+  #firstBlock{
+    margin-top: 30px;
+    padding-left: 0;
+  }
+
+  #pig{
+    margin-left : 20px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px){
+  #benefits{
+    padding : 0;
+  }
+
+  #secondBlock{
+    margin-top : 30px;
+  }
+
+  .tablinks{
+    padding : 0;
+    height: 55px;
+    width: 170px;
+    font-size : 16px;
+  }
+
+  .tab button{
+    padding : 0px;
+    margin : 1.5%;
+  }
+
+  #firstBlock{
+    margin-top: 30px;
+    padding-left : 0px;
+  }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1440px){
+  #benefits{
+    padding : 0;
+  }
+
+  #secondBlock{
+    margin-top : 30px;
+  }
+
+  .tablinks{
+    padding : 0;
+    height: 55px;
+    width: 190px;
+    font-size : 16px;
+  }
+
+  .tab button{
+    padding : 0px;
+    margin : 4%;
+  }
+
+  #firstBlock{
+    margin-top: 30px;
+    padding-left : 0px;
+  }
 }
