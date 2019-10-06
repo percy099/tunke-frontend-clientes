@@ -2,7 +2,7 @@
     <div>
     <nav class="navbar navbar-expand-md navbar-light">
       <router-link :to="{path : '/'}" href="#">
-        <img class="navbar-brand ml-5 pb-2" href="#" src="@/images/logo_verde.png"  width="150" height="85">
+        <img class="navbar-brand ml-1 pb-2" href="#" src="@/images/logo_verde.png"  width="150" height="85">
       </router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
