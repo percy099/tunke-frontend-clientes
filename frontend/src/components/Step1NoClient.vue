@@ -1,7 +1,7 @@
 <template>
     <div id=step1>
         <div class="text-center" >
-            <h1>¡Hola {{person.firstName}} {{person.middleName}}!</h1> 
+            <h1>¡Hola {{person.firstName}} {{person.fatherLastname}}!</h1> 
             <h2>{{person.documentNumber}}</h2>
         </div>
         <div class="text-center"> 

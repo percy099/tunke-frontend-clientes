@@ -11,7 +11,7 @@
                             <label for="phone1">Teléfono Celular:</label>
                         </div>
                         <div class="col-75">
-                            <input type="text" id="phone1" name="phoneNumber1">
+                            <input v-model="person.cellphone1" type="text" id="phone1" name="phoneNumber1">
                         </div>
                     </div>
                     <div class="row">
@@ -19,7 +19,7 @@
                             <label for="phone2">Teléfono Celular Alternativo:</label>
                         </div>
                         <div class="col-75">
-                            <input type="text" id="phone2" name="phoneNumber1">
+                            <input v-model="person.cellphone2" type="text" id="phone2" name="phoneNumber1">
                         </div>
                     </div>
                     <div class="row">
@@ -27,7 +27,7 @@
                             <label for="email1">Correo Electrónico:</label>
                         </div>
                         <div class="col-75">
-                            <input type="text" id="email1" name="emailNumber1">
+                            <input v-model="person.email1" type="text" id="email1" name="emailNumber1">
                         </div>
                     </div>
                     <div class="row">
@@ -35,7 +35,7 @@
                             <label for="email2">Correo Electrónico Alternativo:</label>
                         </div>
                         <div class="col-75">
-                            <input type="text" id="email2" name="emailNumber2">
+                            <input v-model="person.email2" type="text" id="email2" name="emailNumber2">
                         </div>
                     </div>
                 </form>
