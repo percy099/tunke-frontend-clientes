@@ -58,6 +58,7 @@
                   let person_data = res.data;
                   if(person_data.type==1){ //CLIENT
                     alert('Cliente');
+                    console.log(person_data);
                   }
                   else if(person_data.type==2){//NO CLIENT
                     console.log(person_data);
@@ -73,8 +74,7 @@
                   title: 'Error',
                   type: 'error',
                   text: 'Gaaaaaa'
-                  },
-                  alert(error))
+                  })
               })
           }
       }
