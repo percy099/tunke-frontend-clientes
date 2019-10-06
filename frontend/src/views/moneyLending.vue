@@ -1,8 +1,6 @@
 <template>
     <div>   
         <Wizard1></Wizard1>     
-        <div><h1>Hola esto es prestamos</h1></div>
-        
     </div>
 </template>
 

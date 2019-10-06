@@ -1,49 +1,39 @@
 <template>
     <div id="step3">
         <div class="tab">
-            <button id="btnSimple" class="tablinks inactive" v-on:click="openAccount('simpleAccount')">Cuenta Simple  <img width="25" src="@/images/credit-cards.png"></button>
-            <button id="btnMillionaire" class="tablinks inactive" v-on:click="openAccount('millionaireAccount')">Cuenta Millonaria <img width="25" src="@/images/credit-cards.png"></button>
-            <button id="btnSuperRate" class="tablinks inactive" v-on:click="openAccount('superRate')">Cuenta Supertasa <img width="25" src="@/images/credit-cards.png"></button>
+            <button id="btnSimple" class="tablinks inactive" v-on:click="openAccount('simpleAccount')">Cuenta Simple  <img class="cards" width="25" src="@/images/credit-cards.png"></button>
+            <button id="btnMillionaire" class="tablinks inactive" v-on:click="openAccount('millionaireAccount')">Cuenta Sueldo <img class="cards" width="25" src="@/images/credit-cards.png"></button>
+            <button id="btnSuperRate" class="tablinks inactive" v-on:click="openAccount('superRate')">Cuenta Fantasy <img class="cards" width="25" src="@/images/credit-cards.png"></button>
         </div>
         <!-- Tab content -->
         <div id="simpleAccount" class="tabcontent">
             <div class="row">
-                <div class="col-6">
-                    <div class="pl-4">
+               <div class="col-sm-6" id="firstBlock">
+                    <div class="pl-4" id="simpleAccount">
                         <h3>Cuenta Simple</h3>
-                        <p>Lorem ipsum is simply dummy text
-                            of the printing and typesetting <br>
-                            industry.
+                        <p align="justify">Es una cuenta en la que puedes guardar tu dinero de manera segura y a la vez ganar intereses por el tiempo en que este se mantenga en el banco.
                         </p>
-                        <p>Lorem ipsum has been the <br>
-                            industry's standard dummy text <br>
-                            ever since the 1500's, when an, <br>
-                            unknown printer took a galley of <br>
-                            type and scrambled it to make a <br>
-                            type specimen book.</p>
-                        <img src="@/images/piggy.png" width="25%">
+                        <p align="justify">Operaciones ilimitadas sin costo entre cuentas Tunke en todos nuestros canales y cajeros de otros bancos.</p>
+                        <img src="@/images/piggy.png" width="25%" id="pig">
                         <img src="@/images/planta.png" width="25%" class="ml-4">
                         <img src="@/images/protection.png" width="25%" class="ml-4">
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-sm-6" id="secondBlock">
                     <div class="pl-3">
                         <h3>Beneficios</h3>
-                        <ul>
+                        <ul id="benefits">
                             <li>
                                 <h5>Ahorro</h5>
-                                <h6>Lorem ipsum dolor sit amet,<br>
-                                consectet ur adipiscing elit.</h6>
+                                <h6 align="justify">Disfrutar de un futuro financiero saludable</h6>
                             </li>
                             <li class="mt-3">
                                 <h5>Crecimiento</h5>
-                                <h6>Lorem ipsum dolor sit amet,<br>
-                                consectet ur adipiscing elit.</h6>
+                                <h6 align="justify">Alcanza tus planes y metas al realizar inversiones inteligentes</h6>
                             </li>
                             <li class="mt-3">
                                 <h5>Seguridad</h5>
-                                <h6>Lorem ipsum dolor sit amet,<br>
-                                consectet ur adipiscing elit.</h6>
+                                <h6 align="justify">Estar protegido frenta a alguna emergencia.</h6>
                             </li>
                         </ul>
                         <div class="d-flex justify-content-center mt-5">
