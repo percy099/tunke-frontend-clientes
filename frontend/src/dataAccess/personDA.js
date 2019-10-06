@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function doDniValidation(dni){
-    let url = process.env.VUE_APP_API_URL + 'api/dniValidation'
+    let url = 'http://3.80.235.12:9993/api/dniValidation';
 
     var body ={
         "documentNumber" : dni
