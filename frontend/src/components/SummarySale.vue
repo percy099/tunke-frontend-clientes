@@ -1,16 +1,16 @@
 <template>
-  <div class="container mt-3 mr-5">
+  <div class="container mt-3 mr-6">
     <h1>¡ENHORABUENA!</h1>
     <h6>¡Ya somos una familia!</h6>
     <h5>La apertura de tu cuenta fue realizada con éxito</h5>
 
     <div class="row">
-      <div class="col-md-6 coll-sm-3">
+      <div class="col-12 col-lg-6">
         <div class="box mt-4 ml-5">
-          <pre>Datos de la cuenta</pre>
+          <pre> Datos de la cuenta</pre>
           <div class="container ml-4">
             <div class="row">
-              <div class="col-md-6 coll-sm-3">
+              <div class="col-6 col-sm-6 col-md-6">
                 <h3>Cliente:</h3>
                 <h3>Número de Cuenta:</h3>
                 <h3>CCI:</h3>
@@ -18,7 +18,7 @@
                 <h3>Fecha de Apertura:</h3>
                 <h3>Moneda:</h3>
               </div>
-              <div class="col-md-6 coll-sm-3">
+              <div class="col-6 col-sm-6 col-md-6">
                 <h4>Leonella Checa</h4>
                 <h4>1781-3467-9456</h4>
                 <h4>1679137976197</h4>
@@ -30,14 +30,19 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 coll-sm-3">
+      <div class="col-12 col-lg-6">
         <img src="@/images/familia.png" class="d-block" />
       </div>
     </div>
-    <h3 style="margin-left: 13vh">Los documentos serán enviados a:</h3>
-    <b>leonella.checa@pucp.edu.pe</b>
-    <br />
-    <button @click="aceptar" class="btn text-white">Aceptar</button>
+    <div class="row">
+      <div class="a">Los documentos serán enviados a:</div>
+    </div>
+    <div class="row">
+      <b>leonella.checa@pucp.pe</b>
+    </div>
+    <div class="row">
+      <button class="btn text-white btn-lg bnt-md" @click="aceptar">Aceptar</button>
+    </div>
   </div>
 </template>
 
@@ -46,19 +51,15 @@
 <script>
 import router from "@/router.js";
 export default {
-    name: "summarySale",
-    data(){
-        return{
-
-        };
-    },
-    computed:{
-
-    },
-    methods: {
-        aceptar(){
-            router.push('/');
-        }
+  name: "summarySale",
+  data() {
+    return {};
+  },
+  computed: {},
+  methods: {
+    aceptar() {
+      router.push("/");
     }
-}
+  }
+};
 </script>
