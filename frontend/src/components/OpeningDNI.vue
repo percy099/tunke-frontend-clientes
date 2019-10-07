@@ -20,7 +20,7 @@
                           <br> Personales</a>
                           </h6> 
                           </label>
-                          <button class="mt-4 text-white btn">Empieza ahora</button>
+                          <button class="mt-4 ml-4 text-white btn">Empieza ahora</button>
                       </div>           
               </form>
             </div>

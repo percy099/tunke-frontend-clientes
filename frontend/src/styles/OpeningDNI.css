@@ -91,11 +91,15 @@ h6{
 
   h1{
     margin-top : 20vh;
-    margin-left : 12vh;
+    text-align: center;
   }
 
   h5{
     margin-right: 3vh;
+  }
+  
+  .ml-5, .mx-5 {
+    margin-left: 2rem!important;
   }
 }
 
