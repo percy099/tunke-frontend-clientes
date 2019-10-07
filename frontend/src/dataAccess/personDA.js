@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function doDniValidation(dni){
-    let url = 'http://3.80.235.12:9993/api/dniValidation/';
+    let url = VUE_APP_API_URL+'api/dniValidation/';
 
     var body ={
         "documentNumber" : dni
@@ -11,7 +11,7 @@ export function doDniValidation(dni){
 }
 
 export function doRegisterProspect(idPerson,ema1,ema2,cell1,cell2){
-    let url = 'http://3.80.235.12:9993/api/prospectiveClients/'
+    let url = VUE_APP_API_URL+'api/prospectiveClients/'
 
     var body={
         "idPerson" : idPerson,

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function doCreateAccount(idPer,cur){
-    let url = 'http://3.80.235.12:9993/api/openAccount/';
+    let url = VUE_APP_API_URL+'/api/openAccount/';
 
     var body ={
         "idPerson" : idPer,
