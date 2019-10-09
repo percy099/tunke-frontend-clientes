@@ -36,18 +36,28 @@
                                 <h6 align="justify">Estar protegido frenta a alguna emergencia.</h6>
                             </li>
                         </ul>
-                        <div class="d-flex justify-content-center mt-5">
+                        <div class="d-flex justify-content-center mt-3">
 
                             <label for="opt1" class="radio">
-                                <input type="radio" name="rdo" id="opt1" class="hidden" checked="true"/>
+                                <input @click="changeCurr(1)" type="radio" name="rdo" id="opt1" class="hidden" checked="true"/>
                                 <span class="label"></span>Soles
                             </label>
                             
                             <label for="opt2" class="radio">
-                                <input type="radio" name="rdo" id="opt2" class="hidden"/>
+                                <input @click="changeCurr(2)" type="radio" name="rdo" id="opt2" class="hidden"/>
                                 <span class="label"></span>Dólares
                             </label>
                     
+                        </div>
+                        <div class="ml-5">
+                            <input  class="form-check-input" type="checkbox" id="autoSizingCheck">
+                            <label class="form-check-label" for="autoSizingCheck">
+                            <h6>He leído y acepto la 
+                            <a href="#"> Política de 
+                            <br> tratamiento y protección de datos 
+                            <br> Personales</a>
+                            </h6> 
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -69,8 +79,15 @@
 </style>
 
 <script>
+
+import {mapActions,mapState} from 'vuex'
+
 export default {
+    computed:{
+        ...mapState(['currency'])
+    },
     methods:{
+        ...mapActions(['changeCurrency']),
         openAccount: function(accountType){
         
         var i, tabcontent, tablinks, btn, buttons;
@@ -97,6 +114,10 @@ export default {
 
         document.getElementById(accountType).style.display = "block";
         document.getElementById(btn).classList.add('active');
+        },
+        changeCurr(cur){
+            this.changeCurrency(cur);
+            console.log(this.currency);
         }
     },
     mounted() {

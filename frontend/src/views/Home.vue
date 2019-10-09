@@ -10,13 +10,27 @@
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img class="d-block img-fluid img-carousel" src="@/images/llamasAjustado.jpg" alt="First slide">
+          <img id="img1" class="d-block w-100 img-fluid" src="@/images/llamasAjustado.jpg" alt="First slide">
+          <div class="carousel-caption d-md-block pb-5 cap1">
+            <h2 class="content wordsFirstSlide">100% digital donde</h2>
+            <h2 class="content wordsFirstSlide">quiera que estés</h2>
+            <button @click="openAccount" class="btn button-1 text-white">ABRE TU CUENTA AHORA</button>
+          </div>
         </div>
         <div class="carousel-item">
-          <img class="d-block img-fluid img-carousel" src="@/images/adult.jpg" alt="Second slide">
+          <img id="img2" class="d-block w-100 img-fluid" src="@/images/adult.jpg" alt="Second slide">
+          <div class="carousel-caption d-md-block pb-5 cap2">
+            <h2 class="content wordsSecondSlide" id="firstWordSecondSlide">Tenemos campañas</h2>
+            <h2 class="content wordsSecondSlide" id="secondWordSecondSlide">para ti</h2>
+            <button @click="openMoneyLending" class="btn button-2">BUSCA TU CAMPAÑA</button>
+          </div>
         </div>
         <div class="carousel-item">
-          <img class="d-block img-fluid img-carousel" src="@/images/calmAjustado.jpg" alt="Third slide">
+          <img id="img3" class="d-block w-100 img-fluid" src="@/images/calmAjustado.jpg" alt="Third slide">
+          <div class="carousel-caption d-md-block pb-5">
+            <h1 id="textTunke">Tunke</h1>
+            <h2 id="middle">Somos el primer Banco 100% digital en el Perú</h2>
+          </div>
         </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -37,7 +51,15 @@
 import Nav from '@/components/Nav.vue'
 
 export default {
-  name: 'home'
+  name: 'home',
+  methods :{
+    openAccount(){
+      this.$router.push('/OpeningDNI');
+    },
+    openMoneyLending(){
+      this.$router.push('/moneyLending');
+    }
+  }
 }
 </script>
 
