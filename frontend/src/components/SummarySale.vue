@@ -11,8 +11,8 @@
           <div class="container ml-4">
             <div class="row">
               <div class="col-6 col-sm-6 col-md-6">
-                <h3>Cliente:</h3>
-                <h3>Número de Cuenta:</h3>
+                <div class="client">Cliente:</div>
+                <h3>Número de Cuenta:</h3>                
                 <h3>CCI:</h3>
                 <h3>Detalle de Cuenta:</h3>
                 <h3>Fecha de Apertura:</h3>
