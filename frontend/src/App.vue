@@ -39,11 +39,14 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
 footer{
-    bottom: 0;
-    width: 100%;
-    height: 2.5rem;  
-    background-color: rgba(0,203,138,0.66);;
+  bottom: 0;
+  left : 0;
+  right: 0;
+  width: 100%;
+  height: 2.5rem;  
+  background-color: rgba(0,203,138,0.66);;
 }
 
 </style>

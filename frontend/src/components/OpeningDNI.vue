@@ -20,7 +20,7 @@
                           <br> Personales</a>
                           </h6> 
                           </label>
-                          <button class="mt-4 text-white btn">Empieza ahora</button>
+                          <button class="mt-4 text-white btn" type="submit">Empieza ahora</button>
                       </div>           
               </form>
             </div>
@@ -54,6 +54,7 @@
       methods:{
           ...mapActions(['fill']),
           enterDni(){
+              //let res = personDA.doDniValidation(this.dni);
               personDA.doDniValidation(this.dni).then((res) =>{
                   let person_data = res.data;
                   if(person_data.type==1){ //CLIENT
@@ -73,7 +74,7 @@
                   Swal.fire({
                   title: 'Error',
                   type: 'error',
-                  text: 'Gaaaaaa'
+                  text: 'DNI inválido'
                   })
               })
           }
