@@ -24,44 +24,28 @@ span{
 }
 
 hr{
-    border: 10px solid #F1FAF5;
+    border: 8px solid #F1FAF5;
     border-radius: 5px;
+    margin-top: 1vh;
+    margin-bottom: 1rem;
 }
 
 h6{
     font-size: 17px;
 }
 
+#question3{
+    text-align: center;
+}
 
-@media screen and (min-width:200px) and (max-width: 450px){
-    #boxQuestion1{
-        margin-left: 20px;
+@media screen and (min-width:200px) and (max-width: 575px){
+    #question3{
+        text-align: left;
     }
-
-    #boxQuestion2{
-        margin-left: 20px;
-    }
-
-    #checkQuestions2{
-        margin-left: 60px;
-    }
-
-    #checkQuestions1{
-        margin-right: 15px;
-    }
+    
 }
 
 @media screen and (min-width:763px) and (max-width: 1023px){
-    #boxQuestion1{
-        margin-left: 63px;
-    }
-
-    #boxQuestion2{
-        margin-left: 55px;
-    }   
-
-    #checkQuestions2{
-        margin-left: 115px;
-    }
+    
 }
 

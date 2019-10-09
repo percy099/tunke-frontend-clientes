@@ -10,7 +10,8 @@
               <form id="form_openAcount" @submit.prevent='enterDni'>
                       <h2 class="text-center mt-5">Ingresa tu DNI</h2>
                       <h6 class="ml-5 mt-4">Número de DNI</h6>
-                      <input v-model="dni" id="txt_dni" type="text" class="form-control ml-5 mt-1" placeholder="DNI">
+                      <input v-model="dni" id="txt_dni" type="text" class="form-control ml-5 mt-1" maxlength="8" minlength="8"
+                       @keypress="isNumber($event)" placeholder="DNI">
                       <div class="form-check ml-5  mt-4">
                           <input  class="form-check-input" type="checkbox" id="autoSizingCheck">
                           <label class="form-check-label" for="autoSizingCheck">
@@ -20,7 +21,7 @@
                           <br> Personales</a>
                           </h6> 
                           </label>
-                          <button class="mt-4 text-white btn">Empieza ahora</button>
+                          <button class="mt-4 ml-4 text-white btn">Empieza ahora</button>
                       </div>           
               </form>
             </div>
@@ -58,6 +59,7 @@
                   let person_data = res.data;
                   if(person_data.type==1){ //CLIENT
                     alert('Cliente');
+                    console.log(person_data);
                   }
                   else if(person_data.type==2){//NO CLIENT
                     console.log(person_data);
@@ -73,11 +75,19 @@
                   title: 'Error',
                   type: 'error',
                   text: 'Gaaaaaa'
-                  },
-                  alert(error))
-              })
-          }
+                  })
+              })             
+          },
+          isNumber: function(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode < 48 || charCode > 57) {
+              evt.preventDefault();;
+            } else {
+          return true;
       }
+    }        
+      }
+      
     }
-
 </script>
