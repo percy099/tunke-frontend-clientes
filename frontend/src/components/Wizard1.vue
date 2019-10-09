@@ -6,7 +6,7 @@
             <tab-content title="Identifícate">
                <Step1NoClient></Step1NoClient>
             </tab-content>
-            <tab-content title="Permítenos conocerte" :before-change="registerCurrency">>
+            <tab-content title="Permítenos conocerte" :before-change="registerCurrency">
                 <Step2NoClient></Step2NoClient>
             </tab-content>
             <tab-content title="Elige tu cuenta" class="">
