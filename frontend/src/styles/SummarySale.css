@@ -1,57 +1,38 @@
+#fp{
+    font-size: 16px;
+    font-family: 'Montserrat';
+}
+#sp{
+    font-family: 'Montserrat';
+    font-size: 16px;
+    font-weight: 550;
+}
+.email{
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Montserrat';
+    font-weight: 550; 
+}
+.card-title{
+    color: #111111;
+    font-family: 'Montserrat';
+}
 h1{
     color: #2FA2D7;
     font-weight: 550;
     font-size: 35px;
     font-family: 'Montserrat';
 }
-
-pre{
-    font-weight: 550;
-    font-size: 24px;
-    font-family: 'Montserrat';    
-}
-
-.client{
-    font-size: 20px;
-    font-weight: 500;
-    font-family: 'Montserrat';   
-    margin-bottom: 4vh;
-}
-
-h3{
-    font-size: 20px;
-    font-family: 'Montserrat';   
-}
-
-h4{
-    font-weight: 550;
-    font-size: 20px;
-    font-family: 'Montserrat';      
-}
-
 h5{
     color: #1F8686; 
     font-weight: 550;
     font-size: 20px;
     font-family: 'Montserrat';
 }
-
 h6{
     color: #56C3C3;
     font-size: 18px;    
     font-family: 'Montserrat';
-}
-
-.box{
-    height: 42vh;
-    width: 78vh;
-    background-color: rgba(200, 200, 200, 0.2);
-}
-
-b{
-    font-family: 'Montserrat';
-    margin-left: auto;
-    margin-right: auto;    
 }
 button{
     background-color: rgba(0,203,138,0.66);
@@ -60,230 +41,293 @@ button{
     margin-right: auto; 
     margin-bottom: 2vh;     
 }
-
 img{
-    width: 60vh;
-    height: 43vh;
-    margin-bottom: 2vh;
+    width: 100%;
+    height: 100%;
 }
-
 .a{    
     margin-left: auto;
     margin-right: auto;
     font-family: 'Montserrat';  
 }
 
-@media screen and (min-width: 991px) and (max-width: 1125px){
-    .box{
-        height: 37vh;
-        width: 160%;
-    } 
-    h3{
-        font-size: 21px;  
+@media screen and (min-width: 991px) and (max-width: 1200px){
+    #fp{
+        font-size: 13px;
     }
-    h4{
-        font-size: 21px;
+    #sp{
+        font-size: 13px;
     }
-    img{
-        width: 60vh;
-        height: 40vh;            
-        margin-left: 28vh;    
-    }    
-}
-
-@media screen and (min-width: 767px) and (max-width: 991px){
-    .box{
-        height: 34vh;
-        width: 90%;
-    } 
-    h3{
-        font-size: 18px;  
+    h1{
+        font-size: 32px;
     }
-    h4{
+    h5{
         font-size: 18px;
-    }
-    img{
-        width: 60vh;
-        height: 40vh; 
-        margin-top: 1vh;   
-        margin-left: 23vh; 
-        margin-top: 1vh;    
-    }    
-}
-
-@media screen and (min-width: 576px) and (max-width: 767px){
-    .box{
-        height: 32vh;
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }   
-    h3{
-        font-size: 15px;  
-    }
-    h4{
-        font-size: 15px;
-    }
-    img{
-        margin-right: auto;
-        margin-left: auto;
-        width: 45vh;
-        height: 30vh; 
-        margin-top: 1vh;       
-    }
-    b{
-        margin-left: 35vh;
-    }
+    } 
+    h6{
+        font-size: 16px;    
+    } 
     button{
-        background-color: rgba(0,203,138,0.66);;       
-        margin-bottom: 1.5vh;
+        background-color: rgba(0,203,138,0.66);
         position: relative;
-    } 
-}
-
-@media screen and (min-width: 498px) and (max-width: 576px){
-    .box{
-        height: 24vh;
-        width: 75%;        
-    } 
-    h3{
-        font-size: 10px;
-    }
-    h4{
-        font-size: 10px;
-    } 
-    img{        
-        margin-right: auto;
         margin-left: auto;
-        width: 35vh;
-        height: 20vh; 
-        margin-top: 1vh; 
-    }    
-}
-
-@media screen and (min-width: 380px) and (max-width: 498px){
-    .box{
-        height: 24vh;
-        width: 75%;        
-    }
-    h3{
-        font-size: 10px;
-    }
-    h4{
-        font-size: 10px;
-    }
-    img{        
-        margin-right: auto;
+        margin-right: auto; 
+        margin-bottom: 2vh;     
+    }  
+    img{
+        width: 100%;
+        height: 100%;
+    }  
+    .a{    
         margin-left: auto;
-        width: 35vh;
-        height: 20vh; 
-        margin-top: 1vh; 
+        margin-right: auto;
+        font-family: 'Montserrat';  
     }
-    pre{
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+    #fp{
+        font-size: 9px;
+    }
+    #sp{
+        font-size: 9px;
+    }
+    h1{
+        font-size: 26px;
+    }
+    .client{
+        font-size: 8px;
+    } 
+    h5{
+        font-size: 16px;
+    } 
+    h6{
+        font-size: 15px;    
+    } 
+    .email{
         font-size: 16px;
     }
-}
-
-@media screen and (max-width: 380px){
-    .box{
-        height: 20vh;
-        width: 65%;       
-    }
-    h3{
-        font-size: 6px;
-        margin-right: -4vh;
-    }
-    h4{
-        font-size: 6px; 
-        margin-left: -2vh;           
-    }
-    img{
-        width: 22vh;
-        height: 15vh;
-        margin-right: auto;
-        margin-left: auto;
-        margin-top: 1vh; 
-    }
-    pre{
-        font-size: 9px;
-    }
-    h1{
-        font-size: 20px;
-    }
-    h6{
-        font-size: 8px;
-    }
-    h5{
-        font-size: 14px;
-    }
     button{
-        width: 12vh;
-        height: 2vh;        
-        font-size: 10px;
-        padding-top: -1vh;
-        padding-bottom: 4vh; 
+        background-color: rgba(0,203,138,0.66);
+        position: relative;
+        margin-left: auto;
+        margin-right: auto; 
+        margin-bottom: 2vh;     
     }  
-    .a{
-        font-size: 11px;
+    img{
+        width: 100%;
+        height: 100%;
+    }  
+    .a{    
+        font-size: 16px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: 'Montserrat';  
     }
-    b{
-        font-size: 11px;
-    }      
 }
 
-@media screen and (width: 320px) and (height: 576px){
-    .box{
-        height: 28vh;
-        width: 65%;    
+@media screen and (min-width: 529px) and (max-width: 768px){
+    #fp{
+        font-size: 12px;
     }
-    h3{
-        font-size: 6px;
-        margin-right: -4vh;
+    #sp{
+        font-size: 12px;
     }
-    h4{
-        font-size: 6px; 
-        margin-left: -2vh;           
+    h1{
+        font-size: 24px;
     }
-    img{
-        width: 22vh;
-        height: 15vh;
-        margin-right: auto;
+    .client{
+        font-size: 8px;
+    } 
+    h5{
+        font-size: 16px;
+    } 
+    h6{
+        font-size: 15px;    
+    } 
+    .email{
+        font-size: 16px;
+    }
+    button{
+        background-color: rgba(0,203,138,0.66);
+        position: relative;
         margin-left: auto;
-        margin-top: 1vh; 
+        margin-right: auto; 
+        margin-bottom: 2vh;     
+    }  
+    img{
+        width: 100%;
+        height: 100%;
+    }  
+    .a{    
+        font-size: 16px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: 'Montserrat';  
     }
-    pre{
+}
+
+@media screen and (min-width: 495px) and (max-width: 529px){
+    #fp{
+        font-size: 11px;
+    }
+    #sp{
+        font-size: 11px;
+    }
+    h1{
+        font-size: 24px;
+    }
+    .client{
+        font-size: 8px;
+    } 
+    h5{
+        font-size: 16px;
+    } 
+    h6{
+        font-size: 15px;    
+    } 
+    .email{
+        font-size: 16px;
+    }
+    button{
+        background-color: rgba(0,203,138,0.66);
+        position: relative;
+        margin-left: auto;
+        margin-right: auto; 
+        margin-bottom: 2vh;     
+    }  
+    img{
+        width: 100%;
+        height: 100%;
+    }  
+    .a{    
+        font-size: 16px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: 'Montserrat';  
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 495px){
+    #fp{
+        font-size: 9px;
+    }
+    #sp{
         font-size: 9px;
     }
     h1{
-        font-size: 20px;
+        font-size: 24px;
     }
-    h6{
+    .client{
         font-size: 8px;
-    }
-    h5{
-        font-size: 14px;
     } 
-    .a{
-        font-size: 11px;
-    }
-    b{
-        font-size: 11px;
+    h5{
+        font-size: 16px;
+    } 
+    h6{
+        font-size: 15px;    
+    } 
+    .email{
+        font-size: 16px;
     }
     button{
-        width: 12vh;
-        height: 2vh;        
-        font-size: 10px;
-        padding-top: -1vh;
-        padding-bottom: 4vh; 
+        background-color: rgba(0,203,138,0.66);
+        position: relative;
+        margin-left: auto;
+        margin-right: auto; 
+        margin-bottom: 2vh;     
+    }  
+    img{
+        width: 100%;
+        height: 100%;
+    }  
+    .a{    
+        font-size: 16px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: 'Montserrat';  
     }
 }
 
-@media screen and (max-width: 320px){
-    #container{
-      max-width: 100%;
+@media screen and (min-width: 374px) and (max-width: 400px){
+    #fp{
+        margin-left: -4vh;
+        font-size: 8px;
     }
-  }
+    #sp{
+        font-size: 8px;
+    }
+    h1{
+        font-size: 24px;
+    }
+    .client{
+        font-size: 8px;
+    } 
+    h5{
+        font-size: 16px;
+    } 
+    h6{
+        font-size: 15px;    
+    } 
+    .email{
+        font-size: 16px;
+    }
+    button{
+        background-color: rgba(0,203,138,0.66);
+        position: relative;
+        margin-left: auto;
+        margin-right: auto; 
+        margin-bottom: 2vh;     
+    }  
+    img{
+        width: 100%;
+        height: 100%;
+    }  
+    .a{    
+        font-size: 16px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: 'Montserrat';  
+    }
+}
 
-@-ms-viewport{
-    width: device-width;
+@media screen and (min-width: 320px) and (max-width: 374px){
+    #fp{
+        margin-left: -4vh;
+        font-size: 6.5px;
+    }
+    #sp{
+        font-size: 6.5px;
+    }
+    h1{
+        font-size: 24px;
+    }
+    .client{
+        font-size: 8px;
+    } 
+    h5{
+        font-size: 16px;
+    } 
+    h6{
+        font-size: 15px;    
+    } 
+    .email{
+        font-size: 16px;
+    }
+    button{
+        background-color: rgba(0,203,138,0.66);
+        position: relative;
+        margin-left: auto;
+        margin-right: auto; 
+        margin-bottom: 2vh;     
+    }  
+    img{
+        width: 100%;
+        height: 100%;
+    }  
+    .a{    
+        font-size: 16px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: 'Montserrat';  
+    }
 }
