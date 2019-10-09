@@ -11,15 +11,22 @@ pre{
     font-family: 'Montserrat';    
 }
 
+.client{
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Montserrat';   
+    margin-bottom: 4vh;
+}
+
 h3{
     font-size: 20px;
-    font-family: 'Montserrat';    
+    font-family: 'Montserrat';   
 }
 
 h4{
     font-weight: 550;
     font-size: 20px;
-    font-family: 'Montserrat';     
+    font-family: 'Montserrat';      
 }
 
 h5{
@@ -36,7 +43,7 @@ h6{
 }
 
 .box{
-    height: 37vh;
+    height: 42vh;
     width: 78vh;
     background-color: rgba(200, 200, 200, 0.2);
 }
@@ -56,7 +63,7 @@ button{
 
 img{
     width: 60vh;
-    height: 40vh;
+    height: 43vh;
     margin-bottom: 2vh;
 }
 
