@@ -35,6 +35,14 @@ export default new Vuex.Store({
       email : '',
       name : '',
       openingDate : ''
+    },
+    securityQuestions:{
+      questions:[]
+    },
+    answersSecurityQuestions:{
+      posAnswer1:-1,
+      posAnswer2:-1,
+      posAnswer3:-1
     }
   },
   mutations: {
@@ -61,9 +69,31 @@ export default new Vuex.Store({
       state.responseCreateAccount.currency = response_create.currency;
       state.responseCreateAccount.email = response_create.email;
     },
+    fillQuestionsComplete(state, res_answer){
+      let aux=res_answer.securityQuestions;
+      state.securityQuestions.questions=[];
+      for (let i=0; i< aux.length;i++){       
+        state.securityQuestions.questions.push({
+          answers : aux[i].answers,
+          correctAnswerIndex : aux[i].correctAnswerIndex,
+          question: aux[i].question   
+        });
+      }
+    },
+    fillAnswersSelected(state,relationAnswerQuestion){
+      if(relationAnswerQuestion.ques==1){
+        state.answersSecurityQuestions.posAnswer1=relationAnswerQuestion.posAns;
+      }
+      else if(relationAnswerQuestion.ques==2){
+        state.answersSecurityQuestions.posAnswer2=relationAnswerQuestion.posAns;
+      }
+      else if(relationAnswerQuestion.ques==3){
+        state.answersSecurityQuestions.posAnswer3=relationAnswerQuestion.posAns;
+      }
+    },
     changeCur(state,cur){
       state.currency = cur;
-    }
+     }
   },
   actions: {
     fill(context,person_data){
@@ -71,6 +101,13 @@ export default new Vuex.Store({
     },
     captureResponse(context,response_create){
         context.commit('fillResponseCreateAccount',response_create);
+    },
+
+    completeSecurityQuestion(context,res_answer){
+      context.commit('fillQuestionsComplete',res_answer);
+    },
+    completePosAnswerQuestion(context,relationAnswerQuestion){
+      context.commit('fillAnswersSelected',relationAnswerQuestion);
     },
     changeCurrency(context,cur){
         context.commit('changeCur',cur);
