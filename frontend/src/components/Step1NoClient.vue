@@ -14,16 +14,16 @@
                 <hr>
                 <div id="checkQuestions1" class="d-flex justify-content-center align-items-center flex-column pr-1 mr-md-5 mt-3 mb-4">
                     <span class="mr-sm-6">
-                        <input type="radio" id="q1a1" name="option1" value="option1"> {{securityQuestions.questions[0].answers[0]}}
+                        <input type="radio" @click="posCheckBoxQuestions(1,0)" name="option1" value="option1"> {{securityQuestions.questions[0].answers[0]}}
                     </span>
                     <span class="mr-sm-6">
-                        <input type="radio" id="q1a2" name="option1" value="option2"> {{securityQuestions.questions[0].answers[1]}}
+                        <input type="radio" @click="posCheckBoxQuestions(1,1)" name="option1" value="option2"> {{securityQuestions.questions[0].answers[1]}}
                     </span>
                     <span class="mr-sm-6">
-                        <input type="radio" id="q1a3" name="option1" value="option3"> {{securityQuestions.questions[0].answers[2]}}
+                        <input type="radio" @click="posCheckBoxQuestions(1,2)" name="option1" value="option3"> {{securityQuestions.questions[0].answers[2]}}
                     </span>
                     <span class="mr-sm-6">
-                        <input type="radio" id="q1a4" name="option1" value="option4"> {{securityQuestions.questions[0].answers[3]}}
+                        <input type="radio" @click="posCheckBoxQuestions(1,3)" name="option1" value="option4"> {{securityQuestions.questions[0].answers[3]}}
                     </span>
                 </div>
             </div>
@@ -32,16 +32,16 @@
                 <hr>
                 <div id="checkQuestions2" class="d-flex justify-content-center align-items-center flex-column pl-2 ml-md-5 mt-3">
                     <span class="mr-sm-6">
-                        <input class="mr-2" id="q2a1" type="radio" name="option2" value="option1"> {{securityQuestions.questions[1].answers[0]}}
+                        <input class="mr-2" @click="posCheckBoxQuestions(2,0)" type="radio" name="option2" value="option1"> {{securityQuestions.questions[1].answers[0]}}
                     </span>
                     <span class="mr-sm-6">
-                        <input class="mr-2" id="q2a2" type="radio" name="option2" value="option2"> {{securityQuestions.questions[1].answers[1]}}
+                        <input class="mr-2" @click="posCheckBoxQuestions(2,1)" type="radio" name="option2" value="option2"> {{securityQuestions.questions[1].answers[1]}}
                     </span>
                     <span class="mr-sm-6">
-                        <input class="mr-2" id="q2a3" type="radio" name="option2" value="option3"> {{securityQuestions.questions[1].answers[2]}}
+                        <input class="mr-2" @click="posCheckBoxQuestions(2,2)" type="radio" name="option2" value="option3"> {{securityQuestions.questions[1].answers[2]}}
                     </span>
                     <span class="mr-sm-6">
-                        <input class="mr-2" id="q2a3" type="radio" name="option2" value="option4"> {{securityQuestions.questions[1].answers[3]}}
+                        <input class="mr-2" @click="posCheckBoxQuestions(2,3)" type="radio" name="option2" value="option4"> {{securityQuestions.questions[1].answers[3]}}
                     </span>
                 </div>
             </div>
@@ -51,16 +51,16 @@
         <hr>
         <div class="d-flex justify-content-center align-items-center flex-column">
             <span class="mr-sm-6">
-                <input class="mr-2" id="q3a1" type="radio" name="option3" value="option1">{{securityQuestions.questions[2].answers[0]}}
+                <input class="mr-2" @click="posCheckBoxQuestions(3,0)" type="radio" name="option3" value="option1">{{securityQuestions.questions[2].answers[0]}}
             </span>
             <span class="mr-sm-6">
-                <input class="mr-2" id="q3a2" type="radio" name="option3" value="option2">{{securityQuestions.questions[2].answers[1]}} 
+                <input class="mr-2" @click="posCheckBoxQuestions(3,1)" type="radio" name="option3" value="option2">{{securityQuestions.questions[2].answers[1]}} 
             </span>
             <span class="mr-sm-6">
-                <input class="mr-2" id="q3a3" type="radio" name="option3" value="option3">{{securityQuestions.questions[2].answers[2]}}
+                <input class="mr-2" @click="posCheckBoxQuestions(3,2)" type="radio" name="option3" value="option3">{{securityQuestions.questions[2].answers[2]}}
             </span>
             <span class="mr-sm-6">
-                <input class="mr-2" id="q3a4" type="radio" name="option3" value="option4">{{securityQuestions.questions[2].answers[3]}}
+                <input class="mr-2" @click="posCheckBoxQuestions(3,3)" type="radio" name="option3" value="option4">{{securityQuestions.questions[2].answers[3]}}
             </span>
         </div>
     </div>
@@ -72,15 +72,22 @@
 
 <script>
 
-import {mapState} from 'vuex'
+import {mapState,mapActions} from 'vuex'
 
 export default {
     name : 'Step1NoClient',
     computed:{
-        ...mapState(['person','securityQuestions'])
+        ...mapState(['person','securityQuestions','answersSecurityQuestions'])
     },
     methods:{
-
+        ...mapActions(['completePosAnswerQuestion']),
+        posCheckBoxQuestions(question,position){
+            let body={
+                "ques" : question,
+                "posAns" : position
+            } 
+            this.completePosAnswerQuestion(body);
+        }
     },
     mounted() {
         console.log(this.securityQuestions);

@@ -38,6 +38,11 @@ export default new Vuex.Store({
     },
     securityQuestions:{
       questions:[]
+    },
+    answersSecurityQuestions:{
+      posAnswer1:-1,
+      posAnswer2:-1,
+      posAnswer3:-1
     }
   },
   mutations: {
@@ -66,12 +71,24 @@ export default new Vuex.Store({
     },
     fillQuestionsComplete(state, res_answer){
       let aux=res_answer.securityQuestions;
+      state.securityQuestions.questions=[];
       for (let i=0; i< aux.length;i++){       
         state.securityQuestions.questions.push({
           answers : aux[i].answers,
           correctAnswerIndex : aux[i].correctAnswerIndex,
           question: aux[i].question   
         });
+      }
+    },
+    fillAnswersSelected(state,relationAnswerQuestion){
+      if(relationAnswerQuestion.ques==1){
+        state.answersSecurityQuestions.posAnswer1=relationAnswerQuestion.posAns;
+      }
+      else if(relationAnswerQuestion.ques==2){
+        state.answersSecurityQuestions.posAnswer2=relationAnswerQuestion.posAns;
+      }
+      else if(relationAnswerQuestion.ques==3){
+        state.answersSecurityQuestions.posAnswer3=relationAnswerQuestion.posAns;
       }
     }
   },
@@ -84,6 +101,9 @@ export default new Vuex.Store({
     },
     completeSecurityQuestion(context,res_answer){
       context.commit('fillQuestionsComplete',res_answer);
+    },
+    completePosAnswerQuestion(context,relationAnswerQuestion){
+      context.commit('fillAnswersSelected',relationAnswerQuestion);
     }
   }
 })

@@ -29,14 +29,16 @@ import * as accountDA from '@/dataAccess/accountDA.js';
 import * as personDA from '@/dataAccess/personDA.js';
 import {mapState, mapActions} from 'vuex';
 import router from '@/router.js'
+import Swal from 'sweetalert2'
 
 export default {
     data(){
         return{
+            counterTries: 3
         }
     },
     computed:{
-        ...mapState(['person','currency','securityQuestions'])
+        ...mapState(['person','currency','securityQuestions','answersSecurityQuestions'])
         
     },
     methods:{
@@ -57,69 +59,62 @@ export default {
         },
         verificacionV1(){
             
-            let counterCorrectAns=0;
-            let missingChecked=0;
+            if (this.counterTries>0){
 
-            if (Step1NoClient.getElementById("q1a1").checked){
-                if(this.securityQuestions.questions[0].correctAnswerIndex==1){counterCorrectAns++;}
-            }
-            else if (Step1NoClient.getElementById("q1a2").checked){
-                if(this.securityQuestions.questions[0].correctAnswerIndex==2){counterCorrectAns++;}
-            }
-            else if (Step1NoClient.getElementById("q1a3").checked){
-                if(this.securityQuestions.questions[0].correctAnswerIndex==3){counterCorrectAns++;}
-            }
-            else if (Step1NoClient.getElementById("q1a4").checked){
-                if(this.securityQuestions.questions[0].correctAnswerIndex==4){counterCorrectAns++;}
+                if (this.answersSecurityQuestions.posAnswer1==-1 || this.answersSecurityQuestions.posAnswer2==-1 
+                    || this.answersSecurityQuestions.posAnswer2==-1 )
+                {
+                    //falta seleccionar campos, no pierde intentos
+                    Swal.fire({
+                        title: 'Respuestas incompletas',
+                        type: 'error',
+                        text: 'Todas las preguntas son necesarias para pasar al siguiente paso.'
+                        })
+                    return false;
+                }
+                else
+                {
+                    if(this.securityQuestions.questions[0].correctAnswerIndex==this.answersSecurityQuestions.posAnswer1
+                       && this.securityQuestions.questions[1].correctAnswerIndex==this.answersSecurityQuestions.posAnswer2
+                       && this.securityQuestions.questions[2].correctAnswerIndex==this.answersSecurityQuestions.posAnswer3)
+                       {
+                        //respuestas correctas
+                        return true;
+                       }
+                    else{
+                        //respuestas erroneas, pierde un intento
+                        this.counterTries--;
+                        if(this.counterTries!=0){
+                                personDA.doQuestionsRequest(this.person.idPerson).then((res)=>{
+                                let responseQuestionReq=res.data;
+                                this.completeSecurityQuestion(responseQuestionReq);
+                            }).catch(error=>{
+                                Swal.fire({
+                                    title: 'Error',
+                                    type: 'error',
+                                    text: 'Error en la recepción de preguntas'
+                                })
+                            })
+                        }
+                        Swal.fire({
+                        title: 'Respuestas inválidas',
+                        type: 'error',
+                        text: 'Por favor, verifique sus respuestas.'
+                        })
+                        return false;
+                    }
+                }
+               
             }
             else{
-                missingChecked++;
-            }
-
-            if (Step1NoClient.getElementById("q2a1").checked){
-                if(this.securityQuestions.questions[1].correctAnswerIndex==1){counterCorrectAns++;}
-            }
-            else if (Step1NoClient.getElementById("q2a3").checked){
-                if(this.securityQuestions.questions[1].correctAnswerIndex==2){counterCorrectAns++;}
-            }
-            else if (Step1NoClient.getElementById("q2a3").checked){
-                if(this.securityQuestions.questions[1].correctAnswerIndex==3){counterCorrectAns++;}
-            }
-            else if (Step1NoClient.getElementById("q2a4").checked){
-                if(this.securityQuestions.questions[1].correctAnswerIndex==4){counterCorrectAns++;}
-            }
-            else{
-                missingChecked++;
-            }
-
-            if (Step1NoClient.getElementById("q3a1").checked){
-                if(this.securityQuestions.questions[2].correctAnswerIndex==1){counterCorrectAns++;}
-            }
-            else if (Step1NoClient.getElementById("q3a3").checked){
-                if(this.securityQuestions.questions[2].correctAnswerIndex==2){counterCorrectAns++;}
-            }
-            else if (Step1NoClient.getElementById("q3a3").checked){
-                if(this.securityQuestions.questions[2].correctAnswerIndex==3){counterCorrectAns++;}
-            }
-            else if (Step1NoClient.getElementById("q3a4").checked){
-                if(this.securityQuestions.questions[2].correctAnswerIndex==4){counterCorrectAns++;}
-            }
-            else{
-                missingChecked++;
+                Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Cantidad de intentos superados.'
+                })
+                this.$router.push('/');
             }
             
-            if (missingChecked>=1){
-                //faltan seleccionar no pierde un intento
-                return false;
-            }
-            else if (counterCorrectAns==3){
-                //respuestas correctas
-                return true;
-            }
-            else {
-                //respuestas erroneas, pierde un intento
-                return false;
-            }
         },
         registerCurrency(){
             personDA.doRegisterProspect(this.person.idPerson,this.person.email1,this.person.email2,this.person.cellphone1,this.person.cellphone2).then((res) =>{

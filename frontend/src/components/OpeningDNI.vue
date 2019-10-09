@@ -13,7 +13,7 @@
                       <input v-model="dni" id="txt_dni" type="text" class="form-control ml-5 mt-1" maxlength="8" minlength="8"
                        @keypress="isNumber($event)" placeholder="DNI">
                       <div class="form-check ml-5  mt-4">
-                          <input  class="form-check-input" type="checkbox" id="autoSizingCheck">
+                          <input  class="form-check-input" @click="acceptTerms()" type="checkbox" id="autoSizingCheck">
                           <label class="form-check-label" for="autoSizingCheck">
                           <h6>He leído y acepto la 
                           <a href="#"> Política de 
@@ -46,7 +46,8 @@
       name: 'openingDNI',
       data(){
         return {
-          dni : ''
+          dni : '',
+          termsAccept:false
         };
       },
       computed:{
@@ -56,28 +57,36 @@
           ...mapActions(['fill']),
           enterDni(){
               //let res = personDA.doDniValidation(this.dni);
-              personDA.doDniValidation(this.dni).then((res) =>{
-                  let person_data = res.data;
-                  if(person_data.type==1){ //CLIENT
-                    alert('Cliente');
-                    console.log(person_data);
-                  }
-                  else if(person_data.type==2){//NO CLIENT
-                    console.log(person_data);
-                    this.fill(person_data);
-                    router.push('/accountOpening');
-                  }
-                  else if(person_data.type==3){//BLACK LIST
-                    router.push('/blackList');
-                  }
-              }).catch(error=>
-              {
-                  Swal.fire({
-                  title: 'Error',
-                  type: 'error',
-                  text: 'DNI inválido'
-                  })
-              })             
+              if (this.termsAccept){
+                  personDA.doDniValidation(this.dni).then((res) =>{
+                      let person_data = res.data;
+                      if(person_data.type==1){ //CLIENT
+                        alert('Cliente');
+                        console.log(person_data);
+                      }
+                      else if(person_data.type==2){//NO CLIENT
+                        console.log(person_data);
+                        this.fill(person_data);
+                        router.push('/accountOpening');
+                      }
+                      else if(person_data.type==3){//BLACK LIST
+                        router.push('/blackList');
+                      }
+                  }).catch(error=>
+                  {
+                      Swal.fire({
+                      title: 'Error',
+                      type: 'error',
+                      text: 'DNI inválido'
+                      })
+                  })  
+              } else{
+                Swal.fire({
+                      title: 'Términos y condiciones',
+                      type: 'error',
+                      text: 'Por favor, acepte los términos y condiciones.'
+                      })
+              }         
           },
           isNumber: function(evt) {
             evt = (evt) ? evt : window.event;
@@ -85,9 +94,12 @@
             if (charCode < 48 || charCode > 57) {
               evt.preventDefault();;
             } else {
-          return true;
-      }
-    }        
+              return true;
+            }
+          },
+          acceptTerms: function(){
+            this.termsAccept=!this.termsAccept;
+          }     
       }
       
     }
