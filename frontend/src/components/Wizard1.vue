@@ -6,7 +6,7 @@
             <tab-content title="Identifícate">
                <Step1NoClient></Step1NoClient>
             </tab-content>
-            <tab-content title="Permítenos conocerte" :before-change="registerCurrency">>
+            <tab-content title="Permítenos conocerte" :before-change="registerCurrency">
                 <Step2NoClient></Step2NoClient>
             </tab-content>
             <tab-content title="Elige tu cuenta" class="">
@@ -24,6 +24,7 @@
 
 import Step1NoClient from "@/components/Step1NoClient.vue";
 import Step2NoClient from '@/components/Step2NoClient.vue';
+import * as S2NC from '@/components/Step2NoClient.vue'
 import Step3NoClient from '@/components/Step3NoClient.vue';
 import * as accountDA from '@/dataAccess/accountDA.js';
 import * as personDA from '@/dataAccess/personDA.js';
@@ -52,6 +53,7 @@ export default {
         registerCurrency(){
             personDA.doRegisterProspect(this.person.idPerson,this.person.email1,this.person.email2,this.person.cellphone1,this.person.cellphone2).then((res) =>{
                 console.log(res.data);
+                
             }).catch(error=>
             {
                 Swal.fire({
