@@ -217,8 +217,8 @@ h2{
     }
 }
 
-/*MOBILE L*/
-@media screen and (min-width: 376px) and (max-width: 425px){
+/*MOBILE L*/ 
+@media screen and (min-width: 376px) and (max-width: 448px){
     #img1{
         background: url(../images/llamasAjustadoL.jpg) no-repeat;
         width: 0;
@@ -260,7 +260,6 @@ h2{
         width: 69%;
         margin : 0;
         margin-bottom: 70%;
-        /*background-color: rgba(255, 255, 255,0.5);*/
     }
 
     .wordsSecondSlide{
@@ -288,8 +287,227 @@ h2{
     }
 }
 
-/*TABLET*/
-@media screen and (min-width: 426px) and (max-width: 768px){
+/*XL*/
+@media screen and (min-width: 449px) and (max-width: 509px){
+    #img1{
+        background: url(../images/llamasXL.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 60%;
+    }
+
+    #img2{
+        background: url(../images/adultXL.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 60%;
+    }
+
+    #img3{
+        background: url(../images/calmXL.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 60%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 45%;
+        width: 55%;
+        height: 28%;
+    }
+
+    .cap2{
+        margin-bottom: 55%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 1.3rem;
+    }
+
+    .wordsFirstSlide{
+        font-size: 1.3rem;
+    }
+
+    #middle{
+        margin-bottom: 60%;
+    }
+}
+
+/*TODAVIA FALTA*/
+@media screen and (min-width: 510px) and (max-width: 550px){
+    #img1{
+        background: url(../images/llamasT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 70%;
+    }
+
+    #img2{
+        background: url(../images/adultT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 70%;
+    }
+
+    #img3{
+        background: url(../images/calmT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 70%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 60%;
+        width: 45%;
+        height: 20%;
+    }
+
+    .cap2{
+        margin-bottom: 75%;
+        margin-left: 0%;
+        width: 50%;
+        height: 25%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 1.3rem;
+    }
+
+    .wordsFirstSlide{
+        font-size: 1.3rem;
+    }
+
+    #middle{
+        margin-bottom: 70%;
+    }
+}
+
+@media screen and (min-width: 551px) and (max-width: 629px){
+    #img1{
+        background: url(../images/llamasT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 60%;
+    }
+
+    #img2{
+        background: url(../images/adultT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 60%;
+    }
+
+    #img3{
+        background: url(../images/calmT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 60%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 30%;
+        width: 45%;
+        height: 25%;
+    }
+
+    .cap2{
+        margin-bottom: 55%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsFirstSlide{
+        font-size: 1.4rem;
+    }
+
+    .wordsSecondSlide{
+        font-size: 1.4rem;
+    }
+
+    #middle{
+        margin-bottom: 55%;
+    }
+}
+
+/*TAL VEZ SECCIONAR*/
+@media screen and (min-width: 630px) and (max-width: 741px){
+    #img1{
+        background: url(../images/llamasT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 50%;
+    }
+
+    #img2{
+        background: url(../images/adultT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 50%;
+    }
+
+    #img3{
+        background: url(../images/calmT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 50%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 30%;
+        width: 45%;
+        height: 25%;
+    }
+
+    .cap2{
+        margin-bottom: 55%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsFirstSlide{
+        font-size: 1.6rem;
+    }
+
+    .wordsSecondSlide{
+        font-size: 1.6rem;
+    }
+
+    #middle{
+        margin-bottom: 50%;
+    }
+}
+
+/*ESTA BIEN*/
+@media screen and (min-width: 742px) and (max-width: 798px){
     #img1{
         background: url(../images/llamasT.jpg) no-repeat;
         width: 0;
@@ -339,12 +557,4 @@ h2{
     }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1024px){
-    .cap1{
-        height: 55%;
-    }
-
-    .wordsSecondSlide{
-        font-size : 1.9rem;
-    }
-}
+/*798-- X */
