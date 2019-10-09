@@ -11,15 +11,15 @@
           <div class="container ml-4">
             <div class="row">
               <div class="col-6 col-sm-6 col-md-6">
-                <h3>Cliente:</h3>
-                <h3>Número de Cuenta:</h3>
+                <div class="client">Cliente:</div>
+                <h3>Número de Cuenta:</h3>                
                 <h3>CCI:</h3>
                 <h3>Detalle de Cuenta:</h3>
                 <h3>Fecha de Apertura:</h3>
                 <h3>Moneda:</h3>
               </div>
               <div class="col-6 col-sm-6 col-md-6">
-                <h4>Leonella Checa</h4>
+                <h4>Leonella Checa Altamirano Carlos</h4>
                 <h4>1781-3467-9456</h4>
                 <h4>1679137976197</h4>
                 <h4>Cuenta Simple</h4>

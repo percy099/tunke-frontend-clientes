@@ -1,249 +1,32 @@
 img{
-  height: 65.3vh;
-  width: 54vh;
-  position: relative;
-} 
-.box{
-  height: 65vh;
+  height: 100.5%;
   width: 100%;
-  background-color: rgba(200, 200, 200, 0.6);
   position: relative;
+}
+#fp{
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 30px;
+  padding-top: 4vh;
+  padding-left: 4vh;
+}
+#sp{
+  font-family: 'Montserrat';
+  font-size: 25px;
+  padding-top: 4vh;
+  padding-left: 4vh;
 }
 h1{
   font-family: 'Montserrat';
   font-weight: 700;
-  padding-top: 6vh;
-  padding-left: 10vh;
-}
-h3{
-  font-family: 'Montserrat';
-  font-weight: 650;
-  padding-top: 6vh;
-  padding-left: 10vh;
-}
-h4{
-  font-family: 'Montserrat';
-  font-weight: 600;
-  padding-top: 8vh;
-  padding-left: 10vh;
+  padding-top: 4vh;
+  padding-left: 4vh;
 }
 button{
   background-color: rgba(0,203,138,0.66);
   position: relative;
-  margin-top: 4vh;
-  margin-left: 10vh;      
+  margin: 5vh;
 }
-
-@media screen and (min-width: 991px) and (max-width: 1125px){
-  img{
-    z-index: 1;
-  } 
-  .box{
-    z-index: -1;
-  }
-  h1{
-    padding-left: 12vh;
-  }
-  h3{
-    padding-left: 12vh;
-  }
-  h4{
-    padding-left: 12vh;
-  }
-  button{
-    margin-left: 12vh;      
-  }
-}
-
-@media screen and (min-width: 768px) and (max-width: 991px){
-  img{
-    width: 41vh;
-    z-index: 1;
-  } 
-  .box{
-    z-index: -1;
-  }
-  h1{
-    font-size: 23px;
-    padding-left: 10vh;
-  }
-  h3{
-    font-size: 20px;
-    padding-left: 10vh;
-  }
-  h4{
-    font-size: 18px;
-    padding-left: 10vh;
-  }
-  button{
-    margin-left: 10vh;      
-  }
-}
-
-@media screen and (min-width: 576px) and (max-width: 768px){
-  img{
-    width: 32vh;
-    height: 50vh;
-    z-index: 1;
-  } 
-  .box{
-    height: 50vh;
-    z-index: -1;
-  }
-  h1{
-    font-size: 20px;
-    padding-left: 10vh;
-  }
-  h3{
-    font-size: 17px;
-    padding-top: 2vh;
-    padding-left: 10vh;
-  }
-  h4{
-    font-size: 15px;
-    padding-top: 2vh;
-    padding-left: 10vh;
-  }
-  button{
-    margin-left: 10vh;      
-  }
-}
-
-@media screen and (min-width: 550px) and (max-width: 768px){
-  img{
-    width: 32vh;
-    height: 50vh;
-    z-index: 1;
-  } 
-  .box{
-    height: 50vh;
-    z-index: -1;
-  }
-  h1{
-    font-size: 20px;
-    padding-left: 10vh;
-  }
-  h3{
-    font-size: 17px;
-    padding-top: 2vh;
-    padding-left: 10vh;
-  }
-  h4{
-    font-size: 15px;
-    padding-top: 2vh;
-    padding-left: 10vh;
-  }
-  button{
-    margin-left: 10vh;      
-  }
-}
-
-@media screen and (min-width: 450px) and (max-width: 550px){
-  img{
-    width: 28vh;
-    height: 42vh;
-    z-index: 1;
-  } 
-  .box{
-    height: 42vh;
-    z-index: -1;
-  }
-  h1{
-    padding-top: 2vh;
-    font-size: 16px;
-    padding-left: 10vh;
-  }
-  h3{
-    font-size: 13px;
-    padding-top: 2vh;
-    padding-left: 10vh;
-  }
-  h4{
-    font-size: 11px;
-    padding-top: 2vh;
-    padding-left: 10vh;
-  }
-  button{
-    margin-left: 10vh;     
-    width: 10vh;
-    height: 4vh; 
-    font-size: 10px; 
-    margin-top: -1vh;
-  }
-}
-
-@media screen and (min-width: 380px) and (max-width: 450px){
-  img{
-    width: 24vh;
-    height: 42vh;
-    z-index: 1;
-  } 
-  .box{
-    width: 20hv;
-    height: 42vh;
-    z-index: -1;
-  }
-  h1{
-    padding-top: 2vh;
-    font-size: 16px;
-    padding-left: 10vh;
-  }
-  h3{
-    font-size: 13px;
-    padding-top: 2vh;
-    padding-left: 10vh;
-  }
-  h4{
-    font-size: 11px;
-    padding-top: 2vh;
-    padding-left: 10vh;
-  }
-  button{
-    margin-left: 10vh;     
-    width: 10vh;
-    height: 4vh; 
-    font-size: 10px; 
-    margin-top: -1vh;
-  }
-}
-
-@media screen and (min-width: 320px) and (max-width: 380px){
-  img{
-    width: 20vh;
-    height: 42vh;
-    z-index: 1;
-  } 
-  .box{
-    width: 20hv;
-    height: 42vh;
-    z-index: -1;
-  }
-  h1{
-    padding-top: 2vh;
-    font-size: 14px;
-    padding-left: 10vh;
-  }
-  h3{
-    font-size: 11px;
-    padding-top: 2vh;
-    padding-left: 10vh;
-  }
-  h4{
-    font-size: 9px;
-    padding-top: 2vh;
-    padding-left: 10vh;
-  }
-  button{
-    margin-left: 10vh;     
-    width: 10vh;
-    height: 4vh; 
-    font-size: 10px; 
-    margin-top: -1vh;
-  }
-}
-
-@media screen and (max-width: 320px){
-  #container{
-    max-width: 100%;
-  }
+.card{
+  max-width: 1024px;
 }
