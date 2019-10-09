@@ -35,6 +35,9 @@ export default new Vuex.Store({
       email : '',
       name : '',
       openingDate : ''
+    },
+    securityQuestions:{
+      questions:[]
     }
   },
   mutations: {
@@ -60,6 +63,16 @@ export default new Vuex.Store({
       state.responseCreateAccount.openingDate = response_create.openingDate;
       state.responseCreateAccount.currency = response_create.currency;
       state.responseCreateAccount.email = response_create.email;
+    },
+    fillQuestionsComplete(state, res_answer){
+      let aux=res_answer.securityQuestions;
+      for (let i=0; i< aux.length;i++){       
+        state.securityQuestions.questions.push({
+          answers : aux[i].answers,
+          correctAnswerIndex : aux[i].correctAnswerIndex,
+          question: aux[i].question   
+        });
+      }
     }
   },
   actions: {
@@ -68,6 +81,9 @@ export default new Vuex.Store({
     },
     captureResponse(context,response_create){
         context.commit('fillResponseCreateAccount',response_create);
+    },
+    completeSecurityQuestion(context,res_answer){
+      context.commit('fillQuestionsComplete',res_answer);
     }
   }
 })

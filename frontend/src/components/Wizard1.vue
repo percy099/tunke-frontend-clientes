@@ -32,29 +32,15 @@ import router from '@/router.js'
 
 export default {
     data(){
-        //crear estructura de las preguntas
-        //creo que esta estructura va en el store ya que lo usaremos en los archivos del step1.vue y en el wizard1.vue
         return{
-            question:{
-                answer1:'',
-                answer2:'',
-                answer3:'',
-                answer4:'',
-                correctAnswerIndex:-1,
-                question:''
-            },
-            securityQuestions:{
-                question1:this.question,
-                question2:this.question,
-                question3:this.question,
-            }
         }
     },
     computed:{
-        ...mapState(['person','currency'])
+        ...mapState(['person','currency','securityQuestions'])
+        
     },
     methods:{
-        ...mapActions(['captureResponse']),
+        ...mapActions(['captureResponse','completeSecurityQuestion']),
         onComplete (){
             accountDA.doCreateAccount(this.person.idPerson,this.currency).then((res) =>{
                   let response_create = res.data;
@@ -69,60 +55,71 @@ export default {
                   })
               })
         },
-        //creo que esto va antes de entrar al wizard xd
-        getSecurityQuestions(){
-            personDA.doQuestionsRequest(this.person.idPerson).then((res)=>{
-                console.log(res.data);
-                let responseQuestionReq=res.data;
-        
-                //pregunta1
-                this.securityQuestions.question1.answer1=responseQuestionReq.securityQuestions[0].answers[0];
-                this.securityQuestions.question1.answer2=responseQuestionReq.securityQuestions[0].answers[1];
-                this.securityQuestions.question1.answer3=responseQuestionReq.securityQuestions[0].answers[2];
-                this.securityQuestions.question1.answer4=responseQuestionReq.securityQuestions[0].answers[3];
-
-                this.securityQuestions.question1.correctAnswerIndex=responseQuestionReq.securityQuestions[0].correctAnswerIndex;
-                this.securityQuestions.question1.question=responseQuestionReq.securityQuestions[0].question;
-
-                //pregunta2
-                this.securityQuestions.question2.answer1=responseQuestionReq.securityQuestions[1].answers[0];
-                this.securityQuestions.question2.answer2=responseQuestionReq.securityQuestions[1].answers[1];
-                this.securityQuestions.question2.answer3=responseQuestionReq.securityQuestions[1].answers[2];
-                this.securityQuestions.question2.answer4=responseQuestionReq.securityQuestions[1].answers[3];
-
-                this.securityQuestions.question2.correctAnswerIndex=responseQuestionReq.securityQuestions[1].correctAnswerIndex;
-                this.securityQuestions.question2.question=responseQuestionReq.securityQuestions[1].question;
-
-                //pregunta3
-                this.securityQuestions.question3.answer1=responseQuestionReq.securityQuestions[2].answers[0];
-                this.securityQuestions.question3.answer2=responseQuestionReq.securityQuestions[2].answers[1];
-                this.securityQuestions.question3.answer3=responseQuestionReq.securityQuestions[2].answers[2];
-                this.securityQuestions.question3.answer4=responseQuestionReq.securityQuestions[2].answers[3];
-
-                this.securityQuestions.question3.correctAnswerIndex=responseQuestionReq.securityQuestions[2].correctAnswerIndex;
-                this.securityQuestions.question3.question=responseQuestionReq.securityQuestions[2].question;
-                
-            }).catch(error=>{
-                Swal.fire({
-                    title: 'Error',
-                    type: 'error',
-                    text: 'Error en la recepción de preguntas'
-                })
-            })
-            return true;
-        },
         verificacionV1(){
-            alert('Validar la info y seleccion')
-              
-            //hacer las verificaciones de que esta seleccionado un checkbox y las respuestas correctas
-            /*
-                Swal.fire({
-                    title: 'Error',
-                    type: 'error',
-                    text: 'Las respuestas no son correctas'
-                })
-            })*/
-            return true;
+            
+            let counterCorrectAns=0;
+            let missingChecked=0;
+
+            if (Step1NoClient.getElementById("q1a1").checked){
+                if(this.securityQuestions.questions[0].correctAnswerIndex==1){counterCorrectAns++;}
+            }
+            else if (Step1NoClient.getElementById("q1a2").checked){
+                if(this.securityQuestions.questions[0].correctAnswerIndex==2){counterCorrectAns++;}
+            }
+            else if (Step1NoClient.getElementById("q1a3").checked){
+                if(this.securityQuestions.questions[0].correctAnswerIndex==3){counterCorrectAns++;}
+            }
+            else if (Step1NoClient.getElementById("q1a4").checked){
+                if(this.securityQuestions.questions[0].correctAnswerIndex==4){counterCorrectAns++;}
+            }
+            else{
+                missingChecked++;
+            }
+
+            if (Step1NoClient.getElementById("q2a1").checked){
+                if(this.securityQuestions.questions[1].correctAnswerIndex==1){counterCorrectAns++;}
+            }
+            else if (Step1NoClient.getElementById("q2a3").checked){
+                if(this.securityQuestions.questions[1].correctAnswerIndex==2){counterCorrectAns++;}
+            }
+            else if (Step1NoClient.getElementById("q2a3").checked){
+                if(this.securityQuestions.questions[1].correctAnswerIndex==3){counterCorrectAns++;}
+            }
+            else if (Step1NoClient.getElementById("q2a4").checked){
+                if(this.securityQuestions.questions[1].correctAnswerIndex==4){counterCorrectAns++;}
+            }
+            else{
+                missingChecked++;
+            }
+
+            if (Step1NoClient.getElementById("q3a1").checked){
+                if(this.securityQuestions.questions[2].correctAnswerIndex==1){counterCorrectAns++;}
+            }
+            else if (Step1NoClient.getElementById("q3a3").checked){
+                if(this.securityQuestions.questions[2].correctAnswerIndex==2){counterCorrectAns++;}
+            }
+            else if (Step1NoClient.getElementById("q3a3").checked){
+                if(this.securityQuestions.questions[2].correctAnswerIndex==3){counterCorrectAns++;}
+            }
+            else if (Step1NoClient.getElementById("q3a4").checked){
+                if(this.securityQuestions.questions[2].correctAnswerIndex==4){counterCorrectAns++;}
+            }
+            else{
+                missingChecked++;
+            }
+            
+            if (missingChecked>=1){
+                //faltan seleccionar no pierde un intento
+                return false;
+            }
+            else if (counterCorrectAns==3){
+                //respuestas correctas
+                return true;
+            }
+            else {
+                //respuestas erroneas, pierde un intento
+                return false;
+            }
         },
         registerCurrency(){
             personDA.doRegisterProspect(this.person.idPerson,this.person.email1,this.person.email2,this.person.cellphone1,this.person.cellphone2).then((res) =>{
@@ -137,6 +134,20 @@ export default {
             })
             return true;
         }
+    },
+    mounted() {
+   
+            personDA.doQuestionsRequest(this.person.idPerson).then((res)=>{
+                let responseQuestionReq=res.data;
+                this.completeSecurityQuestion(responseQuestionReq);
+            }).catch(error=>{
+                Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Error en la recepción de preguntas'
+                })
+            })
+        
     },
     components:{
         Step1NoClient,
