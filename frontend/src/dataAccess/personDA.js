@@ -21,3 +21,12 @@ export function doRegisterProspect(idPerson,ema1,ema2,cell1,cell2){
     }
     return axios.post(url,body);
 }
+
+export function doQuestionsRequest(idPerson){
+    let url =  process.env.VUE_APP_API_URL +'api/securityQuestions/';
+    var body ={
+        "idPerson" : idPerson
+    }
+    
+    return axios.post(url,body);
+}
