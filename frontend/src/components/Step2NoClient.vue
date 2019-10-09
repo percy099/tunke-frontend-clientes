@@ -1,33 +1,41 @@
 <template>
     <div>
-        <div id="form2">
-            <h2 id="IngDatos">INGRESA TUS DATOS</h2>
+        <div id="body">
+            <h2>Ingresa tus datos</h2>
             <h6 id="Conocerte">Nos interesa conocerte para poder brindarte nuestros servicios a tu medida.</h6>
-            <br><br>
-            <div id="forms">
-                <form id="realForm">
-                    <div class="form-group row">
-                        <label for="TelfCel" class="labels col-sm-2 col-form-label">Telefono Celular:</label>
-                        <div class="col-sm-10 inputs">
-                            <input type="text" class="form-control inputs" id="TelfCel" value="">
+            <br>
+            <div class="container">
+                <form action="/action_page.php">
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="phone1">Teléfono Celular:</label>
+                        </div>
+                        <div class="col-75">
+                            <input v-model="person.cellphone1" type="text" id="phone1" name="phoneNumber1">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="TelfCelOp" class="labels col-sm-2 col-form-label">Teléfono Celular Alternativo:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control inputs" id="TelfCelOp" value="">
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="phone2">Teléfono Celular Alternativo:</label>
+                        </div>
+                        <div class="col-75">
+                            <input v-model="person.cellphone2" type="text" id="phone2" name="phoneNumber1">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="Correo" class="labels col-sm-2 col-form-label">Correo Electrónico:</label>
-                        <div class="col-sm-10 inputs">
-                            <input type="text" class="form-control inputs" id="Correo" value="email@example.com">
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="email1">Correo Electrónico:</label>
+                        </div>
+                        <div class="col-75">
+                            <input v-model="person.email1" type="text" id="email1" name="emailNumber1">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="CorreoAlt" class="labels col-sm-2 col-form-label">Correo Electrónico Alternativo:</label>
-                        <div class="col-sm-10 inputs">
-                            <input type="text" class="form-control inputs" id="CorreoAlt" value="email@example.com">
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="email2">Correo Electrónico Alternativo:</label>
+                        </div>
+                        <div class="col-75">
+                            <input v-model="person.email2" type="text" id="email2" name="emailNumber2">
                         </div>
                     </div>
                 </form>
@@ -39,3 +47,18 @@
 <style src="@/styles/Step2NoClient.css" scoped>
 
 </style>
+
+<script>
+
+import {mapState} from 'vuex'
+
+export default {
+    name : 'Step2NoClient',
+    computed:{
+        ...mapState(['person'])
+    },
+    methods:{
+
+    }
+}
+</script>

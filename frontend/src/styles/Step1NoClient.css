@@ -24,6 +24,28 @@ span{
 }
 
 hr{
-    border: 10px solid #F1FAF5;
+    border: 8px solid #F1FAF5;
     border-radius: 5px;
+    margin-top: 1vh;
+    margin-bottom: 1rem;
 }
+
+h6{
+    font-size: 17px;
+}
+
+#question3{
+    text-align: center;
+}
+
+@media screen and (min-width:200px) and (max-width: 575px){
+    #question3{
+        text-align: left;
+    }
+    
+}
+
+@media screen and (min-width:763px) and (max-width: 1023px){
+    
+}
+

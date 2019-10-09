@@ -19,12 +19,12 @@
                 <h3>Moneda:</h3>
               </div>
               <div class="col-6 col-sm-6 col-md-6">
-                <h4>Leonella Checa Altamirano Carlos</h4>
-                <h4>1781-3467-9456</h4>
-                <h4>1679137976197</h4>
-                <h4>Cuenta Simple</h4>
-                <h4>08-09-2019</h4>
-                <h4>SOLES</h4>
+                <h4>{{responseCreateAccount.name}}</h4>
+                <h4>{{responseCreateAccount.accountNumber}}</h4>
+                <h4>{{responseCreateAccount.cci}}</h4>
+                <h4>{{responseCreateAccount.accountDetail}}</h4>
+                <h4>{{responseCreateAccount.openingDate}}</h4>
+                <h4>{{responseCreateAccount.currency}}</h4>
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@
       <div class="a">Los documentos serán enviados a:</div>
     </div>
     <div class="row">
-      <b>leonella.checa@pucp.pe</b>
+      <b>{{responseCreateAccount.email}}</b>
     </div>
     <div class="row">
       <button class="btn text-white btn-lg bnt-md" @click="aceptar">Aceptar</button>
@@ -49,13 +49,17 @@
 <style src="@/styles/SummarySale.css" scoped></style>
 
 <script>
-import router from "@/router.js";
+import router from "@/router.js"
+import {mapState} from 'vuex'
+
 export default {
   name: "summarySale",
-  data() {
-    return {};
+  data(){
+    return {}
   },
-  computed: {},
+  computed:{ 
+    ...mapState(['responseCreateAccount'])
+  },
   methods: {
     aceptar() {
       router.push("/");
