@@ -90,7 +90,10 @@ export default new Vuex.Store({
       else if(relationAnswerQuestion.ques==3){
         state.answersSecurityQuestions.posAnswer3=relationAnswerQuestion.posAns;
       }
-    }
+    },
+    changeCur(state,cur){
+      state.currency = cur;
+     }
   },
   actions: {
     fill(context,person_data){
@@ -99,11 +102,15 @@ export default new Vuex.Store({
     captureResponse(context,response_create){
         context.commit('fillResponseCreateAccount',response_create);
     },
+
     completeSecurityQuestion(context,res_answer){
       context.commit('fillQuestionsComplete',res_answer);
     },
     completePosAnswerQuestion(context,relationAnswerQuestion){
       context.commit('fillAnswersSelected',relationAnswerQuestion);
+    },
+    changeCurrency(context,cur){
+        context.commit('changeCur',cur);
     }
   }
 })

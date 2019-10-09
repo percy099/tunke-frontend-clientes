@@ -54,7 +54,7 @@ export default {
   name: 'home',
   methods :{
     openAccount(){
-      this.$router.push('/accountOpening');
+      this.$router.push('/OpeningDNI');
     },
     openMoneyLending(){
       this.$router.push('/moneyLending');
