@@ -60,6 +60,9 @@ export default new Vuex.Store({
       state.responseCreateAccount.openingDate = response_create.openingDate;
       state.responseCreateAccount.currency = response_create.currency;
       state.responseCreateAccount.email = response_create.email;
+    },
+    changeCur(state,cur){
+      state.currency = cur;
     }
   },
   actions: {
@@ -68,6 +71,9 @@ export default new Vuex.Store({
     },
     captureResponse(context,response_create){
         context.commit('fillResponseCreateAccount',response_create);
+    },
+    changeCurrency(context,cur){
+        context.commit('changeCur',cur);
     }
   }
 })
