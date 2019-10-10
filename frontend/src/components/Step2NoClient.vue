@@ -12,9 +12,9 @@
                         <div class="valid-feedback">Teléfono Válido</div>
                         <div class="invalid-feedback">
                             <span v-if="!$v.phone1.required">Télefono Principal Requerido. </span>
-                            <span v-if="!$v.phone1.minLength">Debe ser de al menos de {{
+                            <span v-if="!$v.phone1.minLength">Debe ser de {{
                             $v.phone1.$params.minLength.min}} dígitos. </span>
-                            <span v-if="!$v.phone1.maxLength">Debe ser a lo mucho de {{
+                            <span v-if="!$v.phone1.maxLength">Debe ser de {{
                             $v.phone1.$params.maxLength.max}} dígitos. </span>
                             <span v-if="!$v.phone1.numeric">Debe contener solo números. </span>
                         </div>
