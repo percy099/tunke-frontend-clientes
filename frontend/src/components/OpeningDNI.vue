@@ -10,8 +10,19 @@
               <form id="form_openAcount" @submit.prevent='enterDni'>
                       <h2 class="text-center mt-5">Ingresa tu DNI</h2>
                       <h6 class="ml-5 mt-4">Número de DNI</h6>
-                      <input v-model="dni" id="txt_dni" type="text" class="form-control ml-5 mt-1" maxlength="8" minlength="8"
-                       @keypress="isNumber($event)" placeholder="DNI">
+                      <input id="txt_dni" type="text" class="form-control ml-5 mt-1" maxlength="8" minlength="8"
+                      @keypress="isNumber($event)" placeholder="DNI"
+                       v-model.trim="$v.dni.$model" :class="{
+                         'is-invalid' : $v.dni.$error, 'is-valid' : !$v.dni.$invalid }">
+                      <div class="valid-feedback ml-5">Dni Válido</div>
+                      <div class="invalid-feedback ml-5">
+                        <span v-if="!$v.dni.required">Dni Requerido. </span>
+                        <span v-if="!$v.dni.minLength">Debe ser de al menos de {{
+                          $v.dni.$params.minLength.min}} dígitos </span>
+                        <span v-if="!$v.dni.maxLength">Debe ser de al menos de {{
+                          $v.dni.$params.maxLength.max}} dígitos </span>
+                        <span v-if="!$v.dni.numeric">Debe contener solo números. </span>
+                      </div>
                       <div class="form-check ml-5  mt-4">
                           <input  class="form-check-input" @click="acceptTerms()" type="checkbox" id="autoSizingCheck">
                           <label class="form-check-label" for="autoSizingCheck">
@@ -42,6 +53,8 @@
     import * as personDA from '@/dataAccess/personDA.js'
     import Swal from 'sweetalert2'
 
+    import { required, minLength, maxLength, numeric} from 'vuelidate/lib/validators'
+
     export default {
       name: 'openingDNI',
       data(){
@@ -49,6 +62,14 @@
           dni : '',
           termsAccept:false
         };
+      },
+      validations: {
+        dni: {
+          required, 
+          minLength: minLength(8),
+          maxLength: maxLength(8),
+          numeric
+        }
       },
       computed:{
         ...mapState(['person'])
