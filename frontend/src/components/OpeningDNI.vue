@@ -82,8 +82,11 @@
                   personDA.doDniValidation(this.dni).then((res) =>{
                       let person_data = res.data;
                       if(person_data.type==1){ //CLIENT
-                        alert('Cliente');
+                        /*alert('Cliente');
+                        console.log(person_data);*/
                         console.log(person_data);
+                        this.fill(person_data);
+                        router.push('/accountOpeningClient');
                       }
                       else if(person_data.type==2){//NO CLIENT
                         console.log(person_data);

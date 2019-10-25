@@ -23,6 +23,11 @@ export default new Router({
       component: () => import('./views/AccountOpening.vue')
     },
     {
+      path: '/accountOpeningClient',
+      name: 'accountOpeningClient',
+      component: () => import('./views/AccountOpeningClient.vue')
+    },
+    {
       path: '/moneyLending',
       name: 'moneyLending',
       component: () => import('./views/moneyLending.vue')
