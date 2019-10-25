@@ -1,0 +1,909 @@
+.home{
+    font-family : 'Montserrat';
+}
+
+h2{
+    font-weight: bold;
+}
+
+.cap1{
+    text-align: left;
+    margin-bottom: 12%;
+    width : 30%;
+    height: 35%;
+    background-color: rgba(86, 86, 86,0.6);
+}
+
+.button-1{
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255,0.55);
+    border-radius: 0%;
+    margin-left: 5%;
+    margin-top : 2%;
+}
+
+
+.cap2{
+    text-align: left;
+    margin-bottom: 12%;
+    margin-left : 40%;
+    border-radius: 5%;
+    width : 35%;
+    height: 50%;
+    color : #219D64;
+    /*color : #a46791;*/
+    font-weight: bold;
+    background-color: rgba(255, 255, 255,0.6);
+}
+.button-2{
+    font-weight: bold;
+    font-size: 1rem;
+    height: 30%;
+    background-color: rgba(16, 138, 58, 0.9);
+    color : white;
+    border-radius: 0%;
+    margin-left: 5%;
+    margin-top : 5%; 
+}
+
+.content{
+    padding-left: 5%;
+}
+
+#middle{
+    text-shadow: black 0.1em 0.1em 0.2em;
+    margin-bottom: 15%;
+}
+
+#textTunke{
+    text-shadow: black 0.1em 0.1em 0.2em;
+    font-weight: bold;
+    font-size : 3.0rem;
+}
+
+.wordsSecondSlide{
+    font-size: 2.5rem;
+    text-shadow: whitesmoke 0.05em 0.05em 0.1em;
+}
+
+#firstWordSecondSlide{
+    padding-top: 2.5%;
+}
+
+/*MOBILE S*/
+@media screen and (min-width: 0px) and (max-width: 320px){
+    #secondWordSecondSlide{
+        margin-bottom: 0;
+    }
+
+    #img1{
+        background: url(../images/llamasAjustado2.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 67%;
+    }
+
+    #img2{
+        background: url(../images/adultAjustado2.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 67%;
+    }
+
+    #img3{
+        background: url(../images/calmAjustado375.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 67%;
+    }
+
+    .wordsFirstSlide{
+        font-size: 1.1rem;
+    }
+
+    .button-1{
+        font-size: 0.7rem;
+        background-color: rgba(255, 255, 255,0.35);
+    }
+    
+    .cap1{
+        height: 30%;
+        width : 60%;
+        margin-bottom: 55%;
+    }
+
+    .cap2{
+        height: 30%;
+        width: 69%;
+        margin : 0;
+        margin-bottom: 70%;
+        background-color: rgba(255, 255, 255,0.5);
+    }
+
+    .wordsSecondSlide{
+        font-size: 1.2rem;
+    }
+
+    .button-2{
+        border-radius: 10%;
+        font-size: 0.7rem;
+        height: 55%;
+        width: 90%;
+        background-color: rgba(162, 200, 175,0.8);
+        color : white;
+        margin-bottom: 5%;
+    }
+
+    #textTunke{
+        font-size: 2.0rem;
+    }
+
+    #middle{
+        font-size:1.0rem;
+        margin-bottom: 90%;
+    }
+}
+
+
+/*MOBILE M*/
+@media screen and (min-width: 321px) and (max-width: 375px){
+    #img1{
+        background: url(../images/llamasAjustado2.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 67%;
+    }
+
+    #img2{
+        background: url(../images/adultAjustadoM.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 67%;
+    }
+
+    #img3{
+        background: url(../images/calmAjustadoM2.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 67%;
+    }
+
+    .wordsFirstSlide{
+        font-size: 1.1rem;
+    }
+
+    .button-1{
+        font-size: 0.7rem;
+        background-color: rgba(255, 255, 255,0.35);
+    }
+    
+    .cap1{
+        height: 30%;
+        width : 60%;
+        margin-bottom: 55%;
+    }
+
+    .cap2{
+        height: 30%;
+        width: 69%;
+        margin : 0;
+        margin-bottom: 70%;
+        /*background-color: rgba(255, 255, 255,0.5);*/
+    }
+
+    .wordsSecondSlide{
+        font-size: 1.2rem;
+
+    }
+
+    .button-2{
+        border-radius: 10%;
+        font-size: 0.7rem;
+        height: 52%;
+        width: 90%;
+        margin-top: 0%;
+        background-color: rgba(162, 200, 175,0.8);
+        color : white;
+    }
+
+    #textTunke{
+        font-size: 2.0rem;
+    }
+
+    #middle{
+        font-size:1.0rem;
+        margin-bottom: 90%;
+    }
+}
+
+/*MOBILE L*/ 
+@media screen and (min-width: 376px) and (max-width: 448px){
+    #img1{
+        background: url(../images/llamasAjustadoL.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 67%;
+    }
+
+    #img2{
+        background: url(../images/adultAjustadoL.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 67%;
+    }
+
+    #img3{
+        background: url(../images/calmAjustadoL.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 67%;
+    }
+
+    .wordsFirstSlide{
+        font-size: 1.1rem;
+    }
+
+    .button-1{
+        font-size: 0.7rem;
+        background-color: rgba(255, 255, 255,0.35);
+    }
+    
+    .cap1{
+        height: 30%;
+        width : 60%;
+        margin-bottom: 55%;
+    }
+
+    .cap2{
+        height: 30%;
+        width: 69%;
+        margin : 0;
+        margin-bottom: 70%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 1.2rem;
+
+    }
+
+    .button-2{
+        border-radius: 10%;
+        font-size: 0.7rem;
+        height: 52%;
+        width: 90%;
+        margin-top: 0%;
+        background-color: rgba(162, 200, 175,0.8);
+        color : white;
+    }
+
+    #textTunke{
+        font-size: 2.0rem;
+    }
+
+    #middle{
+        font-size:1.0rem;
+        margin-bottom: 90%;
+    }
+}
+
+/*XL*/
+@media screen and (min-width: 449px) and (max-width: 509px){
+    #img1{
+        background: url(../images/llamasXL.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 60%;
+    }
+
+    #img2{
+        background: url(../images/adultXL.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 60%;
+    }
+
+    #img3{
+        background: url(../images/calmXL.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 60%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 45%;
+        width: 55%;
+        height: 28%;
+    }
+
+    .cap2{
+        margin-bottom: 55%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 1.3rem;
+    }
+
+    .wordsFirstSlide{
+        font-size: 1.3rem;
+    }
+
+    #middle{
+        margin-bottom: 60%;
+    }
+}
+
+/*TODAVIA FALTA*/
+@media screen and (min-width: 510px) and (max-width: 550px){
+    #img1{
+        background: url(../images/llamasT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 70%;
+    }
+
+    #img2{
+        background: url(../images/adultT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 70%;
+    }
+
+    #img3{
+        background: url(../images/calmT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 70%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 60%;
+        width: 45%;
+        height: 20%;
+    }
+
+    .cap2{
+        margin-bottom: 75%;
+        margin-left: 0%;
+        width: 50%;
+        height: 25%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 1.3rem;
+    }
+
+    .wordsFirstSlide{
+        font-size: 1.3rem;
+    }
+
+    #middle{
+        margin-bottom: 70%;
+    }
+}
+
+@media screen and (min-width: 551px) and (max-width: 629px){
+    #img1{
+        background: url(../images/llamasT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 60%;
+    }
+
+    #img2{
+        background: url(../images/adultT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 60%;
+    }
+
+    #img3{
+        background: url(../images/calmT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 60%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 30%;
+        width: 45%;
+        height: 25%;
+    }
+
+    .cap2{
+        margin-bottom: 55%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsFirstSlide{
+        font-size: 1.4rem;
+    }
+
+    .wordsSecondSlide{
+        font-size: 1.4rem;
+    }
+
+    #middle{
+        margin-bottom: 55%;
+    }
+}
+
+/*TAL VEZ SECCIONAR*/
+@media screen and (min-width: 630px) and (max-width: 741px){
+    #img1{
+        background: url(../images/llamasT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 50%;
+    }
+
+    #img2{
+        background: url(../images/adultT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 50%;
+    }
+
+    #img3{
+        background: url(../images/calmT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 50%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 30%;
+        width: 45%;
+        height: 25%;
+    }
+
+    .cap2{
+        margin-bottom: 55%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsFirstSlide{
+        font-size: 1.6rem;
+    }
+
+    .wordsSecondSlide{
+        font-size: 1.6rem;
+    }
+
+    #middle{
+        margin-bottom: 50%;
+    }
+}
+
+/*ESTA BIEN*/
+@media screen and (min-width: 742px) and (max-width: 798px){
+    #img1{
+        background: url(../images/llamasT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 50%;
+    }
+
+    #img2{
+        background: url(../images/adultT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 50%;
+    }
+
+    #img3{
+        background: url(../images/calmT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 50%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 30%;
+        width: 45%;
+        height: 25%;
+    }
+
+    .cap2{
+        margin-bottom: 55%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 2rem;
+    }
+
+    #middle{
+        margin-bottom: 60%;
+    }
+}
+
+/*798-- X */
+@media screen and (min-width: 742px) and (max-width: 798px){
+    #img1{
+        background: url(../images/llamasT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 50%;
+    }
+
+    #img2{
+        background: url(../images/adultT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 50%;
+    }
+
+    #img3{
+        background: url(../images/calmT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding: 50%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 30%;
+        width: 45%;
+        height: 25%;
+    }
+
+    .cap2{
+        margin-bottom: 55%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 2rem;
+    }
+
+    #middle{
+        margin-bottom: 60%;
+    }
+}
+
+@media screen and (min-width: 799px) and (max-width: 889px){
+    #img1{
+        background: url(../images/llamasT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 90%;
+    }
+
+    #img2{
+        background: url(../images/adultT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 90%;
+    }
+
+    #img3{
+        background: url(../images/calmT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 90%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 30%;
+        width: 45%;
+        height: 25%;
+    }
+
+    .cap2{
+        margin-bottom: 55%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 2rem;
+    }
+
+    #middle{
+        margin-bottom: 60%;
+    }
+}
+
+@media screen and (min-width: 890px) and (max-width: 990px){
+    #img1{
+        background: url(../images/llamasXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 90%;
+    }
+
+    #img2{
+        background: url(../images/adultXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 90%;
+    }
+
+    #img3{
+        background: url(../images/calmXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 90%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 30%;
+        width: 45%;
+        height: 25%;
+    }
+
+    .cap2{
+        margin-bottom: 55%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 2rem;
+    }
+
+    #middle{
+        margin-bottom: 60%;
+    }
+}
+
+@media screen and (min-width: 991px) and (max-width: 1090px){
+    #img1{
+        background: url(../images/llamasXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 75%;
+    }
+
+    #img2{
+        background: url(../images/adultXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 75%;
+    }
+
+    #img3{
+        background: url(../images/calmXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 75%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 30%;
+        width: 45%;
+        height: 25%;
+    }
+
+    .cap2{
+        margin-bottom: 35%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 2rem;
+    }
+
+    #middle{
+        margin-bottom: 60%;
+    }
+}
+
+@media screen and (min-width: 1091px) and (max-width: 1190px){
+    #img1{
+        background: url(../images/llamasXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 60%;
+    }
+
+    #img2{
+        background: url(../images/adultXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 60%;
+    }
+
+    #img3{
+        background: url(../images/calmXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 60%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 30%;
+        width: 45%;
+        height: 30%;
+    }
+
+    .cap2{
+        margin-bottom: 35%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 2rem;
+    }
+
+    #middle{
+        margin-bottom: 35%;
+    }
+}
+
+@media screen and (min-width: 1191px) and (max-width: 1290px){
+    #img1{
+        background: url(../images/llamasXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 60%;
+    }
+
+    #img2{
+        background: url(../images/adultXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 60%;
+    }
+
+    #img3{
+        background: url(../images/calmXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 60%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 30%;
+        width: 45%;
+        height: 30%;
+    }
+
+    .cap2{
+        margin-bottom: 35%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 2rem;
+    }
+
+    #middle{
+        margin-bottom: 35%;
+    }
+}
+
+@media screen and (min-width: 1291px) and (max-width: 1360px){
+    #img1{
+        background: url(../images/llamasXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 60%;
+    }
+
+    #img2{
+        background: url(../images/adultXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 60%;
+    }
+
+    #img3{
+        background: url(../images/calmXT.jpg) no-repeat;
+        width: 0;
+        height: 0;
+        padding-bottom: 60%;
+    }
+
+    .button-1{
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255,0.35);
+        margin-top: 5%;
+    }
+
+    .cap1{
+        margin-bottom: 30%;
+        width: 45%;
+        height: 28%;
+    }
+
+    .cap2{
+        margin-bottom: 35%;
+        margin-left: 0%;
+        width: 50%;
+        height: 30%;
+    }
+
+    .wordsSecondSlide{
+        font-size: 2rem;
+    }
+
+    #middle{
+        margin-bottom: 50%;
+    }
+}
