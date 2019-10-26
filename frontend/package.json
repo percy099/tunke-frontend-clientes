@@ -11,8 +11,12 @@
     "core-js": "^2.6.5",
     "sweetalert2": "^8.18.1",
     "vue": "^2.6.10",
+    "vue-circle-counter": "^3.0.0",
+    "vue-circular-count-down-timer": "^1.0.4",
     "vue-form-wizard": "^0.8.4",
     "vue-router": "^3.0.3",
+    "vue-timers": "^2.0.4",
+    "vuejs-progress-bar": "^1.1.1",
     "vuelidate": "^0.7.4",
     "vuex": "^3.0.1"
   },

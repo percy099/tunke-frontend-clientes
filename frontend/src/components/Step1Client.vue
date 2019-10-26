@@ -11,7 +11,13 @@
             <button :disabled='isDisabled' type='button' class="btn btn-primary text-white btn-lg bnt-md btn-block" @clicK.once="disabled()">Enviar correo a pepe***@pucp.pe</button>
             <p></p>
             <h2>Ingresa el código que te enviamos:</h2>
-            Código de Verificación: <input id="code" type="text" v-model='number'/>
+            Código de Verificación: <input id="code" type="text" v-model='number'/><p></p>
+            <circular-count-down-timer 
+                :initial-value="30"
+                :steps="30" 
+                :size=100
+                :paused=true>
+            </circular-count-down-timer>                 
         </div>
     </div>
 </template>

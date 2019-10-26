@@ -46,6 +46,6 @@ export default new Router({
       path: '/summarySale',
       name: 'summarySale',
       component: () => import('./components/SummarySale.vue')
-    }
+    },
   ]
 })
