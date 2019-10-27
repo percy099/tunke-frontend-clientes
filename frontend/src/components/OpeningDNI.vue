@@ -12,6 +12,7 @@
                       <h6 class="ml-5 mt-4">Número de DNI</h6>
                       <input v-model="dni" id="txt_dni" type="text" class="form-control ml-5 mt-1" maxlength="8" minlength="8"
                        @keypress="isNumber($event)" placeholder="DNI">
+                      <div class="g-signin2 ml-5 mt-2" data-width="265" data-height="35" data-onsuccess="onSignIn" android:text="{string}"></div>          
                       <div class="form-check ml-5  mt-4">
                           <input  class="form-check-input" type="checkbox" id="autoSizingCheck">
                           <label class="form-check-label" for="autoSizingCheck">
@@ -84,9 +85,18 @@
             if (charCode < 48 || charCode > 57) {
               evt.preventDefault();;
             } else {
-          return true;
-      }
-    }        
+              return true;
+            }
+          } ,
+          onSignIn: function(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log("ID Token: " + id_token);
+          }       
       }
       
     }
