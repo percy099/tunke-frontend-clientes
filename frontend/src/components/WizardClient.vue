@@ -3,10 +3,10 @@
         <form-wizard next-button-text="Siguiente" title="" subtitle="" color="#2CFFBA" shape="circle" 
         back-button-text="Atrás" finish-button-text="Abrir cuenta" @on-complete="onComplete"
         step-size="sm" id="container">
-            <tab-content title="Identifícate">
+            <tab-content title="Identifícate" :before-change="verificationToken">
                <Step1Client></Step1Client>
             </tab-content>
-            <tab-content title="Elige tu cuenta" class="">
+            <tab-content title="Elige tu cuenta" :before-change="verification2" class="">
                 <Step2Client></Step2Client>
             </tab-content>
         </form-wizard>
@@ -35,12 +35,13 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','securityQuestions','answersSecurityQuestions'])
+        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms'])
         
     },
     methods:{
-        ...mapActions(['captureResponse','completeSecurityQuestion']),
+        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms']),
         onComplete (){
+
             accountDA.doCreateAccount(this.person.idPerson,this.currency).then((res) =>{
                   let response_create = res.data;
                   this.captureResponse(response_create);
@@ -54,10 +55,23 @@ export default {
                   })
               })
         },
-        verificacionV1(){
+        verificationToken(){
             
             if (this.counterTries>0){
-               
+               this.counterTries=this.counterTries-1;
+               if(this.token.input==this.token.received){
+                   console.log("token igual");
+                   return true;
+               }
+               else {
+                   Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'El token ingresado no coincide con el token enviado.'
+                    })
+                   this.changeFlagTimer(true);
+                   return false;
+               }
             }
             else{
                 Swal.fire({
@@ -68,7 +82,19 @@ export default {
                 this.$router.push('/');
             }
             
-        },        
+        },  
+        verification2(){
+            if(this.clientAcceptedTerms){
+                return true;
+            }else{
+                Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Por favor, acepte los términos y condiciones'
+                })
+                return false;
+            }
+        }      
     },
     mounted() {        
     },
