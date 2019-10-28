@@ -26,6 +26,12 @@ export default new Vuex.Store({
       vehicle1Plate : '',
       vehicle2Plate : ''
     },
+    token:{
+      input:'',
+      received:''
+    },
+    flagRestartTimer:false,
+    clientAcceptedTerms:false,
     currency : 1,
     responseCreateAccount:{
       accountDetail : '',
@@ -46,6 +52,12 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    changeFlagTimer(state,flag){
+      state.flagRestartTimer=flag;
+    },
+    changeClientTerms(state,terms){
+      state.clientAcceptedTerms=terms;
+    },
     fillPersonData(state,person_data){
       state.person.idPerson = person_data.idPerson;
       state.person.documentType = person_data.documentType;
@@ -59,6 +71,11 @@ export default new Vuex.Store({
       state.person.nationality = person_data.nationality;
       state.person.vehicle1Plate = person_data.vehicle1Plate;
       state.person.vehicle2Plate = person_data.vehicle2Plate;
+
+      state.person.email1  = person_data.email1 ;
+      state.person.email2  = person_data.email2 ;
+      state.person.cellphone1   = person_data.cellphone1  ;
+      state.person.cellphone2  = person_data.cellphone2 ;
     },
     fillResponseCreateAccount(state,response_create){
       state.responseCreateAccount.name = response_create.name;
@@ -93,6 +110,10 @@ export default new Vuex.Store({
     },
     changeCur(state,cur){
       state.currency = cur;
+     },
+    fillToken(state, tok){
+       state.token.input=tok.input;
+       state.token.received=tok.received;
      }
   },
   actions: {
@@ -111,6 +132,15 @@ export default new Vuex.Store({
     },
     changeCurrency(context,cur){
         context.commit('changeCur',cur);
+    },
+    fillToken(context,token_){
+      context.commit('fillToken',token_);
+    },
+    changeFlagTimer(context,flag_){
+      context.commit('changeFlagTimer',flag_);
+    },
+    changeClientTerms(context,acceptTerms){
+      context.commit('changeClientTerms',acceptTerms);
     }
   }
 })

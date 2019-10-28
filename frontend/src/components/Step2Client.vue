@@ -50,7 +50,7 @@
                     
                         </div>
                         <div class="ml-5">
-                            <input  class="form-check-input" :disabled="!termsRead" type="checkbox" id="autoSizingCheck">
+                            <input  class="form-check-input" :disabled="!termsRead" type="checkbox" id="autoSizingCheck" @click="changeStateTerms()">
                             <label class="form-check-label" for="autoSizingCheck">
                             <h6>He leído y acepto los 
                             <a href="#" @click="goTermsAndConds()"> términos y condiciones
@@ -73,7 +73,7 @@
     </div>
 </template>
 
-<style scoped src="@/styles/Step3NoClient.css">
+<style scoped src="@/styles/Step2Client.css">
 
 </style>
 
@@ -84,15 +84,18 @@ import Swal from 'sweetalert2'
 
 export default {
     data(){
-        return {
-          termsRead:false
-        };
+        return{
+            termsRead:false
+        }
     },
     computed:{
-        ...mapState(['currency'])
+        ...mapState(['currency','clientAcceptedTerms'])
     },
     methods:{
-        ...mapActions(['changeCurrency']),
+        ...mapActions(['changeCurrency','changeClientTerms']),
+        changeStateTerms:function(){
+            this.changeClientTerms(!this.clientAcceptedTerms);
+        },
         openAccount: function(accountType){
         
         var i, tabcontent, tablinks, btn, buttons;
@@ -122,6 +125,7 @@ export default {
         },
         changeCurr(cur){
             this.changeCurrency(cur);
+            console.log(this.currency);
         },
         goTermsAndConds(){
             this.termsRead=true;

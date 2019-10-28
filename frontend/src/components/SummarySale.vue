@@ -47,7 +47,7 @@
       <div class="email">{{responseCreateAccount.email}}</div>
     </div>
     <div class="row">
-      <button class="btn text-white btn-lg bnt-md" @click="aceptar">Aceptar</button>
+      <button class="btn text-white btn-lg bnt-md" @click="accept">Aceptar</button>
     </div>
   </div>
 </template>
@@ -69,7 +69,7 @@ export default {
     ...mapState(["responseCreateAccount"])
   },
   methods: {
-    aceptar() {
+    accept() {
       router.push("/");
     }
   }
