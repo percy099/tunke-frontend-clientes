@@ -24,10 +24,10 @@
                         <span v-if="!$v.dni.numeric">Debe contener solo números. </span>
                       </div>
                       <div class="form-check ml-5  mt-4">
-                          <input  class="form-check-input" @click="acceptTerms()" type="checkbox" id="autoSizingCheck">
+                          <input  class="form-check-input"  :disabled="!termsRead" @click="acceptTerms()" type="checkbox" id="autoSizingCheck">
                           <label class="form-check-label" for="autoSizingCheck">
                           <h6>He leído y acepto la 
-                          <a href="#" @click="goPolitics()"> Política de 
+                          <a href="#"  @click="goPolitics()"> Política de 
                           <br> tratamiento y protección de datos 
                           <br> Personales</a>
                           </h6> 
@@ -60,7 +60,8 @@
       data(){
         return {
           dni : '',
-          termsAccept:false
+          termsAccept:false,
+          termsRead:false
         };
       },
       validations: {
@@ -82,8 +83,11 @@
                   personDA.doDniValidation(this.dni).then((res) =>{
                       let person_data = res.data;
                       if(person_data.type==1){ //CLIENT
-                        alert('Cliente');
+                        /*alert('Cliente');
+                        console.log(person_data);*/
                         console.log(person_data);
+                        this.fill(person_data);
+                        router.push('/accountOpeningClient');
                       }
                       else if(person_data.type==2){//NO CLIENT
                         console.log(person_data);
@@ -122,6 +126,7 @@
             this.termsAccept=!this.termsAccept;
           } ,
           goPolitics(){
+            this.termsRead=true;
             Swal.fire({
                       title: 'Política de tratamiento y protección de datos personales',
                       
