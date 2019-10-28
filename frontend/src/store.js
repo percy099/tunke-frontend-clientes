@@ -110,8 +110,7 @@ export default new Vuex.Store({
     },
     changeCur(state,cur){
       state.currency = cur;
-     }
-     ,
+     },
     fillToken(state, tok){
        state.token.input=tok.input;
        state.token.received=tok.received;

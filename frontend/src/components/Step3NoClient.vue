@@ -122,7 +122,6 @@ export default {
         },
         changeCurr(cur){
             this.changeCurrency(cur);
-            //console.log(this.currency);
         },
         goTermsAndConds(){
             this.termsRead=true;
