@@ -10,20 +10,12 @@ export function doCreateAccount(idPer,cur){
     return axios.post(url,body);
 }
 
-/*
-export function doGetTokenSMS(email){
-    let url =  process.env.VUE_APP_API_URL + 'api/sendToken/';
-    var body ={
-        "email":email
-    }   
-    return axios.post(url,body);
-}
-*/
 
-export function doGetTokenEmail(email){
+export function doGetToken(email,type){
     let url =  process.env.VUE_APP_API_URL + 'api/sendToken/';
     var body ={
-        "email":email
+        "email":email,
+        "msgType":type
     }   
     return axios.post(url,body);
 }

@@ -11,7 +11,7 @@
             <button :disabled="tokenSended" type='button' class="btn btn-primary text-white btn-lg bnt-md btn-block" @click="sendToEmail">Enviar correo a {{hiddenEmail}}</button>
             <p></p>
             <h2>Ingresa el código que te enviamos:</h2>
-            Código de Verificación: <input :disabled='!tokenSended'  :maxlength="6" id="code" type="text" class="form-control"
+            Código de Verificación: <input :disabled='!tokenSended'  :maxlength="6" id="code" type="text" class="form-control text-center"
             v-model='token.input' :class="{'is-invalid' : $v.token.$error, 'is-valid':!$v.token.$invalid }"/>
             <div class="valid-feedback">Token admitido</div>
             <div class="invalid-feedback">
@@ -110,9 +110,9 @@ export default {
                 this.tokenSended=true;                
                 
                 //enviar señal al back para enviar SMS
-                this.getToken();
-                /*
-                accountDA.doGetTokenSMS(this.person.email1).then((res) =>{
+                //this.getToken();
+                
+                accountDA.doGetToken(this.person.cellphone1,0).then((res) =>{
                       let token_data = res.data;
                       
                       let body={
@@ -129,7 +129,7 @@ export default {
                       type: 'error',
                       text: 'Error en la captura del Token'
                       })
-                  })  */
+                  })  
             }else{
                 Swal.fire({
                     title: 'Error',
@@ -149,7 +149,7 @@ export default {
                 
                 //enviar señal al back para enviar correo
                 //this.getToken();
-                accountDA.doGetTokenEmail(this.person.email1).then((res) =>{
+                accountDA.doGetToken(this.person.email1,1).then((res) =>{
                       let token_data = res.data;
                       
                       let body={
@@ -158,6 +158,7 @@ export default {
                        }
                       this.fillToken(body);
                       console.log(this.token.received);
+                      console.log(this.person.email1);
                       
                   }).catch(error=>
                   {
