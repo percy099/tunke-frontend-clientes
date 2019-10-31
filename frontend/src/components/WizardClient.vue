@@ -59,6 +59,19 @@ export default {
             
             if (this.counterTries>0){
                this.counterTries=this.counterTries-1;
+               
+               if (this.token.input!='' & this.token.received!=''){
+
+               }else{
+                   Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Se requiere ingresar el token para poder proseguir'
+                    })
+                   this.changeFlagTimer(true);
+                   return false;
+               }
+
                if(this.token.input==this.token.received){
                    console.log("token igual");
                    return true;

@@ -109,7 +109,7 @@
                 Swal.fire({
                       title: 'Política de Protección de datos',
                       type: 'error',
-                      text: 'Por favor, acepte la política de tratamiento y protección de datos personales.'
+                      text: 'Por favor, lea y acepte la política de tratamiento y protección de datos personales.'
                       })
               }         
           },
