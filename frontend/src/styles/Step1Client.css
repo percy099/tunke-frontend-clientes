@@ -125,3 +125,7 @@ h6{
     
 }
 
+.form-control{
+    width: 200px;
+    margin: auto;
+}

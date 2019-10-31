@@ -11,7 +11,7 @@
             <button :disabled="tokenSended" type='button' class="btn btn-primary text-white btn-lg bnt-md btn-block" @click="sendToEmail">Enviar correo a {{hiddenEmail}}</button>
             <p></p>
             <h2>Ingresa el código que te enviamos:</h2>
-            Código de Verificación: <input :disabled='!tokenSended'  :maxlength="6" id="code" type="text" class="form-control"
+            Código de Verificación: <input :disabled='!tokenSended'  :maxlength="6" id="code" type="text" class="form-control text-center"
             v-model='token.input' :class="{'is-invalid' : $v.token.$error, 'is-valid':!$v.token.$invalid }"/>
             <div class="valid-feedback">Token admitido</div>
             <div class="invalid-feedback">
@@ -43,6 +43,7 @@
 import {mapState,mapActions} from 'vuex'
 import Swal from 'sweetalert2'
 import { required, minLength, maxLength} from 'vuelidate/lib/validators'
+import * as accountDA from '@/dataAccess/accountDA.js'
 
 export default {
     name : 'Step1Client',
@@ -53,12 +54,12 @@ export default {
             hiddenNumber:'',
             hiddenEmail:'',
             timerOff:true
-        }
+        };
     },
     validations: {
         token: {
             required,
-            minLength: minLength(1),
+            minLength: minLength(6),
             maxLength: maxLength(6)
         }
     },
@@ -109,7 +110,27 @@ export default {
                 this.tokenSended=true;                
                 
                 //enviar señal al back para enviar SMS
-                this.getToken();
+                //this.getToken();
+                
+                accountDA.doGetToken(this.person.email1,this.person.cellphone1,0).then((res) =>{
+                      let token_data = res.data;
+                      
+                      let body={
+                        "input":'',
+                        "received": token_data.token
+                       }
+                      this.fillToken(body);
+                      console.log(this.token.received);
+                      console.log(this.person.cellphone1);
+                  }).catch(error=>
+                  {
+                      Swal.fire({
+                      title: 'Error',
+                      type: 'error',
+                      text: 'Error en la captura del Token'
+                      });
+                         console.log(error);
+                  })  
             }else{
                 Swal.fire({
                     title: 'Error',
@@ -118,7 +139,7 @@ export default {
                 })
                 this.$router.push('/');
             }
-
+            
         },
         sendToEmail(){      
             if(this.counter>0){
@@ -128,7 +149,26 @@ export default {
                 this.tokenSended=true;                
                 
                 //enviar señal al back para enviar correo
-                this.getToken();
+                //this.getToken();
+                accountDA.doGetToken(this.person.email1,this.person.cellphone1,1).then((res) =>{
+                      let token_data = res.data;
+                      
+                      let body={
+                        "input":'',
+                        "received": token_data.token
+                       }
+                      this.fillToken(body);
+                      console.log(this.token.received);
+                      console.log(this.person.email1);
+                      
+                  }).catch(error=>
+                  {
+                      Swal.fire({
+                      title: 'Error',
+                      type: 'error',
+                      text: 'Error en la captura del Token'
+                      })
+                  }) 
             }else{
                 Swal.fire({
                     title: 'Error',
