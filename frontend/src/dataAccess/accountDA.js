@@ -11,11 +11,12 @@ export function doCreateAccount(idPer,cur){
 }
 
 
-export function doGetToken(email,type){
+export function doGetToken(email,cellphone,type){
     let url =  process.env.VUE_APP_API_URL + 'api/sendToken/';
     var body ={
         "email":email,
-        "msgType":type
+        "cellphone":cellphone,
+        "msgType": type
     }   
     return axios.post(url,body);
 }

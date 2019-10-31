@@ -54,12 +54,12 @@ export default {
             hiddenNumber:'',
             hiddenEmail:'',
             timerOff:true
-        }
+        };
     },
     validations: {
         token: {
             required,
-            minLength: minLength(1),
+            minLength: minLength(6),
             maxLength: maxLength(6)
         }
     },
@@ -112,7 +112,7 @@ export default {
                 //enviar señal al back para enviar SMS
                 //this.getToken();
                 
-                accountDA.doGetToken(this.person.cellphone1,0).then((res) =>{
+                accountDA.doGetToken(this.person.email1,this.person.cellphone1,0).then((res) =>{
                       let token_data = res.data;
                       
                       let body={
@@ -121,14 +121,15 @@ export default {
                        }
                       this.fillToken(body);
                       console.log(this.token.received);
-                      
+                      console.log(this.person.cellphone1);
                   }).catch(error=>
                   {
                       Swal.fire({
                       title: 'Error',
                       type: 'error',
                       text: 'Error en la captura del Token'
-                      })
+                      });
+                         console.log(error);
                   })  
             }else{
                 Swal.fire({
@@ -149,7 +150,7 @@ export default {
                 
                 //enviar señal al back para enviar correo
                 //this.getToken();
-                accountDA.doGetToken(this.person.email1,1).then((res) =>{
+                accountDA.doGetToken(this.person.email1,this.person.cellphone1,1).then((res) =>{
                       let token_data = res.data;
                       
                       let body={
