@@ -11,14 +11,13 @@
             <button :disabled="tokenSended" type='button' class="btn btn-primary text-white btn-lg bnt-md btn-block" @click="sendToEmail">Enviar correo a {{hiddenEmail}}</button>
             <p></p>
             <h2>Ingresa el código que te enviamos:</h2>
-            Código de Verificación: <input :disabled='!tokenSended'  :maxlength="6" id="code" type="text" class="form-control text-center"
-            v-model='token.input' :class="{'is-invalid' : $v.token.$error, 'is-valid':!$v.token.$invalid }"/>
+            Código de Verificación: <input :disabled='!tokenSended' maxlength="6" id="code" type="text" class="form-control"
+            v-model.trim="$v.tokenAux.$model" :class="{'is-invalid' : $v.tokenAux.$error, 'is-valid':!$v.tokenAux.$invalid }">
             <div class="valid-feedback">Token admitido</div>
             <div class="invalid-feedback">
-                <span v-if="!$v.token.required">Debe ingresar el token </span>
-                <span v-if="!$v.token.minLength">Debe ser de {{$v.token.$params.minLength.min}} caracteres. </span>
-                <span v-if="!$v.token.maxLength">Debe ser a lo mucho de {{$v.token.$params.maxLength.max}} caracteres. </span>
-    
+                <span v-if="!$v.tokenAux.required">Debe ingresar el token </span>
+                <span v-if="!$v.tokenAux.minLength">Debe ser de {{$v.tokenAux.$params.minLength.min}} caracteres. </span>
+                <span v-if="!$v.tokenAux.maxLength">Debe ser a lo mucho de {{$v.tokenAux.$params.maxLength.max}} caracteres. </span>
             </div><p></p>
             <circular-count-down-timer 
                 :initial-value="30"
@@ -53,11 +52,13 @@ export default {
             tokenSended: false,
             hiddenNumber:'',
             hiddenEmail:'',
-            timerOff:true
-        };
+            timerOff:true,
+            tokenAux:'',
+            submitStatus: null
+        }
     },
     validations: {
-        token: {
+        tokenAux: {
             required,
             minLength: minLength(6),
             maxLength: maxLength(6)
@@ -200,11 +201,22 @@ export default {
             
             let lastPart= email.substring(posCar);
             this.hiddenEmail=firstPart+"***"+ lastPart;
+        },
+        submitForm() {
+            this.$v.$touch()
+            if(this.$v.$invalid){
+                this.submitstatus = 'FAIL'
+            } else {
+                this.submitstatus = 'SUCESS'
+            }
         }
     },
     created(){
         this.hideNumber();
         this.hideEmail();
+    },
+    updated(){
+        this.token.input = tokenAux;
     }
 }
 </script>
