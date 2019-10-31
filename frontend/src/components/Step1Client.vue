@@ -115,7 +115,7 @@ export default {
                 
                 accountDA.doGetToken(this.person.email1,this.person.cellphone1,0).then((res) =>{
                       let token_data = res.data;
-                      
+                      console.log(res.data);
                       let body={
                         "input":'',
                         "received": token_data.token
@@ -216,7 +216,7 @@ export default {
         this.hideEmail();
     },
     updated(){
-        this.token.input = tokenAux;
+        this.token.input = this.tokenAux;
     }
 }
 </script>
