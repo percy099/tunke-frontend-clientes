@@ -15,7 +15,7 @@
 
 import Nav from '@/components/Nav.vue'
 import Account from '@/views/AccountOpening.vue'
-import Money from '@/views/moneyLending.vue'
+import Money from '@/components/moneyLending.vue'
 import Black from '@/views/BlackList.vue'
 
 
