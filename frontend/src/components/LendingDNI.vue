@@ -77,11 +77,10 @@
       methods:{
           ...mapActions(['fill']),
           enterDni(){
-              //let res = personDA.doDniValidation(this.dni);
               if (this.termsAccept){
                   personDA.doDniValidation(this.dni).then((res) =>{
                       let person_data = res.data;
-                      if(person_data.type==1){ //CLIENT
+                      if(person_data.type==1){ //CLIENT 
                         /*alert('Cliente');
                         console.log(person_data);*/
                         console.log(person_data);
