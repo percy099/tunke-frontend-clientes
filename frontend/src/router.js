@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import AccountOpening from './views/AccountOpening.vue'
-import moneyLending from './views/moneyLending.vue'
+import moneyLending from './components/moneyLending.vue'
 import OpeningDNI from './components/OpeningDNI.vue'
 
 
@@ -30,7 +30,7 @@ export default new Router({
     {
       path: '/moneyLending',
       name: 'moneyLending',
-      component: () => import('./views/moneyLending.vue')
+      component: () => import('./components/moneyLending.vue')
     },
     {
       path: '/openingDNI',
