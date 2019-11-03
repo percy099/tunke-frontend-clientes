@@ -57,7 +57,7 @@ export default {
       this.$router.push('/OpeningDNI');
     },
     openMoneyLending(){
-      this.$router.push('/moneyLending');
+      this.$router.push('/LendingDNI');
     }
   }
 }
