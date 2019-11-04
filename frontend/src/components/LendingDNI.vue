@@ -2,8 +2,7 @@
     <div id="Opening">
         <div class="row">
             <div class="col-sm-6 d-flex align-items-center flex-column justify-content-center">
-                <h1 class="text-white">Abre tu cuenta</h1> 
-                <h5>En 5 minutos</h5>
+                <h1 class="text-white">Tenemos un préstamo listo para ti</h1> 
             </div>
             
             <div class="col-sm-6 container-fluid d-flex justify-content-center mt-5 mb-4">
@@ -78,11 +77,10 @@
       methods:{
           ...mapActions(['fill']),
           enterDni(){
-              //let res = personDA.doDniValidation(this.dni);
               if (this.termsAccept){
                   personDA.doDniValidation(this.dni).then((res) =>{
                       let person_data = res.data;
-                      if(person_data.type==1){ //CLIENT
+                      if(person_data.type==1){ //CLIENT 
                         /*alert('Cliente');
                         console.log(person_data);*/
                         console.log(person_data);

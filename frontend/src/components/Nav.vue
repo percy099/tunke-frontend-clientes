@@ -15,7 +15,7 @@
           </li>
           <li class="nav-item mr-5">
             <!--En vez de accountOpeningCliente debe ser moneyLending-->
-            <router-link class="text-white nav-link" to ="/accountOpeningClient" href="#">CAMPAÑAS</router-link>
+            <router-link class="text-white nav-link" to ="/LendingDNI" href="#">CAMPAÑAS</router-link>
           </li>
         </ul>
       </div>
