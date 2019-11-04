@@ -39,7 +39,7 @@ export default {
         
     },
     methods:{
-        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms']),
+        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken']),
         onComplete (){
 
             accountDA.doCreateAccount(this.person.idPerson,this.currency).then((res) =>{
@@ -74,6 +74,11 @@ export default {
 
                if(this.token.input==this.token.received){
                    console.log("token igual");
+                   let body={
+                        "input":'',
+                        "received": ''
+                       }
+                    this.fillToken(body);
                    return true;
                }
                else {
