@@ -81,15 +81,27 @@
                   personDA.doDniValidation(this.dni).then((res) =>{
                       let person_data = res.data;
                       if(person_data.type==1){ //CLIENT 
+<<<<<<< HEAD
                         /*alert('Cliente');*/
                         console.log(person_data);
                         this.fill(person_data);
                         router.push('/Lending');
+=======
+                        /*alert('Cliente');
+                        console.log(person_data);*/
+                        console.log(person_data);
+                        this.fill(person_data);
+                        router.push('/accountOpeningClient');
+>>>>>>> eecda13dbd09f7a9f3989f0594cadb0630f7cafa
                       }
                       else if(person_data.type==2){//NO CLIENT
                         console.log(person_data);
                         this.fill(person_data);
+<<<<<<< HEAD
                         router.push('/LoanNoClient');
+=======
+                        router.push('/accountOpening');
+>>>>>>> eecda13dbd09f7a9f3989f0594cadb0630f7cafa
                       }
                       else if(person_data.type==3){//BLACK LIST
                         router.push('/blackList');
