@@ -52,5 +52,25 @@ export default new Router({
       name: 'lending',
       component: () => import('./views/Lending.vue')
     },
+    {
+      path: '/lendingBlackList',
+      name: 'lendingBlackList',
+      component: () => import('./views/LendingBlackList.vue')
+    },
+    {
+      path: '/lendingWithoutCampaign',
+      name: 'lendingWithoutCampaign',
+      component: () => import('./views/LendingWithoutCampaign.vue')
+    },
+    {
+      path: '/lendingWithoutAccount',
+      name: 'lendingWithoutAccount',
+      component: () => import('./views/LendingWithoutAccount.vue')
+    },
+    {
+      path: '/lendingActive',
+      name: 'lendingActive',
+      component: () => import('./views/LendingActive.vue')
+    },
   ]
 })
