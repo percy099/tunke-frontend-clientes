@@ -78,22 +78,18 @@
           ...mapActions(['fill']),
           enterDni(){
               if (this.termsAccept){
-                  personDA.doDniValidation(this.dni).then((res) =>{
+                  personDA.doDniValidation(this.dni).then((res) =>{                    
                       let person_data = res.data;
-                      if(person_data.type==1){ //CLIENT 
-                        /*alert('Cliente');
-                        console.log(person_data);*/
-                        console.log(person_data);
-                        this.fill(person_data);
-                        router.push('/accountOpeningClient');
+                      console.log(person_data);
+                      this.fill(person_data);
+                      if(person_data.type==1){ //CLIENT
+                          router.push('/Lending');
                       }
                       else if(person_data.type==2){//NO CLIENT
-                        console.log(person_data);
-                        this.fill(person_data);
-                        router.push('/accountOpening');
+                        router.push('/LendingWithoutAccount');
                       }
                       else if(person_data.type==3){//BLACK LIST
-                        router.push('/blackList');
+                        router.push('/BlackList');
                       }
                   }).catch(error=>
                   {
