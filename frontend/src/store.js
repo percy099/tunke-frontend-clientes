@@ -24,11 +24,36 @@ export default new Vuex.Store({
       address : '',
       nationality : '',
       vehicle1Plate : '',
-      vehicle2Plate : ''
+      vehicle2Plate : '',
+      activeCampaigns:'',
+      activeLoans: '',
+      campaign:{
+          active:'',
+          endDate:'',
+          idCampaign:'',
+          idCurrency: '',
+          interestRate: '',
+          maximumLoan: '',
+          maximumPeriod: '',
+          minimumLoan: '',
+          minimumPeriod: '',
+          month: '',
+          name: '',
+          startDate: ''
+      }
+
     },
     token:{
       input:'',
       received:''
+    },
+    lead:{
+      idShareType:'',
+      minimumLoan:'',
+      maximumLoan:'',
+      active:'',
+      idCampaign:'',
+      idClient:''
     },
     flagRestartTimer:false,
     clientAcceptedTerms:false,
@@ -71,11 +96,17 @@ export default new Vuex.Store({
       state.person.nationality = person_data.nationality;
       state.person.vehicle1Plate = person_data.vehicle1Plate;
       state.person.vehicle2Plate = person_data.vehicle2Plate;
-
       state.person.email1  = person_data.email1 ;
       state.person.email2  = person_data.email2 ;
       state.person.cellphone1   = person_data.cellphone1  ;
       state.person.cellphone2  = person_data.cellphone2 ;
+
+      state.person.activeCampaigns=person_data.activeCampaigns;
+      state.person.activeLoans=person_data.activeLoans;
+
+      if (person_data.activeCampaigns){        
+        state.person.campaign=person_data.campaign;
+      }
     },
     fillResponseCreateAccount(state,response_create){
       state.responseCreateAccount.name = response_create.name;
@@ -114,7 +145,15 @@ export default new Vuex.Store({
     fillToken(state, tok){
        state.token.input=tok.input;
        state.token.received=tok.received;
-     }
+     },
+    fillLeadData(state,lead){
+      state.lead.idShareType=lead.idShareType;
+      state.lead.minimumLoan=lead.minimumLoan;
+      state.lead.maximumLoan=lead.maximumLoan;
+      state.lead.active=lead.active;
+      state.lead.idCampaign=lead.idCampaign;
+      state.lead.idClient=lead.idClient;
+    }
   },
   actions: {
     fill(context,person_data){
@@ -141,6 +180,9 @@ export default new Vuex.Store({
     },
     changeClientTerms(context,acceptTerms){
       context.commit('changeClientTerms',acceptTerms);
+    },
+    fillLead(context,leadData){
+      context.commit('fillLeadData',leadData);
     }
   }
 })
