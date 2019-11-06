@@ -41,7 +41,6 @@
 
 import {mapState,mapActions} from 'vuex'
 import Swal from 'sweetalert2'
-<<<<<<< HEAD
 import { required, minLength, maxLength} from 'vuelidate/lib/validators'
 import * as accountDA from '@/dataAccess/accountDA.js'
 
@@ -219,10 +218,5 @@ export default {
     updated(){
         this.token.input = this.tokenAux;
     }
-=======
-
-export default {
-    
->>>>>>> eecda13dbd09f7a9f3989f0594cadb0630f7cafa
 }
 </script>

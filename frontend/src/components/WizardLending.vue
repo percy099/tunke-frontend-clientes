@@ -3,11 +3,7 @@
         <form-wizard next-button-text="Siguiente" title="" subtitle="" color="#2CFFBA" shape="circle" 
         back-button-text="Atrás" finish-button-text="Finalizar" @on-complete="onComplete"
         step-size="sm" id="container">
-<<<<<<< HEAD
             <tab-content title="Identifícate" class="" :before-change="verificationToken">
-=======
-            <tab-content title="Identifícate" class="">
->>>>>>> eecda13dbd09f7a9f3989f0594cadb0630f7cafa
                <Step1Lending></Step1Lending>
             </tab-content>
             <tab-content title="Elige tu campaña" class="">
@@ -33,20 +29,14 @@ import Step1Lending from "@/components/Step1Lending.vue";
 import Step2Lending from '@/components/Step2Lending.vue';
 import Step3Lending from '@/components/Step3Lending.vue';
 import Step4Lending from '@/components/Step4Lending.vue';
-
-<<<<<<< HEAD
 import * as personDA from '@/dataAccess/personDA.js';
 import * as loanDA from '@/dataAccess/loanDA.js';
-
-=======
->>>>>>> eecda13dbd09f7a9f3989f0594cadb0630f7cafa
 import {mapState, mapActions} from 'vuex';
 import router from '@/router.js'
 import Swal from 'sweetalert2'
 
 export default {
     
-<<<<<<< HEAD
     data(){
         return {
             counterTries:3
@@ -61,8 +51,6 @@ export default {
         onComplete (){
 
             accountDA.doCreateAccount(this.person.idPerson,this.currency).then((res) =>{
-                  //let response_create = res.data;
-                  //this.captureResponse(response_create);
                   this.$router.push('/summaryLoan');
               }).catch(error=>
               {
@@ -97,7 +85,22 @@ export default {
                         "received": ''
                        }
                     this.fillToken(body);
-                   return true;
+
+
+                   if (this.person.activeLoans){
+                          //ya tiene prestamos en proceso
+                          router.push('/LendingActive');
+                        }else{
+                          if(this.person.activeCampaigns){
+                            //tiene campañas entonces sigue el flujo
+                            return true;
+                          }else{
+                            //no tiene campañas 
+                            router.push('/LendingWithoutCampaign');
+                          }
+                          
+                    }
+                   
                }
                else {
                    Swal.fire({
@@ -120,11 +123,6 @@ export default {
             
         }
     },    
-=======
-    
-    
-    
->>>>>>> eecda13dbd09f7a9f3989f0594cadb0630f7cafa
     components:{
         Step1Lending,
         Step2Lending,
