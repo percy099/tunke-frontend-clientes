@@ -14,7 +14,8 @@
             <router-link class="text-white nav-link" to ="/OpeningDNI" href="#">APERTURA TU CUENTA</router-link>
           </li>
           <li class="nav-item mr-5">
-            <router-link class="text-white nav-link" to ="/moneyLending" href="#">CAMPAÑAS</router-link>
+            <!--En vez de accountOpeningCliente debe ser moneyLending-->
+            <router-link class="text-white nav-link" to ="/LendingDNI" href="#">CAMPAÑAS</router-link>
           </li>
         </ul>
       </div>

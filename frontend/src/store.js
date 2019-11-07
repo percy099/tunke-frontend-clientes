@@ -24,8 +24,39 @@ export default new Vuex.Store({
       address : '',
       nationality : '',
       vehicle1Plate : '',
-      vehicle2Plate : ''
+      vehicle2Plate : '',
+      activeCampaigns:'',
+      activeLoans: '',
+      campaign:{
+          active:'',
+          endDate:'',
+          idCampaign:'',
+          idCurrency: '',
+          interestRate: '',
+          maximumLoan: '',
+          maximumPeriod: '',
+          minimumLoan: '',
+          minimumPeriod: '',
+          month: '',
+          name: '',
+          startDate: ''
+      }
+
     },
+    token:{
+      input:'',
+      received:''
+    },
+    lead:{
+      idShareType:'',
+      minimumLoan:'',
+      maximumLoan:'',
+      active:'',
+      idCampaign:'',
+      idClient:''
+    },
+    flagRestartTimer:false,
+    clientAcceptedTerms:false,
     currency : 1,
     responseCreateAccount:{
       accountDetail : '',
@@ -35,9 +66,23 @@ export default new Vuex.Store({
       email : '',
       name : '',
       openingDate : ''
+    },
+    securityQuestions:{
+      questions:[]
+    },
+    answersSecurityQuestions:{
+      posAnswer1:-1,
+      posAnswer2:-1,
+      posAnswer3:-1
     }
   },
   mutations: {
+    changeFlagTimer(state,flag){
+      state.flagRestartTimer=flag;
+    },
+    changeClientTerms(state,terms){
+      state.clientAcceptedTerms=terms;
+    },
     fillPersonData(state,person_data){
       state.person.idPerson = person_data.idPerson;
       state.person.documentType = person_data.documentType;
@@ -51,6 +96,17 @@ export default new Vuex.Store({
       state.person.nationality = person_data.nationality;
       state.person.vehicle1Plate = person_data.vehicle1Plate;
       state.person.vehicle2Plate = person_data.vehicle2Plate;
+      state.person.email1  = person_data.email1 ;
+      state.person.email2  = person_data.email2 ;
+      state.person.cellphone1   = person_data.cellphone1  ;
+      state.person.cellphone2  = person_data.cellphone2 ;
+
+      state.person.activeCampaigns=person_data.activeCampaigns;
+      state.person.activeLoans=person_data.activeLoans;
+
+      if (person_data.activeCampaigns){        
+        state.person.campaign=person_data.campaign;
+      }
     },
     fillResponseCreateAccount(state,response_create){
       state.responseCreateAccount.name = response_create.name;
@@ -60,6 +116,43 @@ export default new Vuex.Store({
       state.responseCreateAccount.openingDate = response_create.openingDate;
       state.responseCreateAccount.currency = response_create.currency;
       state.responseCreateAccount.email = response_create.email;
+    },
+    fillQuestionsComplete(state, res_answer){
+      let aux=res_answer.securityQuestions;
+      state.securityQuestions.questions=[];
+      for (let i=0; i< aux.length;i++){       
+        state.securityQuestions.questions.push({
+          answers : aux[i].answers,
+          correctAnswerIndex : aux[i].correctAnswerIndex,
+          question: aux[i].question   
+        });
+      }
+    },
+    fillAnswersSelected(state,relationAnswerQuestion){
+      if(relationAnswerQuestion.ques==1){
+        state.answersSecurityQuestions.posAnswer1=relationAnswerQuestion.posAns;
+      }
+      else if(relationAnswerQuestion.ques==2){
+        state.answersSecurityQuestions.posAnswer2=relationAnswerQuestion.posAns;
+      }
+      else if(relationAnswerQuestion.ques==3){
+        state.answersSecurityQuestions.posAnswer3=relationAnswerQuestion.posAns;
+      }
+    },
+    changeCur(state,cur){
+      state.currency = cur;
+     },
+    fillToken(state, tok){
+       state.token.input=tok.input;
+       state.token.received=tok.received;
+     },
+    fillLeadData(state,lead){
+      state.lead.idShareType=lead.idShareType;
+      state.lead.minimumLoan=lead.minimumLoan;
+      state.lead.maximumLoan=lead.maximumLoan;
+      state.lead.active=lead.active;
+      state.lead.idCampaign=lead.idCampaign;
+      state.lead.idClient=lead.idClient;
     }
   },
   actions: {
@@ -68,6 +161,28 @@ export default new Vuex.Store({
     },
     captureResponse(context,response_create){
         context.commit('fillResponseCreateAccount',response_create);
+    },
+
+    completeSecurityQuestion(context,res_answer){
+      context.commit('fillQuestionsComplete',res_answer);
+    },
+    completePosAnswerQuestion(context,relationAnswerQuestion){
+      context.commit('fillAnswersSelected',relationAnswerQuestion);
+    },
+    changeCurrency(context,cur){
+        context.commit('changeCur',cur);
+    },
+    fillToken(context,token_){
+      context.commit('fillToken',token_);
+    },
+    changeFlagTimer(context,flag_){
+      context.commit('changeFlagTimer',flag_);
+    },
+    changeClientTerms(context,acceptTerms){
+      context.commit('changeClientTerms',acceptTerms);
+    },
+    fillLead(context,leadData){
+      context.commit('fillLeadData',leadData);
     }
   }
 })
