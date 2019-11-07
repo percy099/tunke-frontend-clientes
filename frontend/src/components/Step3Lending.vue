@@ -15,6 +15,7 @@
 
 <script>
 
+
 import * as loanDA from '@/dataAccess/loanDA.js'
 import {mapActions,mapState} from 'vuex'
 import Swal from 'sweetalert2'
