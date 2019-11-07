@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export function doRequestLead(idPer,idCampaign){
+export function doRequestLead(idClient,idCampaign){
     let url =  process.env.VUE_APP_API_URL + 'api/lead/';
     var body ={
-        "idClient" : idPer,
+        "idClient" : idClient,
         "idCampaign" : idCampaign
     }
     

@@ -1,41 +1,58 @@
 <template>
-    <div id=step1>
-        <h1>HOLA </h1>
-        <div id="vueapp" class="vue-app">
-            ComboBox value: {{ comboboxValue }}
-            <br />
-            <br />
-            <kendo-combobox v-model="comboboxValue"
-                            :placeholder="'Select sport...'"
-                            :data-source="dataSourceArray"
-                            :data-text-field="'text'"
-                            :data-value-field="'value'"ч
-                            :filter="'contains'">
-            </kendo-combobox>
-        </div>
+    <div id="step3">
+        <h1> {{lead.idShareType}}</h1>
+        <h1> {{lead.minimumLoan}}</h1>
+        <h1> {{lead.maximumLoan}}</h1>
+        <h1> {{lead.active}}</h1>
+        <h1> {{lead.idCampaign}}</h1>
+        <h1> {{lead.idClient}}</h1>
     </div>
 </template>
 
-<style src="@/styles/Step2Lending.css" scoped>
+<style scoped src="@/styles/Step2Lending.css">
 
 </style>
 
 <script>
 
-import {mapState,mapActions} from 'vuex'
+
+import * as loanDA from '@/dataAccess/loanDA.js'
+import {mapActions,mapState} from 'vuex'
+import Swal from 'sweetalert2'
 
 export default {
-    name : 'Step3Lending',
+    data(){
+        return {
+        };
+    },
     computed:{
-       
+        ...mapState(['person','currency','lead'])
     },
     methods:{
-        
+        ...mapActions(['changeCurrency','fillLead']),
+        goCampaignSimulation: function(){
+            Swal.fire({
+                    title: 'Mayor informacion',
+                    html: 'Dar mayor información de la campaña'
+                    })
+        },
+        getLeadClient:function(){
+            loanDA.doRequestLead(this.person.idClient,this.person.campaign.idCampaign).then((res) =>{
+                let lead_data = res.data;
+                this.fillLead(lead_data);
+            }).catch(error=>
+                  {
+                      Swal.fire({
+                      title: 'Error',
+                      type: 'error',
+                      text: 'Error en la captura del Lead del cliente'
+                      })
+            })
+        }
     },
-    mounted() {
-        
-    },
+    created() {
+        this.getLeadClient();
+    }
+    
 }
-
-
 </script>
