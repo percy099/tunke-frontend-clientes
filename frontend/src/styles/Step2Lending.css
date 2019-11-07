@@ -4,6 +4,7 @@
 
 div.disabled-item{
     pointer-events: none;
+    opacity:0.5;  
     display: block;
    width:100%;
     margin-bottom:20px;
@@ -16,9 +17,6 @@ div.disabled-item{
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     transition: all 0.3s ease;
-        -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.10);
-    -moz-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.10);
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.10);
 }
 
 .hover-table-layout {
@@ -38,7 +36,6 @@ div.disabled-item{
    display: block;
    width:100%;
     margin-bottom:20px;
-    /*margin-left:15px;*/
     float: left;
     background: #fff;
     border-radius:10px;

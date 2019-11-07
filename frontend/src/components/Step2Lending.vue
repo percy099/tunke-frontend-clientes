@@ -1,8 +1,9 @@
 <template>
     <div id="step2">
         <div class="hover-table-layout">
-            <div class="disabled-item">
+            
             <div class="listing-item">
+            <div class="disabled-item">
                 <figure class="image">
                     <img src="@/images/hipotecario.jpg" alt="image">
                     <figcaption>
@@ -20,7 +21,7 @@
                 </div>
             </div>
             </div>
-            <div class="listing-item">
+            <div class="listing-item" @click="goCampaignSimulation">
                 <figure class="image">
                     <img src="@/images/vehicular.jpeg" alt="image">
                     <figcaption>
@@ -35,10 +36,11 @@
                 </div>      
                 <div class="listing">
                     <h4>Tenemos un plan de cuotas de acuerdo a tus necesidades. ¡Pídelo ya!</h4>
-                </div>
+                </div> 
             </div> 
-            <div class="disabled-item">
             <div class="listing-item" >
+                <div class="disabled-item">
+                    
                 <figure class="image">
                     <img src="@/images/educativo.jpg" alt="image">
                     <figcaption>
@@ -54,7 +56,7 @@
                 <div class="listing">
                     <h4>Aprovecha la oportunidad e incrementa tu talento con este préstamo pensado para ti.</h4>
                 </div>
-            </div>
+            </div> 
             </div>
         </div>
     </div>
@@ -78,7 +80,13 @@ export default {
         ...mapState(['currency'])
     },
     methods:{
-        ...mapActions(['changeCurrency']) 
+        ...mapActions(['changeCurrency']),
+        goCampaignSimulation: function(){
+            Swal.fire({
+                    title: 'Mayor informacion',
+                    html: 'Dar mayor información de la campaña'
+                    })
+        }
     },
     mounted() {
     }
