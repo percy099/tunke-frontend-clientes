@@ -40,7 +40,8 @@ export default new Vuex.Store({
           month: '',
           name: '',
           startDate: ''
-      }
+      },
+      idLead:''
 
     },
     token:{
@@ -106,6 +107,7 @@ export default new Vuex.Store({
 
       if (person_data.activeCampaigns){        
         state.person.campaign=person_data.campaign;
+        state.person.idLead=person_data.idLead;
       }
     },
     fillResponseCreateAccount(state,response_create){

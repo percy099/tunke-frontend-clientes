@@ -1,13 +1,8 @@
 import axios from 'axios';
 
-export function doRequestLead(idClient,idCampaign){
-    let url =  process.env.VUE_APP_API_URL + 'api/lead/';
-    var body ={
-        "idClient" : idClient,
-        "idCampaign" : idCampaign
-    }
-    
-    return axios.post(url,body);
+export function doRequestLead(idLead){
+    let url =  process.env.VUE_APP_API_URL + 'api/lead/' + idLead;
+    return axios.get(url);
 }
 
 export function doCreateLoan(idClient,totalShares,amount,interestRate,idCampaign,idShareType){

@@ -21,7 +21,7 @@
                 </div>
             </div>
             </div>
-            <div class="listing-item" @click="goCampaignSimulation">
+            <div class="listing-item" @click="activaVentana">
                 <figure class="image">
                     <img src="@/images/vehicular.jpeg" alt="image">
                     <figcaption>
@@ -36,7 +36,8 @@
                 </div>      
                 <div class="listing">
                     <h4>Tenemos un plan de cuotas de acuerdo a tus necesidades. ¡Pídelo ya!</h4>
-                </div> 
+                </div>
+
             </div> 
             <div class="listing-item" >
                 <div class="disabled-item">
@@ -59,21 +60,26 @@
             </div> 
             </div>
         </div>
+        <!--Ventana modal de información de la campaña-->  
+        <ModalStep2Lending v-if="showModal" @close="desactivaVentana">
+            <h3 slot="header">custom header</h3>
+        </ModalStep2Lending>
+               
     </div>
 </template>
 
-<style scoped src="@/styles/Step2Lending.css">
-
-</style>
+<style scoped src="@/styles/Step2Lending.css"></style>
 
 <script>
 
 import {mapActions,mapState} from 'vuex'
 import Swal from 'sweetalert2'
+import ModalStep2Lending from '@/components/ModalStep2Lending.vue'
 
 export default {
     data(){
         return {
+            showModal:false
         };
     },
     computed:{
@@ -81,14 +87,23 @@ export default {
     },
     methods:{
         ...mapActions(['changeCurrency']),
-        goCampaignSimulation: function(){
+        goCampaignDetail: function(){
             Swal.fire({
                     title: 'Mayor informacion',
                     html: 'Dar mayor información de la campaña'
                     })
+        },
+        desactivaVentana: function(){
+            this.showModal=false;
+        },
+        activaVentana: function(){
+            this.showModal=true;
         }
     },
     mounted() {
+    },
+    components:{
+        ModalStep2Lending
     }
     
 }
