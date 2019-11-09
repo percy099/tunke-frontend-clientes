@@ -5,6 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    showModalSchedule:false,
+    activeTypeLoan:null,
+    activeShare:null,
+    activeTerm:null,
+    activeTypeCoin:null,
+    activeValueLoan:0,
     person:{
       idProspectiveClient: -1,
       lastEnterDate: new Date,
@@ -75,11 +81,30 @@ export default new Vuex.Store({
       posAnswer1:-1,
       posAnswer2:-1,
       posAnswer3:-1
-    }
+    },
+    simulationList:[]
   },
   mutations: {
+    setShowModalSchedule(state, showModalSchedule){
+      state.showModalSchedule = showModalSchedule;
+    },
+    setActiveTypeLoan(state, activeTypeLoan) {
+      state.activeTypeLoan = activeTypeLoan;
+    },
+    setActiveShare(state, activeShare) {
+      state.activeShare = activeShare;
+    },
+    setActiveTerm(state, activeTerm) {
+      state.activeTerm = activeTerm;
+    },
+    setActiveTypeCoin(state, activeTypeCoin) {
+      state.activeTypeCoin = activeTypeCoin;
+    }, 
+    setActiveValueLoan(state, activeValueLoan) {
+      state.activeValueLoan = activeValueLoan;
+    },
     changeFlagTimer(state,flag){
-      state.flagRestartTimer=flag;
+      state.activeTypeCoin=flag;
     },
     changeClientTerms(state,terms){
       state.clientAcceptedTerms=terms;
@@ -155,6 +180,16 @@ export default new Vuex.Store({
       state.lead.active=lead.active;
       state.lead.idCampaign=lead.idCampaign;
       state.lead.idClient=lead.idClient;
+    },
+    fillSimulationList(state, res_answer){
+      state.simulationList=[];
+      for (let i=0;i<res_answer.length;i++){
+        state.simulationList.push({
+          term:res_answer[i].term,
+          share: res_answer[i].share,
+          tcea:res_answer[i].tcea
+        });
+      }
     }
   },
   actions: {
@@ -185,6 +220,28 @@ export default new Vuex.Store({
     },
     fillLead(context,leadData){
       context.commit('fillLeadData',leadData);
+    },
+    setActiveTypeLoans(context, activeTypeLoan) {
+      context.commit('setActiveTypeLoan',activeTypeLoan);
+    },
+    setActiveShares(context, activeShare) {
+      context.commit('setActiveShare',activeShare);
+    },
+    setActiveTerms(context, activeTerm) {
+      context.commit('setActiveTerm',activeTerm);
+    },
+    setActiveTypeCoins(context, activeTypeCoin) {
+      context.commit('setActiveTypeCoin',activeTypeCoin);
+    },
+    setActiveValueLoans(context, activeValueLoan) {
+      context.commit('setActiveValueLoan', activeValueLoan);
+    },
+    fillShowModalSchedule(context, showModalSchedule){
+      context.commit('setShowModalSchedule', showModalSchedule);
+    },
+    fillSimulationsData(context,simulationsData){
+      context.commit('fillSimulationList',simulationsData);
     }
+
   }
 })

@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <form-wizard next-button-text="Siguiente" title="" subtitle="" color="#2CFFBA" shape="circle" 
+        <form-wizard title="" next-button-text="Siguiente" subtitle="" color="#2CFFBA" shape="circle" 
         back-button-text="Atrás" finish-button-text="Finalizar" @on-complete="onComplete"
         step-size="sm" id="container">
             <tab-content title="Identifícate" class="" :before-change="verificationToken">
@@ -43,7 +43,7 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms'])
+        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','nameWizardNext'])
         
     },
     methods:{
@@ -123,6 +123,9 @@ export default {
             
         }
     },    
+    mounted(){
+
+    },
     components:{
         Step1Lending,
         Step2Lending,

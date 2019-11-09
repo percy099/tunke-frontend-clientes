@@ -1,0 +1,38 @@
+#step3{
+    font-family: 'Montserrat';
+}
+h1{
+    font-weight:bold;
+    font-size:3.5vw;
+    padding-top: 3%;
+    padding-bottom: 3%; 
+}
+h3{
+    font-size:1vw;
+    padding-top: 2%;
+    padding-bottom: 1%; 
+    color: rgb(72, 84, 100);
+}
+
+.container-ext{
+    background-color: rgba(221, 221, 221, 0.39);
+    max-width: 100%;
+    width: 1500px;
+    padding-bottom: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    margin-bottom: 3%;
+}
+
+.col-sm-3, .col-sm-4{
+    font-size:1vw;
+    color: rgb(173, 173, 173);
+}
+
+.inpt{
+    margin-bottom: 8%;    
+}
+
+.row div button .simulation{
+    margin-left: 30%;
+}

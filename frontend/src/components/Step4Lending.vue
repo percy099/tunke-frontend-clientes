@@ -1,6 +1,6 @@
 <template>
     <div id="step4">
-        <div><h1>PASO 4: SIMULACION</h1></div>
+        <div><h1>PASO 4: Elige tu cuenta</h1></div>
     </div>
 </template>
 
