@@ -9,7 +9,7 @@
     </div>
 </template>
 
-<style scoped src="@/styles/Step2Lending.css">
+<style scoped src="@/styles/Step3Lending.css">
 
 </style>
 
@@ -37,8 +37,9 @@ export default {
                     })
         },
         getLeadClient:function(){
-            loanDA.doRequestLead(this.person.idClient,this.person.campaign.idCampaign).then((res) =>{
+            loanDA.doRequestLead(this.person.idLead).then((res) =>{
                 let lead_data = res.data;
+                console.log(lead_data)
                 this.fillLead(lead_data);
             }).catch(error=>
                   {
@@ -50,8 +51,11 @@ export default {
             })
         }
     },
-    created() {
+    mounted() {
         this.getLeadClient();
+    },
+    components:{
+
     }
     
 }
