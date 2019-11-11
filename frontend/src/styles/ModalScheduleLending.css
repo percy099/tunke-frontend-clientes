@@ -16,8 +16,9 @@
   }
   
   .modal-container {
-    width: 800px;
+    width: 1100px;
     height: 600px;
+    padding-top: 10%;
     margin: 0px auto;
     padding: 10px 30px;
     background-color: #fff;
@@ -31,6 +32,7 @@
     overflow-y: auto;
     max-height: 1000px; 
   }
+  
   /*
    * The following styles are auto-applied to elements with
    * transition="modal" when their visibility is toggled
@@ -58,65 +60,88 @@
     .modal-container{
         padding: 30px;
         display: block;
-        width: -webkit-calc(100%*7/10);
-        width: -moz-calc(100%*7/10);
-        width: calc(100%*7/10);
+        width: -webkit-calc(100%*8/10);
+        width: -moz-calc(100%*8/10);
+        width: calc(100%*8/10);
     }
 }
 
-img{
-    max-width: 100%;
-    width: 900px;
-}
 
 
-figure .caption{
-    position:relative;
-    
-    -moz-transform:translateY(-250%);
-    -webkit-transform:translateY(-250%);
-    transform:translateY(-250%);
-    margin-left: 1%;
-    text-align: left;
-    padding-left: 3%;
-    padding-right: 1%;
-    width : 43%;
-    color: rgb(255, 255, 255);
-    background-color: rgba(86, 86, 86, 0.411);
+.modal-container .closeModalSimulation{
+  float: right;
 }
 
-.top-part{
-    margin: 0px 0px 0px;
-    height: 63%;
+.modal-container .closeModalSimulation button{
+  border: 0;
+  color: rgb(255, 255, 255);
+  background: rgba(204, 204, 204, 0.459);
 }
 
-figure .caption h2{
-    font-weight: bold;
-    padding-top: 6%;
-    padding-bottom: 2%;
+#modalCalendar{
+  font-family: 'Montserrat';
+  padding-top: 5%;
 }
 
-figure .caption h5{
-    padding-bottom: 7%;
+h1{
+  font-weight: 700;
+  background-color: rgba(150, 147, 147, 0.089);
+  
 }
 
-.modal-content{
-    margin-top: 5%;
-    width: 100%;
-    border: 0;
-}
-.benefit{
-    color: rgb(54, 65, 61);
-    background-color: rgba(221, 220, 220, 0.26);
-    padding-left: 3%;
-}
-
-h5.detail{
-    padding-top: 5%;
-    padding-bottom: 5%;
-    font-weight: bold;
+hr{
+  width : 66%;
+  height: 4px;
+  background-color: #E6E6E6;
+  margin-top : 0%;
+  margin-bottom: 0.5%;
+  border : none;
+  border-bottom: 1px solid #e6e6e6;
+box-shadow: 0 20px 20px -20px #e6e6e6;
 }
 
-h6.detail{
-    padding-bottom: 5%;
+.firstWord{
+  color :	#C0C0C0;
+  font-weight: bold;
+}
+
+.col-4{
+  font-weight: bold;
+}
+
+.table thead th{
+  border : 0px;
+  color : black;
+  font-size: 0.80rem;
+  font-weight: 600;
+}
+
+tbody tr td{
+ font-size: 0.80rem;
+ font-weight: 500;
+}
+tfoot tr td{
+  font-weight: bold;
+}
+
+.tdOneTwoFourSeven{
+  padding-left: 4%;
+}
+
+.tdThreeFive{
+  padding-left: 2%;
+}
+
+.tdSix{
+  padding-left: 2.5%;
+}
+
+thead .table-dark th{
+  background-color: #e6e6e6;
+}
+
+tfoot .table-dark td{
+  color: black;
+  font-weight: 600;
+  font-size: 1.1rem;
 }

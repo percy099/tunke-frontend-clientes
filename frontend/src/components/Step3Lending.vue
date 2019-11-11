@@ -11,7 +11,8 @@
                     <div class="col-sm-4"><h3>Plazos</h3></div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTypeLoan" :required="!selectedTypeLoan" :options="optionsTypeLoan"  label="text" @input="setActiveTypeLoanF"/></div>
+                    <div class="col-sm-4"><input disabled type="text" class="form-control inpt" v-model="selectedTypeLoan" @input="setActiveTypeLoanF"></div>
+                    <!--div class="col-sm-4"> <v-select class="inpt" v-model="selectedTypeLoan" :required="!selectedTypeLoan" :options="optionsTypeLoan"  label="text" @input="setActiveTypeLoanF"/></div-->
                     <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTypeShare" :required="!selectedTypeShare" :options="optionsShare"  label="text" @input="setActiveShareF"/></div>
                     <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTerm" :required="!selectedTerm" :options="optionsTerm"  label="text" @input="setActiveTermF"/></div>
                 </div>
@@ -27,7 +28,8 @@
                 </div>
                 <div class="row"> 
                     <div class="col-sm-3"><h3></h3></div>
-                    <div class="col-sm-3"><v-select class="inpt" v-model="selectedCoin" :required="!selectedCoin" :options="optionsTypeCoin"  label="text" @input="setActiveTypeCoinF"/></div>
+                    <div class="col-sm-3"><input disabled type="text" class="form-control inpt" v-model="selectedCurrency" @input="setActiveTypeCurrencyF"></div>
+                    <!--div class="col-sm-3"><v-select class="inpt" v-model="selectedCurrency" :required="!selectedCurrency" :options="optionsTypeCoin"  label="text" @input="setActiveTypeCoinF"/></div-->
                     <div class="col-sm-3"><input class="inpt" type="number" v-model="valueLoan"></div>
                     <!--vue-range-slider ref="slider" v-model="activeValueLoan" :min="minLoan" :max="maxLoan" :bg-style="bgStyle" :tooltip-style="tooltipStyle" :process-style="processStyle"></vue-range-slider-->
                     <div class="col-sm-3"><h3></h3></div>
@@ -71,10 +73,11 @@
 import * as loanDA from '@/dataAccess/loanDA.js'
 import {mapActions,mapState} from 'vuex'
 import Swal from 'sweetalert2'
-import 'vue-range-component/dist/vue-range-slider.css'
-import VueRangeSlider from 'vue-range-component'
+//import 'vue-range-component/dist/vue-range-slider.css'
+//import VueRangeSlider from 'vue-range-component'
 import ModalStep3Lending from '@/components/ModalStep3Lending.vue'
 import ModalScheduleLending from '@/components/ModalScheduleLending.vue'
+//import func from '../../vue-temp/vue-editor-bridge'
 
 export default {
     data(){
@@ -97,7 +100,7 @@ export default {
         backgroundColor: '#999'
         },*/
             //Tipo de prestamo
-            selectedTypeLoan:false,
+            selectedTypeLoan:'Préstamo Efectivo',
             optionsTypeLoan: [{
                 value:1, text:'Préstamo Efectivo'
             },{
@@ -114,30 +117,25 @@ export default {
             selectedTerm:false,
             optionsTerm: [],
             //Tipo de moneda
-            selectedCoin:false,
-            optionsTypeCoin: [{
-                value:1, text:'Soles'
-            },{
-                value:2, text:'Dólares'
-            }]
+            selectedCurrency:''
         }
     },
     computed:{
-        ...mapState(['person','currency','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCoin','activeValueLoan','showModalSchedule','simulationList'])
+        ...mapState(['person','currency','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList'])
     },
     methods:{
-        ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCoins','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData']),
+        ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData']),
         desactivaVentana: function(){
             this.showModal=false;
         },
         activaVentana: function(){
-            /*
+            
             console.log(this.activeTypeLoan);
             console.log(this.activeShare);
             console.log(this.activeTerm);
             console.log(this.activeTypeCoin);
-            console.log(this.activeValueLoan);*/
-            if (this.activeTypeLoan!=null && this.activeShare!=null && this.activeTerm!=null && this.activeTypeCoin!=null && this.activeValueLoan!=0){
+            console.log(this.activeValueLoan);
+            if (this.activeShare!=null && this.activeTerm!=null && this.activeValueLoan!=0){
                 
                 //buscar la posicion del regMain y escoger dos simulaciones adicionales
                 let periodsList=[]
@@ -192,9 +190,24 @@ export default {
             //calculo de la cuota
             //let shareNumber=amount*(Math.pow(1+tem,termInput)*tem)/(Math.pow(1+tem,termInput)-1);
             //let share=shareNumber.toFixed(2);
-            let shareNumber=amount*((1/termInpt)+(tem/100)+(this.comision/100));
-
+            
+            let amortization=amount*(1/termInput);
+            let interesA=amount*tem;
             let comisionAmount=amount*this.comision/100;
+            let shareNumber=amortization+interesA+comisionAmount;
+            let share=shareNumber.toFixed(2);
+            /*
+            console.log(amortization);
+            console.log(tem);
+            console.log(interesA);
+            console.log(comisionAmount);
+            console.log(shareNumber);
+            console.log(share);
+            */
+           /*
+            let shareNumber=amount*((1/termInput)+(tem/100)+(this.comision/100));
+            let share=shareNumber.toFixed(2);
+            */
             //let segurosAmount=amount*this.seguros/100;
             let interesAmount=amount*(Math.pow(1+(tea/100),30*termInput/360)-1);
             //let interesAmountSum=interesAmount+comisionAmount+segurosAmount;
@@ -235,8 +248,8 @@ export default {
         setActiveTermF:function(val){
             this.setActiveTerms(val);
         },
-        setActiveTypeCoinF:function(val){
-            this.setActiveTypeCoins(val);
+        setActiveTypeCurrencyF:function(val){
+            this.setActiveTypeCurrencys(val);
         },
         setActiveValueLoanF:function(val){
             this.setActiveValueLoans(val);
@@ -250,13 +263,19 @@ export default {
                 let reg={value: period, text:text_period};
                 this.optionsTerm.push(reg);
             }
-        }
-        
+        },
+        updateTypeCurrency:function(){
+            if (this.person.campaign.idCurrency==1){
+                this.selectedCurrency="Soles";
+            }else if (this.person.campaign.idCurrency==2){
+                this.selectedCurrency="Dólares";
+            }          
+        }        
     },
     mounted() {
         this.getLeadClient();
         this.fillShowModalSchedule(false,'');
-        
+        this.updateTypeCurrency();
     },
     components:{
         VueRangeSlider,

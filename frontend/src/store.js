@@ -12,7 +12,7 @@ export default new Vuex.Store({
     activeTypeLoan:null,
     activeShare:null,
     activeTerm:null,
-    activeTypeCoin:null,
+    activeTypeCurrency:null,
     activeValueLoan:0,
     person:{
       idProspectiveClient: -1,
@@ -101,14 +101,14 @@ export default new Vuex.Store({
     setActiveTerm(state, activeTerm) {
       state.activeTerm = activeTerm;
     },
-    setActiveTypeCoin(state, activeTypeCoin) {
-      state.activeTypeCoin = activeTypeCoin;
+    setActiveTypeCurrency(state, activeTypeCurrency) {
+      state.activeTypeCurrency = activeTypeCurrency;
     }, 
     setActiveValueLoan(state, activeValueLoan) {
       state.activeValueLoan = activeValueLoan;
     },
     changeFlagTimer(state,flag){
-      state.activeTypeCoin=flag;
+      state.flagRestartTimer=flag;
     },
     changeClientTerms(state,terms){
       state.clientAcceptedTerms=terms;
@@ -234,8 +234,8 @@ export default new Vuex.Store({
     setActiveTerms(context, activeTerm) {
       context.commit('setActiveTerm',activeTerm);
     },
-    setActiveTypeCoins(context, activeTypeCoin) {
-      context.commit('setActiveTypeCoin',activeTypeCoin);
+    setActiveTypeCurrencys(context, activeTypeCurrency) {
+      context.commit('setActiveTypeCurrency',activeTypeCurrency);
     },
     setActiveValueLoans(context, activeValueLoan) {
       context.commit('setActiveValueLoan', activeValueLoan);

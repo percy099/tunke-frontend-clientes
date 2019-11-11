@@ -26,13 +26,13 @@
                         <h5 class="detail" align="center">Cuota</h5>
                     </div>
                     <div class="col-sm-3 benefit">
-                        <h5 class="detail" align="center">S/. {{simulationList[0].share}}</h5>
+                        <h5 class="detail" align="center">{{selectedCurrencySymbol}} {{simulationList[0].share}}</h5>
                     </div>
                     <div class="col-sm-3 benefit">
-                        <h5 class="detail" align="center">S/. {{simulationList[1].share}}</h5>
+                        <h5 class="detail" align="center">{{selectedCurrencySymbol}} {{simulationList[1].share}}</h5>
                     </div>
                     <div class="col-sm-3 benefit">
-                        <h5 class="detail" align="center">S/. {{simulationList[2].share}}</h5>
+                        <h5 class="detail" align="center">{{selectedCurrencySymbol}} {{simulationList[2].share}}</h5>
                     </div>  
                 </div> 
                 <div class="row">    
@@ -78,7 +78,8 @@ import {mapActions,mapState} from 'vuex'
 
 export default {
     data(){
-        return {        
+        return {   
+            selectedCurrencySymbol:''     
         };
     },
     computed:{
@@ -93,9 +94,17 @@ export default {
             }
             this.fillShowModalSchedule(data);
             console.log(simulationOption);
-        }
+        },
+        updateCurrencySymbol:function(){
+            if (this.person.campaign.idCurrency==1){
+                this.selectedCurrencySymbol="S/.";
+            }else if (this.person.campaign.idCurrency==2){
+                this.selectedCurrencySymbol="$";
+            }          
+        }    
     },
     mounted() {
+        this.updateCurrencySymbol();
     },
     components:{
         
