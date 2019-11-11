@@ -43,10 +43,10 @@
                         <h5 class="detail" align="center">{{simulationList[0].tcea}}%</h5>
                     </div>
                     <div class="col-sm-3 benefit">
-                        <h5 class="detail" align="center">{{simulationList[0].tcea}}%</h5>
+                        <h5 class="detail" align="center">{{simulationList[1].tcea}}%</h5>
                     </div>
                     <div class="col-sm-3 benefit">
-                        <h5 class="detail" align="center">{{simulationList[0].tcea}}%</h5>
+                        <h5 class="detail" align="center">{{simulationList[2].tcea}}%</h5>
                     </div>  
                 </div> 
                 <div class="row">                  
@@ -54,13 +54,13 @@
                         <h5 class="detail" align="center"></h5>
                     </div>
                     <div class="col-sm-3 benefit" align="center">
-                        <button class="simulation" @click="activaModalSch(1)">Detalle de crédito</button>
+                        <button class="simulation" @click="activaModalSch(0)">Detalle de crédito</button>
                     </div>
                     <div class="col-sm-3 benefit" align="center">
-                        <button class="simulation" @click="activaModalSch(2)">Detalle de crédito</button>
+                        <button class="simulation" @click="activaModalSch(1)">Detalle de crédito</button>
                     </div>  
                     <div class="col-sm-3 benefit" align="center">
-                        <button class="simulation" @click="activaModalSch(3)">Detalle de crédito</button>
+                        <button class="simulation" @click="activaModalSch(2)">Detalle de crédito</button>
                     </div>  
                 </div> 
           </div>
@@ -87,7 +87,11 @@ export default {
     methods:{
         ...mapActions(['changeCurrency','fillShowModalSchedule','fillSimulationsData']),
         activaModalSch: function(simulationOption){
-            this.fillShowModalSchedule(true);
+            let data={
+                "status":true,
+                "simulation":simulationOption
+            }
+            this.fillShowModalSchedule(data);
             console.log(simulationOption);
         }
     },

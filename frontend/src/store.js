@@ -5,7 +5,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    showModalSchedule:false,
+    showModalSchedule:{
+      status:false,
+      simulation:''
+    },
     activeTypeLoan:null,
     activeShare:null,
     activeTerm:null,
@@ -86,7 +89,8 @@ export default new Vuex.Store({
   },
   mutations: {
     setShowModalSchedule(state, showModalSchedule){
-      state.showModalSchedule = showModalSchedule;
+      state.showModalSchedule.status = showModalSchedule.status;
+      state.showModalSchedule.simulation = showModalSchedule.simulation;
     },
     setActiveTypeLoan(state, activeTypeLoan) {
       state.activeTypeLoan = activeTypeLoan;
@@ -245,3 +249,4 @@ export default new Vuex.Store({
 
   }
 })
+

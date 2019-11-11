@@ -46,7 +46,7 @@
             <h3 slot="header">custom header</h3>
         </ModalStep3Lending>
         <!--Ventana modal del calendario de pagos-->  
-        <ModalScheduleLending v-if="showModalSchedule" @close="desactivaModalSch">
+        <ModalScheduleLending v-if="showModalSchedule.status" @close="desactivaModalSch">
             <h3 slot="header">custom header</h3>
         </ModalScheduleLending>
     </div>
@@ -80,8 +80,8 @@ export default {
     data(){
         return {
             showModal:false,
-            comision:0.8,
-            seguros:1.5,
+            comision:0.25,
+            //seguros:1.5,
             minLoan:50,
             maxLoan:1000,
             valueLoan: '',
@@ -183,20 +183,22 @@ export default {
             }
         },
         calculateDataGeneral:function(termInput){
-            let tea=this.person.campaign.interestRate;                  
-            //let tea=22;
+            //let tea=this.person.campaign.interestRate;                  
+            let tea=22;
 
             let tem=Math.pow(1+(tea/100),1/12)-1;
             let amount=this.activeValueLoan;
 
             //calculo de la cuota
-            let shareNumber=amount*(Math.pow(1+tem,termInput)*tem)/(Math.pow(1+tem,termInput)-1);
-            let share=shareNumber.toFixed(2);
+            //let shareNumber=amount*(Math.pow(1+tem,termInput)*tem)/(Math.pow(1+tem,termInput)-1);
+            //let share=shareNumber.toFixed(2);
+            let shareNumber=amount*((1/termInpt)+(tem/100)+(this.comision/100));
 
             let comisionAmount=amount*this.comision/100;
-            let segurosAmount=amount*this.seguros/100;
+            //let segurosAmount=amount*this.seguros/100;
             let interesAmount=amount*(Math.pow(1+(tea/100),30*termInput/360)-1);
-            let interesAmountSum=interesAmount+comisionAmount+segurosAmount;
+            //let interesAmountSum=interesAmount+comisionAmount+segurosAmount;
+            let interesAmountSum=interesAmount+comisionAmount;
 
             let totalLoan=parseFloat(interesAmountSum)+parseFloat(amount);
             //calculo de la tcea
@@ -207,9 +209,10 @@ export default {
             return response;
         },
         desactivaModalSch: function(){
-            this.fillShowModalSchedule(false);
+            this.fillShowModalSchedule(false,'');
         },
         getLeadClient:function(){
+            console.log(this.person.idLead);
             loanDA.doRequestLead(this.person.idLead).then((res) =>{
                 let lead_data = res.data;
                 console.log(lead_data)
@@ -252,7 +255,7 @@ export default {
     },
     mounted() {
         this.getLeadClient();
-        this.fillShowModalSchedule(false);
+        this.fillShowModalSchedule(false,'');
         
     },
     components:{
