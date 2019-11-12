@@ -166,7 +166,7 @@ export default {
 
             let tea=this.person.campaign.interestRate;
             let tem=Math.pow(1+(tea/100),1/12)-1;
-            let interestCampaign=this.activeValueLoan*tem;
+            let interestCampaign=(this.activeValueLoan*tem).toFixed(2);
 
             this.comisionAmount=this.activeValueLoan*this.comision/100;
 
@@ -189,14 +189,21 @@ export default {
                 'interest':interestCampaign,
                 'commission':this.comisionAmount,
                 'feeAmount':fee
-              },
+              }
+              this.shares.push(n_share);
               amountBalance=amountBalance-amortization_;
-
-              this.totalInterest=this.totalInterest+interestCampaign;
-              this.totalComission=this.totalComission+this.comisionAmount;
-              this.totalAmortization=this.totalAmortization+amortization_;
-              this.totalShare=this.totalShare+fee;
+                //parseFloat(interesAmountSum)+parseFloat(amount);
+              this.totalInterest=parseFloat(this.totalInterest)+parseFloat(interestCampaign);
+              this.totalComission=parseFloat(this.totalComission)+parseFloat(this.comisionAmount);
+              this.totalAmortization=parseFloat(this.totalAmortization)+parseFloat(amortization_);
+              this.totalShare=parseFloat(this.totalShare)+parseFloat(fee);
             }
+
+            this.totalInterest=(this.totalInterest).toFixed(2);
+            this.totalComission=(this.totalComission).toFixed(2);
+            this.totalAmortization=(this.totalAmortization).toFixed(2);
+            this.totalShare=(this.totalShare).toFixed(2);
+
         },
         currentday:function(){
             

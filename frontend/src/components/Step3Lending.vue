@@ -181,8 +181,8 @@ export default {
             }
         },
         calculateDataGeneral:function(termInput){
-            //let tea=this.person.campaign.interestRate;                  
-            let tea=22;
+            let tea=this.person.campaign.interestRate;                  
+            //let tea=22;
 
             let tem=Math.pow(1+(tea/100),1/12)-1;
             let amount=this.activeValueLoan;
@@ -197,12 +197,12 @@ export default {
             let shareNumber=amortization+interesA+comisionAmount;
             let share=shareNumber.toFixed(2);
             /*
-            console.log(amortization);
-            console.log(tem);
-            console.log(interesA);
-            console.log(comisionAmount);
-            console.log(shareNumber);
-            console.log(share);
+            console.log("amortization",amortization);
+            console.log("tem",tem);
+            console.log("interesA",interesA);
+            console.log("comisionAmount",comisionAmount);
+            console.log("shareNumber",shareNumber);
+            console.log("share",share);
             */
            /*
             let shareNumber=amount*((1/termInput)+(tem/100)+(this.comision/100));
