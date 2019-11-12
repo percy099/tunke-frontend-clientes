@@ -121,7 +121,7 @@ import {mapActions,mapState} from 'vuex'
 export default {
     data(){
         return {
-            comision:0.25,
+            comision:'',
             comisionAmount:'',
             currencySymbol:'' ,
             currencyName:'',
@@ -131,24 +131,16 @@ export default {
             totalComission:'',
             totalAmortization:'',
             totalShare:'',
-            //interestCalculated:'',
-            //amortizationCalculated:'',
-            shares : [
-            /*{ date : '16/10/2019', initialBalance : 4000.00, amortization : 534.10, interest : 72.35, commission : 10.00, feeAmount: 619.45},
-            { date : '16/11/2019', initialBalance : 3465.90, amortization : 541.85, interest : 64.80, commission : 10.00, feeAmount: 619.45},
-            { date : '16/12/2019', initialBalance : 2923.45, amortization : 1163.41, interest : 52.89, commission : 10.00, feeAmount: 619.45},
-            { date : '16/01/2020', initialBalance : 1760.12, amortization : 575.58, interest : 32.91, commission : 10.00, feeAmount: 619.45},
-            { date : '16/02/2020', initialBalance : 1182.90, amortization : 586.38, interest : 22.21, commission : 10.00, feeAmount: 619.45},
-            { date : '16/03/2020', initialBalance : 598.20, amortization : 598.20, interest : 10.45, commission : 10.00, feeAmount: 619.45}
-            */]
+            shares : []
         }
     },
     computed:{
-        ...mapState(['person','activeValueLoan','simulationList','showModalSchedule','activeShare'])
+        ...mapState(['person','activeValueLoan','simulationList','showModalSchedule','activeShare','parameterSetting'])
     },
     methods:{
         ...mapActions(['changeCurrency']),
         updateData:function(){
+            this.comision=this.parameterSetting.commissionPercentage;
             if (this.person.campaign.idCurrency==1){
                 this.currencySymbol="S/.";
                 this.currencyName="Soles";
@@ -160,8 +152,10 @@ export default {
             this.shareCalculated=this.simulationList[this.showModalSchedule.simulation].share;
             this.termSelected=this.simulationList[this.showModalSchedule.simulation].term;
 
-            let dateToPay=this.currentday();
-                        
+            //let dateToPay=this.currentday();
+            let moment = require('moment');
+            let dateToPay=moment()//new Date()).format("DD/MM/YYYY")
+            
             let amortization_=this.activeValueLoan/this.termSelected;
 
             let tea=this.person.campaign.interestRate;
@@ -170,8 +164,8 @@ export default {
 
             this.comisionAmount=this.activeValueLoan*this.comision/100;
 
-            let amountBalance=this.activeValueLoan;
-            let fee=this.shareCalculated;
+            let amountBalance=parseFloat(this.activeValueLoan);
+            let fee=parseFloat(this.shareCalculated);
             //totales
             this.totalInterest=0;
             this.totalComission=0;
@@ -181,18 +175,20 @@ export default {
             //schedule
             this.shares=[];
             for (let i=0;i<this.termSelected;i++){
-              //dateToPay=this.addDays(dateToPay,30);  
+              let dateAdded=this.addDays(dateToPay,30);  
+              dateToPay=moment(dateAdded).format("DD/MM/YYYY");
               let n_share={
                 'date': dateToPay,
-                'initialBalance':amountBalance,
-                'amortization':amortization_,
+                'initialBalance':(amountBalance).toFixed(2),
+                'amortization':(amortization_).toFixed(2),
                 'interest':interestCampaign,
-                'commission':this.comisionAmount,
-                'feeAmount':fee
+                'commission':(this.comisionAmount).toFixed(2),
+                'feeAmount':(fee).toFixed(2)
               }
+              dateToPay=dateAdded;
               this.shares.push(n_share);
               amountBalance=amountBalance-amortization_;
-                //parseFloat(interesAmountSum)+parseFloat(amount);
+        
               this.totalInterest=parseFloat(this.totalInterest)+parseFloat(interestCampaign);
               this.totalComission=parseFloat(this.totalComission)+parseFloat(this.comisionAmount);
               this.totalAmortization=parseFloat(this.totalAmortization)+parseFloat(amortization_);
@@ -205,39 +201,12 @@ export default {
             this.totalShare=(this.totalShare).toFixed(2);
 
         },
-        currentday:function(){
-            
-            let today = new Date();
-            let dd = today.getDate();
-            let mm = today.getMonth()+1; //Enero is 0.
-            let yyyy = today.getFullYear();
-
-            if(dd<10) dd='0'+dd;
-            if(mm<10) mm='0'+mm;
-            return (mm+'/'+dd+'/'+yyyy);
-        },
         addDays:function (dateIn_, n) {
-            console.log("date ingresada: ", dateIn_);
-            let dateIn=new Date(dateIn_);            
-
-            console.log("date 2:", dateIn);
-            let days = parseInt(n.value);
-
-            dateIn.setDate(dateIn.getDate() + days);
-            console.log("day: ", dateIn.getDate());
-            console.log("date agregada: ", dateIn);
-            
-            let result=dateIn.getDate() + '/' + (dateIn.getMonth() + 1) + '/' + dateIn.getFullYear();
-            console.log("result: ",result);
+            let moment = require('moment');
+            let days = parseInt(n);
+            let result = moment(dateIn_).add(days, 'days');
             return result;
-        },
-         convert: function(str) {
-            let date = new Date(str);
-                let mnth = ("0" + (date.getMonth() + 1)).slice(-2);
-                let day = ("0" + date.getDate()).slice(-2);
-            return [day,mnth,date.getFullYear()].join("/");
         }
-
     },
     mounted() {
       this.updateData();

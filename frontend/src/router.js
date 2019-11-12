@@ -72,5 +72,10 @@ export default new Router({
       name: 'lendingActive',
       component: () => import('./views/LendingActive.vue')
     },
+    {
+      path: '/Step4Lending',
+      name: 'Step4Lending',
+      component: () => import('./components/Step4Lending.vue')
+    }
   ]
 })

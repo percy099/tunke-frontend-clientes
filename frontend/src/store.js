@@ -5,6 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    parameterSetting:{
+        maxTokenSends: '',
+        maxDiaryMovements : '',
+        legalAge : '',
+        maxAccountsNumber : '',
+        commissionPercentage:''
+    },
     showModalSchedule:{
       status:false,
       simulation:''
@@ -194,6 +201,13 @@ export default new Vuex.Store({
           tcea:res_answer[i].tcea
         });
       }
+    },
+    setParameters(state,data){
+      state.parameterSetting.maxTokenSends=data.maxTokenSends;
+      state.parameterSetting.maxDiaryMovements=data.maxDiaryMovements;
+      state.parameterSetting.legalAge=data.legalAge;
+      state.parameterSetting.maxAccountsNumber=data.maxAccountsNumber;
+      state.parameterSetting.commissionPercentage=data.commissionPercentage;
     }
   },
   actions: {
@@ -245,8 +259,10 @@ export default new Vuex.Store({
     },
     fillSimulationsData(context,simulationsData){
       context.commit('fillSimulationList',simulationsData);
+    },
+    fillParameterSettings(context,parameters){
+      context.commit('setParameters',parameters);
     }
-
   }
 })
 

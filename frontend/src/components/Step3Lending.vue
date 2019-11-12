@@ -77,14 +77,12 @@ import Swal from 'sweetalert2'
 //import VueRangeSlider from 'vue-range-component'
 import ModalStep3Lending from '@/components/ModalStep3Lending.vue'
 import ModalScheduleLending from '@/components/ModalScheduleLending.vue'
-//import func from '../../vue-temp/vue-editor-bridge'
 
 export default {
     data(){
         return {
             showModal:false,
-            comision:0.25,
-            //seguros:1.5,
+            comision:'',
             minLoan:50,
             maxLoan:1000,
             valueLoan: '',
@@ -121,7 +119,7 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList'])
+        ...mapState(['person','currency','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList','parameterSetting'])
     },
     methods:{
         ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData']),
@@ -129,12 +127,12 @@ export default {
             this.showModal=false;
         },
         activaVentana: function(){
-            
+            /*
             console.log(this.activeTypeLoan);
             console.log(this.activeShare);
             console.log(this.activeTerm);
             console.log(this.activeTypeCoin);
-            console.log(this.activeValueLoan);
+            console.log(this.activeValueLoan);*/
             if (this.activeShare!=null && this.activeTerm!=null && this.activeValueLoan!=0){
                 
                 //buscar la posicion del regMain y escoger dos simulaciones adicionales
@@ -196,21 +194,8 @@ export default {
             let comisionAmount=amount*this.comision/100;
             let shareNumber=amortization+interesA+comisionAmount;
             let share=shareNumber.toFixed(2);
-            /*
-            console.log("amortization",amortization);
-            console.log("tem",tem);
-            console.log("interesA",interesA);
-            console.log("comisionAmount",comisionAmount);
-            console.log("shareNumber",shareNumber);
-            console.log("share",share);
-            */
-           /*
-            let shareNumber=amount*((1/termInput)+(tem/100)+(this.comision/100));
-            let share=shareNumber.toFixed(2);
-            */
-            //let segurosAmount=amount*this.seguros/100;
+
             let interesAmount=amount*(Math.pow(1+(tea/100),30*termInput/360)-1);
-            //let interesAmountSum=interesAmount+comisionAmount+segurosAmount;
             let interesAmountSum=interesAmount+comisionAmount;
 
             let totalLoan=parseFloat(interesAmountSum)+parseFloat(amount);
@@ -284,6 +269,7 @@ export default {
     },
     created() {
         this.fillDataTerms();
+        this.comision=this.parameterSetting.commissionPercentage;
         /*
         this.enableCross = false;
         this.bgStyle = {

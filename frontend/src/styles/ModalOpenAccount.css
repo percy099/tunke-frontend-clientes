@@ -1,0 +1,133 @@
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: table;
+    transition: opacity .3s ease;
+  }
+  
+  .modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+  .modal-container {
+    width: 800px;
+    height: 600px;
+    margin: 0px auto;
+    padding: 10px 30px;
+    background-color: #fff;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all .3s ease;
+    font-family: 'Montserrat';
+    overflow-y: auto;
+    max-height: 1000px; 
+  }
+
+  .modal-container .closeModalSimulation{
+    float: right;
+  }
+  
+  .modal-container .closeModalSimulation button{
+    border: 0;
+    color: rgb(255, 255, 255);
+    background: rgba(204, 204, 204, 0.459);
+  }
+
+  /*
+   * The following styles are auto-applied to elements with
+   * transition="modal" when their visibility is toggled
+   * by Vue.js.
+   *
+   * You can easily play with the modal transition by editing
+   * these styles.
+   */
+  
+  .modal-enter {
+    opacity: 0;
+  }
+  
+  .modal-leave-active {
+    opacity: 0;
+  }
+  
+  .modal-enter .modal-container,
+  .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  @media only screen {
+    .modal-container{
+        padding: 30px;
+        display: block;
+        width: -webkit-calc(100%*7/10);
+        width: -moz-calc(100%*7/10);
+        width: calc(100%*7/10);
+    }
+}
+
+img{
+    max-width: 100%;
+    width: 900px;
+}
+
+
+figure .caption{
+    position:relative;
+    
+    -moz-transform:translateY(-250%);
+    -webkit-transform:translateY(-250%);
+    transform:translateY(-250%);
+    margin-left: 1%;
+    text-align: left;
+    padding-left: 3%;
+    padding-right: 1%;
+    width : 43%;
+    color: rgb(255, 255, 255);
+    background-color: rgba(86, 86, 86, 0.411);
+}
+
+.top-part{
+    margin: 0px 0px 0px;
+    height: 63%;
+}
+
+figure .caption h2{
+    font-weight: bold;
+    padding-top: 6%;
+    padding-bottom: 2%;
+}
+
+figure .caption h5{
+    padding-bottom: 7%;
+}
+
+.modal-content{
+    margin-top: 5%;
+    width: 100%;
+    border: 0;
+}
+.benefit{
+    color: rgb(54, 65, 61);
+    background-color: rgba(221, 220, 220, 0.26);
+    padding-left: 3%;
+}
+
+h5.detail{
+    padding-top: 5%;
+    padding-bottom: 5%;
+    font-weight: bold;
+}
+
+h6.detail{
+    padding-bottom: 5%;
+}

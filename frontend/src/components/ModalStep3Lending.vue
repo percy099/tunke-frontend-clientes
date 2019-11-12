@@ -63,6 +63,20 @@
                         <button class="simulation" @click="activaModalSch(2)">Detalle de crédito</button>
                     </div>  
                 </div> 
+                <div class="row">                  
+                    <div class="col-sm-3 benefit">
+                        <h5 class="detail" align="center"></h5>
+                    </div>
+                    <div class="col-sm-3 benefit" align="center">
+                        <button class="simulation" @click="requestLoan(0)">Solicitar préstamo</button>
+                    </div>
+                    <div class="col-sm-3 benefit" align="center">
+                        <button class="simulation" @click="requestLoan(1)">Solicitar préstamo</button>
+                    </div>  
+                    <div class="col-sm-3 benefit" align="center">
+                        <button class="simulation" @click="requestLoan(2)">Solicitar préstamo</button>
+                    </div>  
+                </div> 
           </div>
 
     </div>
@@ -93,7 +107,10 @@ export default {
                 "simulation":simulationOption
             }
             this.fillShowModalSchedule(data);
-            console.log(simulationOption);
+            //console.log(simulationOption);
+        },
+        requestLoan: function(simulationOption){
+            this.$router.push('/Step4Lending');
         },
         updateCurrencySymbol:function(){
             if (this.person.campaign.idCurrency==1){
