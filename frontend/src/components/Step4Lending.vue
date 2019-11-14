@@ -25,6 +25,7 @@
 
 <style scoped src="@/styles/Step4Lending.css">
 
+
 </style>
 
 <script>
@@ -33,6 +34,7 @@ import {mapActions,mapState} from 'vuex'
 import Swal from 'sweetalert2'
 import * as loanDA from '@/dataAccess/loanDA.js'
 import ModalOpenAccount from '@/components/ModalOpenAccount.vue'
+import * as accountDA from '@/dataAccess/accountDA.js';
 
 export default {
     data(){

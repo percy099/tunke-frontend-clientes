@@ -24,6 +24,7 @@
 import {mapActions,mapState} from 'vuex'
 import ReusableOpenAccount from '@/components/Step2Client.vue'
 import Swal from 'sweetalert2'
+import * as accountDA from '@/dataAccess/accountDA.js';
 
 export default {
     data(){
