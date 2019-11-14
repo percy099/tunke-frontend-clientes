@@ -93,7 +93,7 @@
                         router.push('/LendingWithoutAccount');
                       }
                       else if(person_data.type==3){//BLACK LIST
-                        router.push('/BlackList');
+                        router.push('/LendingBlackList');
                       }
                   }).catch(error=>
                   {
