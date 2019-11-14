@@ -89,10 +89,10 @@ export default {
         }
     },
     computed:{
-        ...mapState(['currency','clientAcceptedTerms'])
+        ...mapState(['currency','clientAcceptedTerms','termsReadLoan','processId'])
     },
     methods:{
-        ...mapActions(['changeCurrency','changeClientTerms']),
+        ...mapActions(['changeCurrency','changeClientTerms','setTermsReadLoans']),
         changeStateTerms:function(){
             this.changeClientTerms(!this.clientAcceptedTerms);
         },
@@ -129,16 +129,27 @@ export default {
         },
         goTermsAndConds(){
             this.termsRead=true;
-            Swal.fire({
-                      title: 'Términos y condiciones',
-                      
-                      text: 'TUNKE es una empresa privada que brinda servicios financieros en el Perú. En ese sentido, nos comprometemos a mantener la privacidad y la protección de información de nuestros clientes, proveedores y colaboradores de conformidad con lo establecido en la Ley No. 29733, Ley de Protección de datos personales y su reglamento, adoptando para ello las medidas técnicas y organizativas necesarias para evitar la pérdida, mal uso, alteración, acceso no autorizado y robo de los datos personales facilitados por los titulares de datos personales, asimismo garantizando la mejora continua de dichas medidas. En tal contexto, declaramos los siguientes lineamientos que debemos informar previamente a nuestros clientes, proveedores y colaboradores, de forma clara e inequívoca, cuando se recaben sus datos personales a través de cualquiera de nuestros canales:  \n La existencia del tratamiento de datos de carácter personal, la finalidad de la recolección y destinatarios de la información.'
-+'\n Carácter obligatorio o facultativo de la respuesta a las preguntas que en su caso les sean planteadas, así como de las consecuencias de la obtención de los datos personales o la negativa a suministrar los mismos.'                      })
+            console.log("proceso",this.processId);
+            /*
+            if (this.processId==1){
+                //this.termsRead=true;*/
+                Swal.fire({
+                        title: 'Términos y condiciones',
+                        
+                        text: 'TUNKE es una empresa privada que brinda servicios financieros en el Perú. En ese sentido, nos comprometemos a mantener la privacidad y la protección de información de nuestros clientes, proveedores y colaboradores de conformidad con lo establecido en la Ley No. 29733, Ley de Protección de datos personales y su reglamento, adoptando para ello las medidas técnicas y organizativas necesarias para evitar la pérdida, mal uso, alteración, acceso no autorizado y robo de los datos personales facilitados por los titulares de datos personales, asimismo garantizando la mejora continua de dichas medidas. En tal contexto, declaramos los siguientes lineamientos que debemos informar previamente a nuestros clientes, proveedores y colaboradores, de forma clara e inequívoca, cuando se recaben sus datos personales a través de cualquiera de nuestros canales:  \n La existencia del tratamiento de datos de carácter personal, la finalidad de la recolección y destinatarios de la información.'
+                                +'\n Carácter obligatorio o facultativo de la respuesta a las preguntas que en su caso les sean planteadas, así como de las consecuencias de la obtención de los datos personales o la negativa a suministrar los mismos.'                      })
+            /*
+            }else if(this.processId==2){
+                //mostrar mensaje desde ModalOpenAccount
+                //this.setTermsReadLoans(true);
+                //console.log("despues termsReadLoan:",this.termsReadLoan);
+            }*/
         }
     },
     mounted() {
         document.getElementById('simpleAccount').style.display = "block";   
         document.getElementById('btnSimple').classList.add('active');
+        //console.log("inicial termsReadLoan:",this.termsReadLoan);
     }
     
 }

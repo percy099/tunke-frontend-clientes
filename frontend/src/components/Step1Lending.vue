@@ -20,8 +20,8 @@
                 <span v-if="!$v.tokenAux.maxLength">Debe ser a lo mucho de {{$v.tokenAux.$params.maxLength.max}} caracteres. </span>
             </div><p></p>
             <circular-count-down-timer 
-                :initial-value="30"
-                :steps="30" 
+                :initial-value="60"
+                :steps="60" 
                 :size=100
                 :show-negatives="true"
                 :paused="timerOff"
@@ -84,7 +84,7 @@ export default {
             //return this.token.received;
         },
         updateCountdown: function() {
-            this.$refs.countdown.updateTime(31);
+            this.$refs.countdown.updateTime(61);
         },
         updated: function (status) {
             //console.log(status);    //{"value": 144, "seconds": 24, "minutes": 2, "hours": 0}
@@ -92,13 +92,13 @@ export default {
                 this.timerOff=true;
                 this.tokenSended=false;
                 //this.updateCountdown();
-                this.$refs.countdown.updateTime(31);
+                this.$refs.countdown.updateTime(61);
             }
             if(this.flagRestartTimer){
                 this.timerOff=true;
                 this.tokenSended=false;
                 //this.updateCountdown();
-                this.$refs.countdown.updateTime(30-status.value);
+                this.$refs.countdown.updateTime(60-status.value);
                 this.changeFlagTimer(false);
             }
             

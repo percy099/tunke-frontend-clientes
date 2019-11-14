@@ -5,6 +5,27 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    simulationShareSelected:-1,
+    showModalAccount:false,
+    termsReadLoan:false,
+    processId:'',
+    parameterSetting:{
+        maxTokenSends: '',
+        maxDiaryMovements : '',
+        legalAge : '',
+        maxAccountsNumber : '',
+        commissionPercentage:''
+    },
+    showModalSchedule:{
+      status:false,
+      simulation:''
+    },
+    activeTypeLoan:null,
+    activeShare:null,
+    activeTerm:null,
+    activeTypeCurrency:null,
+    activeValueLoan:0,
+    activeAccountLoan:'',
     person:{
       idProspectiveClient: -1,
       lastEnterDate: new Date,
@@ -14,6 +35,7 @@ export default new Vuex.Store({
       cellphone1 : '',
       cellphone2 : '',
       idPerson : -1,
+      idClient:-1,
       documentType : '',
       documentNumber : '',
       firstName : '',
@@ -75,15 +97,50 @@ export default new Vuex.Store({
       posAnswer1:-1,
       posAnswer2:-1,
       posAnswer3:-1
-    }
+    },
+    simulationList:[]
   },
   mutations: {
+    setShowModalSchedule(state, showModalSchedule){
+      state.showModalSchedule.status = showModalSchedule.status;
+      state.showModalSchedule.simulation = showModalSchedule.simulation;
+    },
+    setActiveTypeLoan(state, activeTypeLoan) {
+      state.activeTypeLoan = activeTypeLoan;
+    },
+    setActiveShare(state, activeShare) {
+      state.activeShare = activeShare;
+    },
+    setActiveTerm(state, activeTerm) {
+      state.activeTerm = activeTerm;
+    },
+    setActiveTypeCurrency(state, activeTypeCurrency) {
+      state.activeTypeCurrency = activeTypeCurrency;
+    }, 
+    setActiveValueLoan(state, activeValueLoan) {
+      state.activeValueLoan = activeValueLoan;
+    }, 
+    setActiveAccountLoan(state, activeAccountLoan) {
+      state.activeAccountLoan = activeAccountLoan;
+    },
+    setTermsReadLoan(state, termsReadLoan) {
+      state.termsReadLoan = termsReadLoan;
+    },
+    setsShowModalAccount(state, showModalAccount) {
+      state.showModalAccount = showModalAccount;
+    },
+    setsSimulationShareSelected(state, simulationShareSelected) {
+      state.simulationShareSelected = simulationShareSelected;
+    },
     changeFlagTimer(state,flag){
       state.flagRestartTimer=flag;
     },
     changeClientTerms(state,terms){
       state.clientAcceptedTerms=terms;
-    },
+    }, 
+    setProcessId(state,processId){
+      state.processId=processId;
+    }, 
     fillPersonData(state,person_data){
       state.person.idPerson = person_data.idPerson;
       state.person.documentType = person_data.documentType;
@@ -101,6 +158,7 @@ export default new Vuex.Store({
       state.person.email2  = person_data.email2 ;
       state.person.cellphone1   = person_data.cellphone1  ;
       state.person.cellphone2  = person_data.cellphone2 ;
+      state.person.idClient  = person_data.idClient ;
 
       state.person.activeCampaigns=person_data.activeCampaigns;
       state.person.activeLoans=person_data.activeLoans;
@@ -155,6 +213,23 @@ export default new Vuex.Store({
       state.lead.active=lead.active;
       state.lead.idCampaign=lead.idCampaign;
       state.lead.idClient=lead.idClient;
+    },
+    fillSimulationList(state, res_answer){
+      state.simulationList=[];
+      for (let i=0;i<res_answer.length;i++){
+        state.simulationList.push({
+          term:res_answer[i].term,
+          share: res_answer[i].share,
+          tcea:res_answer[i].tcea
+        });
+      }
+    },
+    setParameters(state,data){
+      state.parameterSetting.maxTokenSends=data.maxTokenSends;
+      state.parameterSetting.maxDiaryMovements=data.maxDiaryMovements;
+      state.parameterSetting.legalAge=data.legalAge;
+      state.parameterSetting.maxAccountsNumber=data.maxAccountsNumber;
+      state.parameterSetting.commissionPercentage=data.commissionPercentage;
     }
   },
   actions: {
@@ -185,6 +260,46 @@ export default new Vuex.Store({
     },
     fillLead(context,leadData){
       context.commit('fillLeadData',leadData);
+    },
+    setActiveTypeLoans(context, activeTypeLoan) {
+      context.commit('setActiveTypeLoan',activeTypeLoan);
+    },
+    setActiveShares(context, activeShare) {
+      context.commit('setActiveShare',activeShare);
+    },
+    setActiveTerms(context, activeTerm) {
+      context.commit('setActiveTerm',activeTerm);
+    },
+    setActiveTypeCurrencys(context, activeTypeCurrency) {
+      context.commit('setActiveTypeCurrency',activeTypeCurrency);
+    }, 
+    setActiveValueLoans(context, activeValueLoan) {
+      context.commit('setActiveValueLoan', activeValueLoan);
+    },
+    setActiveAccountLoans(context, activeAccountLoan) {
+      context.commit('setActiveAccountLoan', activeAccountLoan);
+    },
+    setActiveProcessId(context, processId) {
+      context.commit('setProcessId', processId);
+    },
+    setTermsReadLoans(context, status) {
+      context.commit('setTermsReadLoan', status);
+    },
+    setShowModalAccount(context, status) {
+      context.commit('setsShowModalAccount', status);
+    }, 
+    setSimulationShareSelected(context, status) {
+      context.commit('setsSimulationShareSelected', status);
+    }, 
+    fillShowModalSchedule(context, showModalSchedule){
+      context.commit('setShowModalSchedule', showModalSchedule);
+    },
+    fillSimulationsData(context,simulationsData){
+      context.commit('fillSimulationList',simulationsData);
+    },
+    fillParameterSettings(context,parameters){
+      context.commit('setParameters',parameters);
     }
   }
 })
+

@@ -1,52 +1,57 @@
 <!-- template for the modal component -->
-<template id="modal-template">
+<template id="modal-template" >
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-wrapper">
+      <div class="modal-wrapper" @click="$emit('close')">
         <div class="modal-container">
-
-          <div class="modal-header">
-            <slot name="header">
-              default header
-            </slot>
+           
+            <figure class="top-part">
+              <img src="@/images/vehicularO.jpg" alt="image">            
+                <div class="caption">
+                  <h2 align="left">{{person.campaign.name}}</h2>
+                  <h5 align="left">Aprovecha la oportunidad para obtener lo que tanto deseas</h5>
+                </div>              
+            </figure>
+          
+          <div class="modal-content">                
+                <div class="row">                  
+                    <div class="col-sm-4 benefit">
+                        <h5 class="detail" align="center">Plazos</h5>
+                        <h6 class="detail" align="justify">Tienes hasta 48 meses para pagar tus préstamos. No te compliques y solicita el préstamo que necesitas</h6>   
+                    </div>
+                    <div class="col-sm-4 benefit">
+                        <h5 class="detail" align="center">Cuotas flexibles</h5>
+                        <h6 class="detail" align="justify">Te brindamos facilidades de pago con un plan de acuerdo a tus necesidades</h6>   
+                    </div>
+                    <div class="col-sm-4 benefit">
+                        <h5 class="detail" align="center">Tasa especial</h5>
+                        <h6 class="detail" align="justify">Aprovecha una tasa más baja solicitando tu préstamo ahora</h6>
+                    </div>  
+                  </div> 
           </div>
-
-          <div class="modal-body">
-            <slot name="body">
-              default body
-            </slot>
-          </div>
-
-          <div class="modal-footer">
-            <slot name="footer">
-              default footer
-              <button class="modal-default-button" @click="$emit('close')">
-                OK
-              </button>
-            </slot>
-          </div>
+          
         </div>
       </div>
     </div>
   </transition>
 </template>
 
+<style scoped src="@/styles/ModalStep2Lending.css"></style>
+
 <script>
 
 import {mapActions,mapState} from 'vuex'
-import Swal from 'sweetalert2'
 
 export default {
     data(){
-        return {
-            
+        return {            
         };
     },
     computed:{
-        ...mapState(['currency'])
+        ...mapState(['person'])
     },
     methods:{
-        ...mapActions(['changeCurrency']),
+        ...mapActions(['changeCurrency'])
     },
     mounted() {
     },

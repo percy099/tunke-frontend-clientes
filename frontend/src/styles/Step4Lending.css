@@ -1,0 +1,19 @@
+#step4{
+    font-family: 'Montserrat';
+  }
+
+h1 {
+    margin-top: 3%;
+    margin-left: 12%;
+    font-weight: bold;
+    font-size: 6.5vh;
+}
+
+button{
+  background-color: #090d4d;
+  font-weight: 600;  
+}
+
+.btnNu{
+  width: 15%;
+}

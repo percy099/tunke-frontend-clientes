@@ -72,12 +72,16 @@
         }
       },
       computed:{
-        ...mapState(['person'])
+        ...mapState(['person','processId']) 
       },
       methods:{
-          ...mapActions(['fill']),
+          ...mapActions(['fill','setActiveProcessId']),
           enterDni(){
               if (this.termsAccept){
+                  //1: apertura de cuentas
+                  //2: prestamos             
+                  this.setActiveProcessId(2);
+                  console.log("INGRESE A PRESTAMOS :", this.processId);
                   personDA.doDniValidation(this.dni).then((res) =>{                    
                       let person_data = res.data;
                       console.log(person_data);

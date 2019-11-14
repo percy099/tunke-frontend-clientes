@@ -74,14 +74,17 @@
         }
       },
       computed:{
-        ...mapState(['person'])
+        ...mapState(['person','processId'])
       },
       methods:{
-          ...mapActions(['fill']),
+          ...mapActions(['fill','setActiveProcessId']),
           enterDni(){
               //let res = personDA.doDniValidation(this.dni);
               if (this.termsAccept){
                   personDA.doDniValidation(this.dni).then((res) =>{
+                    //1 : apertura de cuentas
+                    //2 : prestamos
+                    this.setActiveProcessId(1);
                       let person_data = res.data;
                       if(person_data.type==1){ //CLIENT
                         /*alert('Cliente');

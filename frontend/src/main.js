@@ -4,8 +4,6 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-
-
 import VueFormWizard from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 
@@ -17,6 +15,9 @@ Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
 
+import vSelect from 'vue-select'
+
+Vue.component('v-select', vSelect)
 
 new Vue({
   router,

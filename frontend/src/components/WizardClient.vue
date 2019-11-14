@@ -35,11 +35,11 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms'])
+        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','processId'])
         
     },
     methods:{
-        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken']),
+        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','setActiveProcessId']),
         onComplete (){
 
             accountDA.doCreateAccount(this.person.idPerson,this.currency).then((res) =>{

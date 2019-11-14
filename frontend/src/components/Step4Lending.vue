@@ -1,6 +1,25 @@
 <template>
     <div id="step4">
-        <div><h1>PASO 4: SIMULACION</h1></div>
+        <div class=""><h1 align="left">Selecciona tu cuenta</h1></div>
+        <div class="mt-4"><h4>Selecciona la cuenta donde se realizará el depósito</h4></div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6"><div class="my-4 "> <v-select class="inpt" v-model="selectedAccount" :required="!selectedAccount" :options="optionsAccount"  label="accountNumber" @input="setActiveAccountF"/></div></div>
+        </div>
+        <div class>
+            <h4>Cuenta Seleccionada: {{activeAccountLoan.accountNumber}}</h4>
+            <h4>Tipo de cuenta     : {{activeAccountLoan.idAccountType}}</h4>
+            <h4>Fecha de apertura  : {{activeAccountLoan.openingDate}}</h4>
+            <h4>Moneda             : {{activeAccountLoan.currencyName}}</h4>
+        </div>
+        <div align="center">
+            <button class="openAccount text-white p-2 btn btn-primary" @click="activaVentana">Abrir cuenta</button>
+            <button class="finish ml-5 text-white p-2 btn btn-primary btnNu" @click="requestLoan">Finalizar</button>
+        </div>
+        <!--Ventana modal de la simulacion-->  
+        <ModalOpenAccount v-if="showModalAccount" @close="desactivaVentana">
+            <h3 slot="header">custom header</h3>
+        </ModalOpenAccount>
     </div>
 </template>
 
@@ -12,19 +31,111 @@
 
 import {mapActions,mapState} from 'vuex'
 import Swal from 'sweetalert2'
+import * as loanDA from '@/dataAccess/loanDA.js'
+import ModalOpenAccount from '@/components/ModalOpenAccount.vue'
 
 export default {
     data(){
         return {
+            //Accounts
+            selectedAccount:false,
+            optionsAccount: [],
+            showModalAccount:false
         };
     },
     computed:{
-        ...mapState(['currency'])
+        ...mapState(['person','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList']) //showModalAccount
     },
     methods:{
-        ...mapActions(['changeCurrency'])
+        ...mapActions(['changeCurrency','setActiveAccountLoans','setShowModalAccount','setSimulationShareSelected']),
+        setActiveAccountF: function(val){
+            this.setActiveAccountLoans(val);
+        },
+        updateAccounts: function(){
+            loanDA.doRequestAccountsByClient(this.person.idClient).then((res) =>{
+                  let response_create = res.data;
+                  this.optionsAccount=[];                
+                  for (let i=0; i<response_create.accounts.length;i++){
+                      this.optionsAccount.push(response_create.accounts[i]);
+                  }
+              }).catch(error=>
+              {
+                  Swal.fire({
+                  title: 'Error',
+                  type: 'error',
+                  text: 'Error en la captura de cuentas por cliente'
+                  })
+              })
+        },
+        openAccount:function(){
+            //ir a la ventana de apertura de cuenta
+        },
+        requestLoan:function(){
+            //validar el tipo de moneda de la cuenta
+            
+            if (this.activeAccountLoan!='' && this.activeAccountLoan.idCurrency==this.person.campaign.idCurrency){
+                let shareLoan=0;
+                //obtain share
+                console.log("simulationSelected:", this.simulationShareSelected);
+                if (this.simulationShareSelected!=-1 && this.simulationShareSelected!=4 ){
+                    shareLoan=this.simulationList[this.simulationShareSelected].share;
+                }else if (this.simulationShareSelected==4){
+                        //calcular share
+                }
+                
+                let commissionLoan=(this.parameterSetting.commissionPercentage*this.activeValueLoan/100).toFixed(2);
+
+                /**/
+                console.log(this.person.idClient);
+                console.log(this.activeTerm.value);
+                console.log(this.activeValueLoan);
+                console.log(this.person.campaign.interestRate);
+                console.log(this.person.campaign.idCampaign);
+                console.log("shareLoan",shareLoan);
+                console.log(this.activeAccountLoan.idAccount);
+                console.log(commissionLoan);
+
+                loanDA.doCreateLoan(this.person.idClient,this.activeTerm.value,parseFloat(this.activeValueLoan),parseFloat(this.person.campaign.interestRate),this.person.campaign.idCampaign,1,shareLoan, this.activeAccountLoan.idAccount, parseFloat(commissionLoan)).then((res) =>{
+                    let response_create = res.data;
+                    console.log("Resultado query cuentas: ",response_create);
+                    this.$router.push('/summaryLoan');
+                    
+                }).catch(error=>
+                {
+                    Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Error en la solicitud de préstamo'
+                    })
+                })
+
+            }else{
+                //no tienen el mismo tipo de moneda
+                Swal.fire({
+                    title: 'Tipo de moneda incoherente',
+                    type: 'error',
+                    html: 'El tipo de moneda de la cuenta no coincide con el tipo de moneda del préstamo solicitado. <br /><br />'+
+                            'Por favor, seleccione otra cuenta para realizar el depósito.'
+                    })
+            }
+        },
+        desactivaVentana: function(){
+            this.showModalAccount=false;
+            //this.setShowModalAccount(false);
+        },
+        activaVentana: function(){
+            this.showModalAccount=true;
+            //this.setShowModalAccount(true);
+        }
+    },
+    components:{
+        ModalOpenAccount
     },
     mounted() {
+        this.updateAccounts();
+    },
+    updated(){
+        //this.updateAccounts();
     }
     
 }
