@@ -10,6 +10,7 @@
               <form id="form_openAcount" @submit.prevent='enterDni'>
                       <h2 class="text-center mt-5">Ingresa tu DNI</h2>
                       <h6 class="ml-5 mt-4">Número de DNI</h6>
+  
                       <input id="txt_dni" type="text" class="form-control ml-5 mt-1" maxlength="8" minlength="8"
                       @keypress="isNumber($event)" placeholder="DNI"
                        v-model.trim="$v.dni.$model" :class="{
@@ -124,6 +125,7 @@
             } else {
               return true;
             }
+
           },
           acceptTerms: function(){
             this.termsAccept=!this.termsAccept;

@@ -59,7 +59,6 @@
 </style>
 
 <script>
-
 /*
 :bg-style="bgStyle" :tooltip-style="tooltipStyle" :process-style="processStyle"
  :min="minLoan" :max="maxLoan"
@@ -70,6 +69,7 @@
         <h1> {{lead.active}}</h1>
         <h1> {{lead.idCampaign}}</h1>
         <h1> {{lead.idClient}}</h1>*/
+
 
 import * as loanDA from '@/dataAccess/loanDA.js'
 import {mapActions,mapState} from 'vuex'
