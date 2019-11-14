@@ -64,12 +64,11 @@
               </div>
               <div class="container">
                   <div class="row">
-                      <div class="col-2"></div>
-                      <div class="col-10">
+                      <div class="col-12">
                           <table class="table">
                               <thead>
                                   <tr class="table-dark">
-                                      <th>Totales</th>
+                                      <th>N° cuota</th>
                                       <th>F. Vencimiento</th>
                                       <th>Saldo Inicial</th>
                                       <th>Amortización</th>

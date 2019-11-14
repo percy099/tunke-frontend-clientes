@@ -8,3 +8,12 @@ h1 {
     font-weight: bold;
     font-size: 6.5vh;
 }
+
+button{
+  background-color: #090d4d;
+  font-weight: 600;  
+}
+
+.btnNu{
+  width: 15%;
+}

@@ -12,18 +12,18 @@
                         <h5 class="detail" align="center"></h5>
                     </div>
                     <div class="col-sm-3 benefit">
-                        <h5 class="detail" align="center">Pagar en {{simulationList[0].term}} meses</h5>
+                        <h5 class="detail boldWords" align="center">Pagar en {{simulationList[0].term}} meses</h5>
                     </div>
                     <div class="col-sm-3 benefit">
-                        <h5 class="detail" align="center">Pagar en {{simulationList[1].term}} meses</h5>   
+                        <h5 class="detail boldWords" align="center">Pagar en {{simulationList[1].term}} meses</h5>   
                     </div>
                     <div class="col-sm-3 benefit">
-                        <h5 class="detail" align="center">Pagar en {{simulationList[2].term}} meses</h5>   
+                        <h5 class="detail boldWords" align="center">Pagar en {{simulationList[2].term}} meses</h5>   
                     </div>  
                 </div> 
-                <div class="row">                  
+                <div class="row mt-4">                  
                     <div class="col-sm-3 benefit">
-                        <h5 class="detail" align="center">Cuota</h5>
+                        <h5 class="detail boldWords" align="center">Cuota</h5>
                     </div>
                     <div class="col-sm-3 benefit">
                         <h5 class="detail" align="center">{{selectedCurrencySymbol}} {{simulationList[0].share}}</h5>
@@ -35,9 +35,9 @@
                         <h5 class="detail" align="center">{{selectedCurrencySymbol}} {{simulationList[2].share}}</h5>
                     </div>  
                 </div> 
-                <div class="row">    
+                <div class="row mt-4">    
                     <div class="col-sm-3 benefit">
-                        <h5 class="detail" align="center">TCEA</h5>
+                        <h5 class="detail boldWords" align="center">TCEA</h5>
                     </div>              
                     <div class="col-sm-3 benefit">
                         <h5 class="detail" align="center">{{simulationList[0].tcea}}%</h5>
@@ -49,18 +49,18 @@
                         <h5 class="detail" align="center">{{simulationList[2].tcea}}%</h5>
                     </div>  
                 </div> 
-                <div class="row">                  
+                <div class="row mt-4">                  
                     <div class="col-sm-3 benefit">
                         <h5 class="detail" align="center"></h5>
                     </div>
                     <div class="col-sm-3 benefit" align="center">
-                        <button class="simulation" @click="activaModalSch(0)">Detalle de crédito</button>
+                        <a class="simulation" @click="activaModalSch(0)">Detalle de crédito</a>
                     </div>
                     <div class="col-sm-3 benefit" align="center">
-                        <button class="simulation" @click="activaModalSch(1)">Detalle de crédito</button>
+                        <a class="simulation" @click="activaModalSch(1)">Detalle de crédito</a>
                     </div>  
                     <div class="col-sm-3 benefit" align="center">
-                        <button class="simulation" @click="activaModalSch(2)">Detalle de crédito</button>
+                        <a class="simulation" @click="activaModalSch(2)">Detalle de crédito</a>
                     </div>  
                 </div> 
                 <div class="row">                  
@@ -68,13 +68,13 @@
                         <h5 class="detail" align="center"></h5>
                     </div>
                     <div class="col-sm-3 benefit" align="center">
-                        <button class="simulation" @click="requestLoan(0)">Solicitar préstamo</button>
+                        <button class="simulation btn p-2 mt-3 req text-white" @click="requestLoan(0)">Solicitar préstamo</button>
                     </div>
                     <div class="col-sm-3 benefit" align="center">
-                        <button class="simulation" @click="requestLoan(1)">Solicitar préstamo</button>
+                        <button class="simulation btn p-2 mt-3 req text-white" @click="requestLoan(1)">Solicitar préstamo</button>
                     </div>  
                     <div class="col-sm-3 benefit" align="center">
-                        <button class="simulation" @click="requestLoan(2)">Solicitar préstamo</button>
+                        <button class="simulation btn p-2 mt-3 req text-white" @click="requestLoan(2)">Solicitar préstamo</button>
                     </div>  
                 </div> 
           </div>
@@ -91,16 +91,19 @@ import {mapActions,mapState} from 'vuex'
 
 
 export default {
+    props:{
+        next: { type: Function }
+    },
     data(){
         return {   
             selectedCurrencySymbol:''     
         };
     },
     computed:{
-        ...mapState(['person','showModalSchedule','simulationList'])
+        ...mapState(['person','showModalSchedule','simulationList','simulationShareSelected']) 
     },
     methods:{
-        ...mapActions(['changeCurrency','fillShowModalSchedule','fillSimulationsData']),
+        ...mapActions(['changeCurrency','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected']),
         activaModalSch: function(simulationOption){
             let data={
                 "status":true,
@@ -110,7 +113,8 @@ export default {
             //console.log(simulationOption);
         },
         requestLoan: function(simulationOption){
-            this.$router.push('/Step4Lending');
+            this.setSimulationShareSelected(simulationOption);
+            this.next();
         },
         updateCurrencySymbol:function(){
             if (this.person.campaign.idCurrency==1){

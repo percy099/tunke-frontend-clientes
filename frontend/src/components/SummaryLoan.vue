@@ -1,73 +1,65 @@
 <template>
-  <div class="container">
-    <div class="media position-relative">
-      <div class="media-body">
-        <h1 class="mt-3">¡ENHORABUENA!</h1>
-        <h6>¡El depósito se ha realizado de forma exitosa!</h6>
-        <div class="card mb-3">
-          <div class="row no-gutters">
-            <div class="col-md-7">
-              <div
-                class="card-body"
-                style="background-color: rgba(200, 200, 200, 0.6); height:100%;"
-              >
-                <h1 class="card-title">Datos del préstamo</h1>
-                <div class="row ml-4">
-                  <div class="col-25">
-                    <p id="fp" class="card-text">Cliente:</p>
-                    <p id="fp" class="card-text">Número de Cuenta:</p>
-                    <p id="fp" class="card-text">CCI:</p>
-                    <p id="fp" class="card-text">Detalle de Cuenta:</p>
-                    <p id="fp" class="card-text">Fecha de Apertura:</p>
-                    <p id="fp" class="card-text">Moneda</p>
-                  </div>
-                  <div class="col">
-                    <p id="sp" class="card-text">{{responseCreateAccount.name}}</p>
-                    <p id="sp" class="card-text">{{responseCreateAccount.accountNumber}}</p>
-                    <p id="sp" class="card-text">{{responseCreateAccount.cci}}</p>
-                    <p id="sp" class="card-text">{{responseCreateAccount.accountDetail}}</p>
-                    <p id="sp" class="card-text">{{responseCreateAccount.openingDate}}</p>
-                    <p id="sp" class="card-text">{{responseCreateAccount.currency}}</p>
-                  </div>
+    <div id="step4">
+        <div class="container mt-5">
+            <div class="row pt-5">
+                <div class="col-2"></div>
+                <div class="col-1">
+                    <img class="pl-3" src="@/images/tick.png" height="45">
                 </div>
-              </div>
+                <div class="col-9">
+                    <h2>Se depositó con éxito a la siguiente cuenta:</h2>
+                </div>
             </div>
-          </div>
+            <h5 class="text-center mt-5"> {{currentDate}} 8:59pm</h5>
+            <div class="row mt-4">
+                <div class="col-4"></div>
+                <div class="col-1">
+                    <h5 class="firstWords">Cuenta:</h5>
+                </div>
+                <div class="col-7">
+                    <h5>{{person.firstName}} {{person.middleName}} {{person.fatherLastname}} {{person.motherLastname}}</h5>
+                    <h5>{{activeAccountLoan.accountNumber}}</h5>
+                </div>
+            </div>
+            <br>
+            <div class="row pb-5">
+                <div class="col-3"></div>
+                <div class="col-2 px-0">
+                    <h5 class="firstWords">Monto del préstamo:</h5>
+                </div>
+                <div class="col-7">
+                    <h5>
+                        {{activeAccountLoan}} {{activeValueLoan}}
+                    </h5>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="text-center mt-5">
+            <button class="btn btn-primary text-white p-2 mt-5">Página Principal</button>
+        </div>
     </div>
-    <div class="row">
-      <div class="a">Los documentos serán enviados a:</div>
-    </div>
-    <div class="row">
-      <div class="email">{{responseCreateAccount.email}}</div>
-    </div>
-    <div class="row">
-      <button class="btn text-white btn-lg bnt-md" @click="accept">Página Principal</button>
-    </div>
-  </div>
 </template>
 
-<style src="@/styles/SummaryLoan.css" scoped></style>
+
 
 <script>
-import router from "@/router.js";
-import { mapState } from "vuex";
-
 export default {
-  name: "summaryLoan",
-  data() {
-    return {
-
-    };
-  },
-  computed: {
-    ...mapState(["responseCreateLoan"])
-  },
-  methods: {
-    accept() {
-      router.push("/");
+    data(){
+        return {
+            currentDate:new Date()
+        }
+    },
+    computed:{
+        ...mapState(['person','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList']) //showModalAccount
+    },
+    mounted(){
+        let moment = require('moment');
+        this.currentDate=moment().format("DD/MM/YYYY");
     }
-  }
-};
+    
+}
 </script>
+
+<style src="@/styles/SummaryLoan.css" scoped>
+
+</style>

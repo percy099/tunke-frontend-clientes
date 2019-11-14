@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <form-wizard title="" next-button-text="Siguiente" subtitle="" color="#2CFFBA" shape="circle" 
+        <form-wizard ref="wizardLendingMod" title="" next-button-text="Siguiente" subtitle="" color="#2CFFBA" shape="circle" 
         back-button-text="Atrás" finish-button-text="Finalizar" @on-complete="onComplete"
         step-size="sm" id="container">
             <tab-content title="Identifícate" class="" :before-change="verificationToken">
@@ -10,7 +10,7 @@
                 <Step2Lending></Step2Lending>
             </tab-content>
             <tab-content title="Simula tu préstamo" class="">
-                <Step3Lending></Step3Lending>
+                <Step3Lending :method="nextWindow"></Step3Lending>
             </tab-content>
             <tab-content title="Elige tu cuenta" class="">
                 <Step4Lending></Step4Lending>
@@ -48,6 +48,10 @@ export default {
     },
     methods:{
         ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken']),
+        nextWindow(){
+            this.$refs.wizardLendingMod.nextTab();
+        }
+        ,
         onComplete (){
 
             accountDA.doCreateAccount(this.person.idPerson,this.currency).then((res) =>{

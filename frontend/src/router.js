@@ -76,6 +76,11 @@ export default new Router({
       path: '/Step4Lending',
       name: 'Step4Lending',
       component: () => import('./components/Step4Lending.vue')
+    },
+    {
+      path: '/summaryLoan',
+      name: 'summaryLoan',
+      component: () => import('./components/SummaryLoan.vue')
     }
   ]
 })

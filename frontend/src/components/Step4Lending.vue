@@ -1,18 +1,23 @@
 <template>
     <div id="step4">
-        <div><h1 align="left">Selecciona tu cuenta</h1></div>
-        <div class="col-sm-4"> <v-select class="inpt" v-model="selectedAccount" :required="!selectedAccount" :options="optionsAccount"  label="text" @input="setActiveAccountF"/></div>
-        <div>
-            <h2>Cuenta Seleccionada:</h2>
-            <h4>CCI                :</h4>
-            <h4>Tipo de cuenta     :</h4>
-            <h4>Fecha de apertura  :</h4>
-            <h4>Moneda             :</h4>
+        <div class=""><h1 align="left">Selecciona tu cuenta</h1></div>
+        <div class="mt-4"><h4>Selecciona la cuenta donde se realizará el depósito</h4></div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6"><div class="my-4 "> <v-select class="inpt" v-model="selectedAccount" :required="!selectedAccount" :options="optionsAccount"  label="accountNumber" @input="setActiveAccountF"/></div></div>
         </div>
-        <div align="center"><button class="openAccount" @click="activaVentana">Abrir cuenta</button></div>
-        <div align="center"><button class="finish" @click="requestLoan">Finalizar</button></div>
+        <div class>
+            <h4>Cuenta Seleccionada: {{activeAccountLoan.accountNumber}}</h4>
+            <h4>Tipo de cuenta     : {{activeAccountLoan.idAccountType}}</h4>
+            <h4>Fecha de apertura  : {{activeAccountLoan.openingDate}}</h4>
+            <h4>Moneda             : {{activeAccountLoan.currencyName}}</h4>
+        </div>
+        <div align="center">
+            <button class="openAccount text-white p-2 btn btn-primary" @click="activaVentana">Abrir cuenta</button>
+            <button class="finish ml-5 text-white p-2 btn btn-primary btnNu" @click="requestLoan">Finalizar</button>
+        </div>
         <!--Ventana modal de la simulacion-->  
-        <ModalOpenAccount v-if="showModal" @close="desactivaVentana">
+        <ModalOpenAccount v-if="showModalAccount" @close="desactivaVentana">
             <h3 slot="header">custom header</h3>
         </ModalOpenAccount>
     </div>
@@ -35,62 +40,92 @@ export default {
             //Accounts
             selectedAccount:false,
             optionsAccount: [],
-            showModal:false
+            showModalAccount:false
         };
     },
     computed:{
-        ...mapState(['person','currency'])
+        ...mapState(['person','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList']) //showModalAccount
     },
     methods:{
-        ...mapActions(['changeCurrency']),
-        setActiveAccountF: function(){
-
+        ...mapActions(['changeCurrency','setActiveAccountLoans','setShowModalAccount','setSimulationShareSelected']),
+        setActiveAccountF: function(val){
+            this.setActiveAccountLoans(val);
         },
         updateAccounts: function(){
-
-            loanDA.doRequestAccounts(this.person.idClient).then((res) =>{
+            loanDA.doRequestAccountsByClient(this.person.idClient).then((res) =>{
                   let response_create = res.data;
-                  console.log("Resultado query cuentas: ",response_create);
-                  
+                  this.optionsAccount=[];                
+                  for (let i=0; i<response_create.accounts.length;i++){
+                      this.optionsAccount.push(response_create.accounts[i]);
+                  }
               }).catch(error=>
               {
                   Swal.fire({
                   title: 'Error',
                   type: 'error',
-                  text: 'Error en la captura de parámetros de configuración'
+                  text: 'Error en la captura de cuentas por cliente'
                   })
               })
-
-/*
-            optionsAccount=[];
-
-            let account_n={
-                "value":1,
-                "text":2
-            }*/
         },
         openAccount:function(){
             //ir a la ventana de apertura de cuenta
         },
         requestLoan:function(){
-            loanDA.doCreateLoan(idClient,totalShares,amount,interestRate,idCampaign,idShareType).then((res) =>{
-                  let response_create = res.data;
-                  console.log("Resultado query cuentas: ",response_create);
-                  
-              }).catch(error=>
-              {
-                  Swal.fire({
-                  title: 'Error',
-                  type: 'error',
-                  text: 'Error en la solicitud de préstamo'
-                  })
-              })
+            //validar el tipo de moneda de la cuenta
+            
+            if (this.activeAccountLoan!='' && this.activeAccountLoan.idCurrency==this.person.campaign.idCurrency){
+                let shareLoan=0;
+                //obtain share
+                console.log("simulationSelected:", this.simulationShareSelected);
+                if (this.simulationShareSelected!=-1 && this.simulationShareSelected!=4 ){
+                    shareLoan=this.simulationList[this.simulationShareSelected].share;
+                }else if (this.simulationShareSelected==4){
+                        //calcular share
+                }
+                
+                let commissionLoan=(this.parameterSetting.commissionPercentage*this.activeValueLoan/100).toFixed(2);
+
+                /**/
+                console.log(this.person.idClient);
+                console.log(this.activeTerm.value);
+                console.log(this.activeValueLoan);
+                console.log(this.person.campaign.interestRate);
+                console.log(this.person.campaign.idCampaign);
+                console.log("shareLoan",shareLoan);
+                console.log(this.activeAccountLoan.idAccount);
+                console.log(commissionLoan);
+
+                loanDA.doCreateLoan(this.person.idClient,this.activeTerm.value,parseFloat(this.activeValueLoan),parseFloat(this.person.campaign.interestRate),this.person.campaign.idCampaign,1,shareLoan, this.activeAccountLoan.idAccount, parseFloat(commissionLoan)).then((res) =>{
+                    let response_create = res.data;
+                    console.log("Resultado query cuentas: ",response_create);
+                    this.$router.push('/summaryLoan');
+                    
+                }).catch(error=>
+                {
+                    Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Error en la solicitud de préstamo'
+                    })
+                })
+
+            }else{
+                //no tienen el mismo tipo de moneda
+                Swal.fire({
+                    title: 'Tipo de moneda incoherente',
+                    type: 'error',
+                    html: 'El tipo de moneda de la cuenta no coincide con el tipo de moneda del préstamo solicitado. <br /><br />'+
+                            'Por favor, seleccione otra cuenta para realizar el depósito.'
+                    })
+            }
         },
         desactivaVentana: function(){
-            this.showModal=false;
+            this.showModalAccount=false;
+            //this.setShowModalAccount(false);
         },
         activaVentana: function(){
-            this.showModal=true;
+            this.showModalAccount=true;
+            //this.setShowModalAccount(true);
         }
     },
     components:{
@@ -98,6 +133,9 @@ export default {
     },
     mounted() {
         this.updateAccounts();
+    },
+    updated(){
+        //this.updateAccounts();
     }
     
 }

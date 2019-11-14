@@ -37,14 +37,14 @@
                 <div class="row"> 
                     <div class="col-sm-3"><h3></h3></div>
                     <div class="col-sm-3 button_pos" align="center"><button class="simulation" @click="activaVentana">Simular </button></div>
-                    <div class="col-sm-3 button_pos" align="center"><button class="request">Pídelo aquí</button></div>
+                    <div class="col-sm-3 button_pos" align="center"><button class="request" @click="loanSolicitude">Pídelo aquí</button></div>
                    <div class="col-sm-3"><h3></h3></div>
                 </div>
             </div>
             
         </div>
         <!--Ventana modal de la simulacion-->  
-        <ModalStep3Lending v-if="showModal" @close="desactivaVentana">
+        <ModalStep3Lending :next="loanSolicitude" v-if="showModal" @close="desactivaVentana">
             <h3 slot="header">custom header</h3>
         </ModalStep3Lending>
         <!--Ventana modal del calendario de pagos-->  
@@ -59,6 +59,7 @@
 </style>
 
 <script>
+
 /*
 :bg-style="bgStyle" :tooltip-style="tooltipStyle" :process-style="processStyle"
  :min="minLoan" :max="maxLoan"
@@ -79,6 +80,9 @@ import ModalStep3Lending from '@/components/ModalStep3Lending.vue'
 import ModalScheduleLending from '@/components/ModalScheduleLending.vue'
 
 export default {
+    props:{
+        method: { type: Function }
+    },
     data(){
         return {
             showModal:false,
@@ -119,10 +123,24 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList','parameterSetting'])
+        ...mapState(['person','currency','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList','parameterSetting','simulationShareSelected'])
     },
     methods:{
-        ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData']),
+        ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected']),
+        loanSolicitude(){
+            if (this.activeShare!=null && this.activeTerm!=null && this.activeValueLoan!=0 && this.activeValueLoan>0){
+                ////simulationShareSelected
+                //4: cuando no se ha simulado
+                //this.setSimulationShareSelected(4);
+                this.method();
+            }else{
+                Swal.fire({
+                      title: 'Error',
+                      type: 'error',
+                      text: 'Por favor, complete todos los campos requeridos para solicitar un préstamo'
+                      })
+            }
+        },
         desactivaVentana: function(){
             this.showModal=false;
         },
@@ -133,7 +151,7 @@ export default {
             console.log(this.activeTerm);
             console.log(this.activeTypeCoin);
             console.log(this.activeValueLoan);*/
-            if (this.activeShare!=null && this.activeTerm!=null && this.activeValueLoan!=0){
+            if (this.activeShare!=null && this.activeTerm!=null && this.activeValueLoan!=0 && this.activeValueLoan>0){
                 
                 //buscar la posicion del regMain y escoger dos simulaciones adicionales
                 let periodsList=[]
@@ -193,7 +211,7 @@ export default {
             let interesA=amount*tem;
             let comisionAmount=amount*this.comision/100;
             let shareNumber=amortization+interesA+comisionAmount;
-            let share=shareNumber.toFixed(2);
+            let share=shareNumber.toFixed(2);  //cuota mensual
 
             let interesAmount=amount*(Math.pow(1+(tea/100),30*termInput/360)-1);
             let interesAmountSum=interesAmount+comisionAmount;
@@ -204,6 +222,11 @@ export default {
             let tcea=tceaNumber.toFixed(2);
 
             let response=[share,tcea];  //share, tcea
+
+
+            /** ##################3PRUEBA */
+            /*let prueba=this.calculateTCEA(amount,share, termInput);
+            console.log("TCEA calculada:", prueba);*/
             return response;
         },
         desactivaModalSch: function(){
@@ -255,7 +278,31 @@ export default {
             }else if (this.person.campaign.idCurrency==2){
                 this.selectedCurrency="Dólares";
             }          
-        }        
+        } , 
+        calculateTCEA :function(amount,share, termInput){
+            let Finance = require('financejs');
+            let finance = new Finance();
+            
+            let arr=[];
+            let entry=(-1)*amount;
+            arr.push(entry);
+            for (let i=0;i<termInput;i++){
+                arr.push(parseFloat(share));
+                console.log(arr[i]>0);
+            }
+
+            console.log("monto: ", amount);
+            console.log("entry: ", entry);
+            console.log("arr: ", arr);
+            //{ depth: 1500, cashFlow: cashFlow }
+            let tir=finance.IRR({ depth: entry, cashFlow: [-500,100,200,200]});
+            console.log("tir: ", tir);
+            
+                
+            let tcea=(Math.pow(1+(tir/100),12)-1)*100;
+            return tcea;
+
+        }
     },
     mounted() {
         this.getLeadClient();
