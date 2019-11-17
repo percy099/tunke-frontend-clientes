@@ -1,10 +1,15 @@
 <template>
     <div id="step4">
         <div class=""><h1 align="left">Selecciona tu cuenta</h1></div>
-        <div class="mt-4"><h4>Selecciona la cuenta donde se realizará el depósito</h4></div>
+        <div class="mt-4" v-if="hasAccounts"><h4>Selecciona la cuenta donde se realizará el depósito</h4></div>
         <div class="row">
             <div class="col-3"></div>
-            <div class="col-6"><div class="my-4 "> <v-select class="inpt" v-model="selectedAccount" :required="!selectedAccount" :options="optionsAccount"  label="accountNumber" @input="setActiveAccountF"/></div></div>
+            <div class="col-6">
+                <div class="my-4 "> 
+                    <v-select v-if="hasAccounts" class="inpt" v-model="selectedAccount" :required="!selectedAccount" :options="optionsAccount"  label="accountNumber" @input="setActiveAccountF"/>
+                    <h5 v-else>Usted no cuenta con cuentas de la moneda de la campaña</h5>
+                </div>
+            </div>
         </div>
         <div class>
             <h4>Cuenta Seleccionada: {{activeAccountLoan.accountNumber}}</h4>
@@ -17,8 +22,8 @@
             <button class="finish ml-5 text-white p-2 btn btn-primary btnNu" @click="requestLoan">Finalizar</button>
         </div>
         <!--Ventana modal de la simulacion-->  
-        <ModalOpenAccount v-if="showModalAccount" @close="desactivaVentana">
-            <h3 slot="header">custom header</h3>
+        <ModalOpenAccount style="z-index:9000" v-if="showModalAccount" @close="desactivaVentana">
+            <h3 slot="header" style="z-index:9000">custom header</h3>
         </ModalOpenAccount>
     </div>
 </template>
@@ -42,7 +47,8 @@ export default {
             //Accounts
             selectedAccount:false,
             optionsAccount: [],
-            showModalAccount:false
+            showModalAccount:false,
+            hasAccounts : false
         };
     },
     computed:{
@@ -58,7 +64,11 @@ export default {
                   let response_create = res.data;
                   this.optionsAccount=[];                
                   for (let i=0; i<response_create.accounts.length;i++){
-                      this.optionsAccount.push(response_create.accounts[i]);
+                      if(this.person.campaign.idCurrency==response_create.accounts[i].idCurrency)
+                        this.optionsAccount.push(response_create.accounts[i]);
+                      else 
+                        continue;
+                      this.hasAccounts = true;
                   }
               }).catch(error=>
               {
@@ -68,9 +78,6 @@ export default {
                   text: 'Error en la captura de cuentas por cliente'
                   })
               })
-        },
-        openAccount:function(){
-            //ir a la ventana de apertura de cuenta
         },
         requestLoan:function(){
             //validar el tipo de moneda de la cuenta
@@ -123,6 +130,7 @@ export default {
         },
         desactivaVentana: function(){
             this.showModalAccount=false;
+            this.updateAccounts();
             //this.setShowModalAccount(false);
         },
         activaVentana: function(){

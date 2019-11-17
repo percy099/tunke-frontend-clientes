@@ -4,7 +4,8 @@ export function doCreateAccount(idPer,cur){
     let url =  process.env.VUE_APP_API_URL + 'api/openAccount/';
     var body ={
         "idPerson" : idPer,
-        "currency" : cur
+        "currency" : cur,
+        "origin" : 1
     }
     
     return axios.post(url,body);

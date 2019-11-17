@@ -71,7 +71,7 @@ export default {
                    this.changeFlagTimer(true);
                    return false;
                }
-
+               this.token.input = this.token.input.toUpperCase();
                if(this.token.input==this.token.received){
                    console.log("token igual");
                    let body={

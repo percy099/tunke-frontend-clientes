@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <form-wizard ref="wizardLendingMod" title="" next-button-text="Siguiente" subtitle="" color="#2CFFBA" shape="circle" 
-        back-button-text="Atrás" finish-button-text="Finalizar" @on-complete="onComplete"
+        back-button-text="Atrás" finish-button-text="Finalizar"
         step-size="sm" id="container">
             <tab-content title="Identifícate" class="" :before-change="verificationToken">
                <Step1Lending></Step1Lending>
@@ -15,6 +15,7 @@
             <tab-content title="Elige tu cuenta" class="">
                 <Step4Lending></Step4Lending>
             </tab-content>
+            <button style="display:none;" slot="finish">Finish</button>
         </form-wizard>
     </div>
 </template>
@@ -50,20 +51,6 @@ export default {
         ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken']),
         nextWindow(){
             this.$refs.wizardLendingMod.nextTab();
-        }
-        ,
-        onComplete (){
-
-            accountDA.doCreateAccount(this.person.idPerson,this.currency).then((res) =>{
-                  this.$router.push('/summaryLoan');
-              }).catch(error=>
-              {
-                  Swal.fire({
-                  title: 'Error',
-                  type: 'error',
-                  text: 'Error en la solicitud de préstamo'
-                  })
-              })
         },
         verificationToken(){
             
@@ -81,7 +68,7 @@ export default {
                    this.changeFlagTimer(true);
                    return false;
                }
-
+               this.token.input = this.token.input.toUpperCase();
                if(this.token.input==this.token.received){
                    console.log("token igual");
                    let body={
