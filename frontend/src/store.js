@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    selectedFirstButton:false, /* false: "pidelo aqui"  true:"simulation"*/
     simulationShareSelected:-1,
     showModalAccount:false,
     termsReadLoan:false,
@@ -20,6 +21,7 @@ export default new Vuex.Store({
       status:false,
       simulation:''
     },
+    activeTypeDoc:null,
     activeTypeLoan:null,
     activeShare:null,
     activeTerm:null,
@@ -63,7 +65,8 @@ export default new Vuex.Store({
           name: '',
           startDate: ''
       },
-      idLead:''
+      idLead:'',
+      totalAccounts: 0
 
     },
     token:{
@@ -122,6 +125,9 @@ export default new Vuex.Store({
     }, 
     setActiveAccountLoan(state, activeAccountLoan) {
       state.activeAccountLoan = activeAccountLoan;
+    }, 
+    setActiveTypeDoc(state, activeTypeDoc) {
+      state.activeTypeDoc = activeTypeDoc;
     },
     setTermsReadLoan(state, termsReadLoan) {
       state.termsReadLoan = termsReadLoan;
@@ -134,6 +140,9 @@ export default new Vuex.Store({
     },
     changeFlagTimer(state,flag){
       state.flagRestartTimer=flag;
+    }, 
+    changeSelectedFirstButton(state, selectedFirstButton){
+      state.selectedFirstButton=selectedFirstButton;
     },
     changeClientTerms(state,terms){
       state.clientAcceptedTerms=terms;
@@ -162,6 +171,7 @@ export default new Vuex.Store({
 
       state.person.activeCampaigns=person_data.activeCampaigns;
       state.person.activeLoans=person_data.activeLoans;
+      state.person.totalAccounts=person_data.totalAccounts;
 
       if (person_data.activeCampaigns){        
         state.person.campaign=person_data.campaign;
@@ -281,6 +291,9 @@ export default new Vuex.Store({
     },
     setActiveProcessId(context, processId) {
       context.commit('setProcessId', processId);
+    }, 
+    setActiveTypeDocs(context, activeTypeDoc) {
+      context.commit('setActiveTypeDoc', activeTypeDoc);
     },
     setTermsReadLoans(context, status) {
       context.commit('setTermsReadLoan', status);
@@ -299,6 +312,9 @@ export default new Vuex.Store({
     },
     fillParameterSettings(context,parameters){
       context.commit('setParameters',parameters);
+    },
+    setSelectedFirstButton(context,selectedFirstButton){
+      context.commit('changeSelectedFirstButton',selectedFirstButton)
     }
   }
 })

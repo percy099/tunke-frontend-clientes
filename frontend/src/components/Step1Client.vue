@@ -48,7 +48,7 @@ export default {
     name : 'Step1Client',
     data(){
         return {
-            counter: 3,
+            counter: 0,
             tokenSended: false,
             hiddenNumber:'',
             hiddenEmail:'',
@@ -65,10 +65,10 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','token','flagRestartTimer'])
+        ...mapState(['person','token','flagRestartTimer','parameterSetting'])
     },
     methods:{
-        ...mapActions(['fillToken','changeFlagTimer']),
+        ...mapActions(['fillToken','changeFlagTimer','fillParameterSettings']),
         getToken(){
             const TokenGenerator = require('uuid-token-generator');
             const tokgen = new TokenGenerator(128, TokenGenerator.BASE62);
@@ -105,14 +105,11 @@ export default {
         },
         sendToSMS(){    
             if(this.counter>0){
-                this.timerOff=false;
-                //if(this.counter!=3) this.updateCountdown();                   
+                this.timerOff=false;                
                 this.counter = this.counter - 1;
                 this.tokenSended=true;                
                 
                 //enviar señal al back para enviar SMS
-                //this.getToken();
-                
                 accountDA.doGetToken(this.person.email1,this.person.cellphone1,0).then((res) =>{
                       let token_data = res.data;
                       console.log(res.data);
@@ -125,6 +122,11 @@ export default {
                       console.log(this.person.cellphone1);
                   }).catch(error=>
                   {
+                      this.timerOff=true;            
+                      this.counter = this.counter + 1;
+                      this.tokenSended=false;    
+                      this.changeFlagTimer(true);
+
                       Swal.fire({
                       title: 'Error',
                       type: 'error',
@@ -144,13 +146,11 @@ export default {
         },
         sendToEmail(){      
             if(this.counter>0){
-                this.timerOff=false;
-                //if(this.counter!=3) this.updateCountdown();                   
+                this.timerOff=false;               
                 this.counter = this.counter - 1;
                 this.tokenSended=true;                
                 
                 //enviar señal al back para enviar correo
-                //this.getToken();
                 accountDA.doGetToken(this.person.email1,this.person.cellphone1,1).then((res) =>{
                       let token_data = res.data;
                       
@@ -164,6 +164,11 @@ export default {
                       
                   }).catch(error=>
                   {
+                      this.timerOff=true;            
+                      this.counter = this.counter + 1;
+                      this.tokenSended=false;    
+                      this.changeFlagTimer(true);
+
                       Swal.fire({
                       title: 'Error',
                       type: 'error',
@@ -217,6 +222,9 @@ export default {
     },
     updated(){
         this.token.input = this.tokenAux;
+    },
+    mounted(){
+        this.counter=this.parameterSetting.maxTokenSends;      
     }
 }
 </script>

@@ -7,19 +7,33 @@
             <div class="col-6">
                 <div class="my-4 "> 
                     <v-select v-if="hasAccounts" class="inpt" v-model="selectedAccount" :required="!selectedAccount" :options="optionsAccount"  label="accountNumber" @input="setActiveAccountF"/>
-                    <h5 v-else>Usted no cuenta con cuentas de la moneda de la campaña</h5>
+                    <h5 class="noAccounsts" align=center v-else>Usted no cuenta con cuentas de la moneda de la campaña</h5>
                 </div>
             </div>
         </div>
-        <div class>
-            <h4>Cuenta Seleccionada: {{activeAccountLoan.accountNumber}}</h4>
-            <h4>Tipo de cuenta     : {{activeAccountLoan.idAccountType}}</h4>
-            <h4>Fecha de apertura  : {{activeAccountLoan.openingDate}}</h4>
-            <h4>Moneda             : {{activeAccountLoan.currencyName}}</h4>
+        <div class="row mt-4">                  
+            <div class="col-md-6 benefit"><h5 class="boldWords" align="left">Cuenta seleccionada</h5></div>
+            <div class="col-md-1 benefit"><h5 class="boldWords" align="left">:</h5></div>
+            <div class="col-md-4 benefit"><h5 class="detail" align="left">{{activeAccountLoan.accountNumber}}</h5></div>
+        </div>
+        <div class="row mt-4">                  
+            <div class="col-md-6 benefit"><h5 class="boldWords" align="left">Tipo de cuenta</h5></div>
+            <div class="col-md-1 benefit"><h5 class="boldWords" align="left">:</h5></div>
+            <div class="col-md-4 benefit"><h5 class="detail" align="left">{{typeAccount}}</h5></div>
+        </div>
+        <div class="row mt-4">                  
+            <div class="col-md-6 benefit"><h5 class="boldWords" align="left">Fecha de apertura</h5></div>
+            <div class="col-md-1 benefit"><h5 class="boldWords" align="left">:</h5></div>
+            <div class="col-md-4 benefit"><h5 class="detail" align="left">{{activeAccountLoan.openingDate}}</h5></div>
+        </div>
+        <div class="row mt-4">                  
+            <div class="col-md-6 benefit"><h5 class="boldWords" align="left">Moneda</h5></div>
+            <div class="col-md-1 benefit"><h5 class="boldWords" align="left">:</h5></div>
+            <div class="col-md-4 benefit"><h5 class="detail" align="left">{{activeAccountLoan.currencyName}}</h5></div>
         </div>
         <div align="center">
             <button class="openAccount text-white p-2 btn btn-primary" @click="activaVentana">Abrir cuenta</button>
-            <button class="finish ml-5 text-white p-2 btn btn-primary btnNu" @click="requestLoan">Finalizar</button>
+            <button class="finish ml-5 text-white p-2 btn btn-primary btnNu" @click="requestLoan" :disabled="!hasAccounts">Depositar</button>
         </div>
         <!--Ventana modal de la simulacion-->  
         <ModalOpenAccount style="z-index:9000" v-if="showModalAccount" @close="desactivaVentana">
@@ -48,19 +62,22 @@ export default {
             selectedAccount:false,
             optionsAccount: [],
             showModalAccount:false,
-            hasAccounts : false
+            hasAccounts : false,
+            typeAccount:''
         };
     },
     computed:{
-        ...mapState(['person','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList']) //showModalAccount
+        ...mapState(['person','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList','selectedFirstButton']) //showModalAccount
     },
     methods:{
-        ...mapActions(['changeCurrency','setActiveAccountLoans','setShowModalAccount','setSimulationShareSelected']),
+        ...mapActions(['changeCurrency','setActiveAccountLoans','setShowModalAccount','setSimulationShareSelected','setSelectedFirstButton']),
         setActiveAccountF: function(val){
             this.setActiveAccountLoans(val);
+            if(this.activeAccountLoan.idAccountType) {this.typeAccount="Cuenta corriente";}
         },
         updateAccounts: function(){
             loanDA.doRequestAccountsByClient(this.person.idClient).then((res) =>{
+                console.log(res.data);
                   let response_create = res.data;
                   this.optionsAccount=[];                
                   for (let i=0; i<response_create.accounts.length;i++){
@@ -86,10 +103,13 @@ export default {
                 let shareLoan=0;
                 //obtain share
                 console.log("simulationSelected:", this.simulationShareSelected);
-                if (this.simulationShareSelected!=-1 && this.simulationShareSelected!=4 ){
+                if (this.simulationShareSelected!=-1 && !this.selectedFirstButton ){
+                    console.log("Se ingreso desde alguna simulacion")
                     shareLoan=this.simulationList[this.simulationShareSelected].share;
-                }else if (this.simulationShareSelected==4){
+                }else if (this.selectedFirstButton){
                         //calcular share
+                    console.log("Se ingreso desde pidelo aqui")
+                    shareLoan=this.activeTerm.value;
                 }
                 
                 let commissionLoan=(this.parameterSetting.commissionPercentage*this.activeValueLoan/100).toFixed(2);
@@ -142,10 +162,7 @@ export default {
         ModalOpenAccount
     },
     mounted() {
-        this.updateAccounts();
-    },
-    updated(){
-        //this.updateAccounts();
+        this.updateAccounts();   
     }
     
 }

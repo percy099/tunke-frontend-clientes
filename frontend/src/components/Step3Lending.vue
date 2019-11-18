@@ -12,7 +12,6 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-4"><input disabled type="text" class="form-control inpt" v-model="selectedTypeLoan" @input="setActiveTypeLoanF"></div>
-                    <!--div class="col-sm-4"> <v-select class="inpt" v-model="selectedTypeLoan" :required="!selectedTypeLoan" :options="optionsTypeLoan"  label="text" @input="setActiveTypeLoanF"/></div-->
                     <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTypeShare" :required="!selectedTypeShare" :options="optionsShare"  label="text" @input="setActiveShareF"/></div>
                     <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTerm" :required="!selectedTerm" :options="optionsTerm"  label="text" @input="setActiveTermF"/></div>
                 </div>
@@ -29,15 +28,19 @@
                 <div class="row"> 
                     <div class="col-sm-3"><h3></h3></div>
                     <div class="col-sm-3"><input disabled type="text" class="form-control inpt" v-model="selectedCurrency" @input="setActiveTypeCurrencyF"></div>
-                    <!--div class="col-sm-3"><v-select class="inpt" v-model="selectedCurrency" :required="!selectedCurrency" :options="optionsTypeCoin"  label="text" @input="setActiveTypeCoinF"/></div-->
                     <div class="col-sm-3"><input class="inpt" type="number" v-model="valueLoan"></div>
-                    <!--vue-range-slider ref="slider" v-model="activeValueLoan" :min="minLoan" :max="maxLoan" :bg-style="bgStyle" :tooltip-style="tooltipStyle" :process-style="processStyle"></vue-range-slider-->
+                    <div class="slidecontainer">
+                        <h5>{{minLoan}}</h5>
+                        <!--input type="range" class="custom-range my-4" min="minLoan" max="maxLoan" step="10" id="customRange3"-->
+                        <input type="range" min=minLoan max=maxLoan value="50" class="slider" id="myRange">
+                    </div>
+                        <h5>{{maxLoan}}</h5>
                     <div class="col-sm-3"><h3></h3></div>
                 </div>
                 <div class="row"> 
                     <div class="col-sm-3"><h3></h3></div>
                     <div class="col-sm-3 button_pos" align="center"><button class="simulation" @click="activaVentana">Simular </button></div>
-                    <div class="col-sm-3 button_pos" align="center"><button class="request" @click="loanSolicitude">Pídelo aquí</button></div>
+                    <div class="col-sm-3 button_pos" align="center"><button class="request" @click="solicitudeHere">Pídelo aquí</button></div>
                    <div class="col-sm-3"><h3></h3></div>
                 </div>
             </div>
@@ -74,8 +77,6 @@
 import * as loanDA from '@/dataAccess/loanDA.js'
 import {mapActions,mapState} from 'vuex'
 import Swal from 'sweetalert2'
-//import 'vue-range-component/dist/vue-range-slider.css'
-//import VueRangeSlider from 'vue-range-component'
 import ModalStep3Lending from '@/components/ModalStep3Lending.vue'
 import ModalScheduleLending from '@/components/ModalScheduleLending.vue'
 
@@ -85,11 +86,13 @@ export default {
     },
     data(){
         return {
+            value:1,
             showModal:false,
             comision:'',
-            minLoan:50,
+            minLoan:550,
             maxLoan:1000,
             valueLoan: '',
+            sliderValue:0,
          /*   bgStyle : {
         backgroundColor: '#fff',
         boxShadow: 'inset 0.5px 0.5px 3px 1px rgba(0,0,0,.36)'
@@ -123,15 +126,16 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList','parameterSetting','simulationShareSelected'])
+        ...mapState(['person','currency','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList','parameterSetting','simulationShareSelected','selectedFirstButton'])
     },
     methods:{
-        ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected']),
+        ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected','setSelectedFirstButton']),
         loanSolicitude(){
             if (this.activeShare!=null && this.activeTerm!=null && this.activeValueLoan!=0 && this.activeValueLoan>0){
                 ////simulationShareSelected
                 //4: cuando no se ha simulado
                 //this.setSimulationShareSelected(4);
+                //this.setSelectedFirstButton(true);
                 this.method();
             }else{
                 Swal.fire({
@@ -141,6 +145,11 @@ export default {
                       })
             }
         },
+        solicitudeHere(){
+            this.setSelectedFirstButton(true);
+            this.loanSolicitude();
+        }
+        ,
         desactivaVentana: function(){
             this.showModal=false;
         },
@@ -197,7 +206,8 @@ export default {
             }
         },
         calculateDataGeneral:function(termInput){
-            let tea=this.person.campaign.interestRate;                  
+            let tea=this.person.campaign.interestRate;      
+            //console.log("interestRate: ",this.person.campaign.interestRate);
             //let tea=22;
 
             let tem=Math.pow(1+(tea/100),1/12)-1;
@@ -231,21 +241,6 @@ export default {
         },
         desactivaModalSch: function(){
             this.fillShowModalSchedule(false,'');
-        },
-        getLeadClient:function(){
-            console.log(this.person.idLead);
-            loanDA.doRequestLead(this.person.idLead).then((res) =>{
-                let lead_data = res.data;
-                console.log(lead_data)
-                this.fillLead(lead_data);
-            }).catch(error=>
-                  {
-                      Swal.fire({
-                      title: 'Error',
-                      type: 'error',
-                      text: 'Error en la captura del Lead del cliente'
-                      })
-            })
         },
         setActiveTypeLoanF:function(val){
             this.setActiveTypeLoans(val);
@@ -303,14 +298,18 @@ export default {
             return tcea;
 
         }
+        ,
+        getLoan(){
+            let slider = document.getElementById("myRange");
+            this.sliderValue=slider.value;
+        }
     },
     mounted() {
-        this.getLeadClient();
         this.fillShowModalSchedule(false,'');
         this.updateTypeCurrency();
+        this.setSelectedFirstButton(false);
     },
     components:{
-        VueRangeSlider,
         ModalStep3Lending,
         ModalScheduleLending
     },

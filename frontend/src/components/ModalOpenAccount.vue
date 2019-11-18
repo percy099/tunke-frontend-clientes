@@ -105,7 +105,7 @@ export default {
         };
     },
     computed:{
-        ...mapState(['person','currency','termsReadLoan','processId','showModalAccount','setShowModalAccount']) 
+        ...mapState(['person','currency','termsReadLoan','processId','showModalAccount','setShowModalAccount','parameterSetting']) 
     },
     methods:{
         ...mapActions(['changeCurrency','setTermsReadLoans']),
@@ -117,18 +117,27 @@ export default {
         },
         openAccount (){
             if (this.acceptTerms){
-              accountDA.doCreateAccount(this.person.idPerson,this.person.campaign.idCurrency).then((res) =>{
-                    let response_create = res.data;
-                    console.log("response open account",response_create);
-                    this.$emit('close');
-                }).catch(error=>
-                {
+                if(this.person.totalAccounts+1<=this.parameterSetting.maxAccountsNumber){
+                        accountDA.doCreateAccount(this.person.idPerson,this.person.campaign.idCurrency).then((res) =>{
+                            let response_create = res.data;
+                            console.log("response open account",response_create);
+                            this.$emit('close');
+                        }).catch(error=>
+                        {
+                            Swal.fire({
+                            title: 'Error',
+                            type: 'error',
+                            text: 'Error al crear la cuenta'
+                            })
+                        })
+                }else{
                     Swal.fire({
-                    title: 'Error',
-                    type: 'error',
-                    text: 'Error al crear la cuenta'
-                    })
-                })
+                            title: 'Se superó el límite de cuentas abiertas',
+                            type: 'error',
+                            text: 'Estimado cliente, usted ya cuenta con muchas cuentas abiertas en Tunke.'
+                            });
+                    //this.$router.push('/');
+                }
             }else{
               Swal.fire({
                     title: 'Error',

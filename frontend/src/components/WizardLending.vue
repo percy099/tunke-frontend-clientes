@@ -9,7 +9,7 @@
             <tab-content title="Elige tu campaña" class="">
                 <Step2Lending></Step2Lending>
             </tab-content>
-            <tab-content title="Simula tu préstamo" class="">
+            <tab-content title="Simula tu préstamo" class="" :before-change="validateSimulation">
                 <Step3Lending :method="nextWindow"></Step3Lending>
             </tab-content>
             <tab-content title="Elige tu cuenta" class="">
@@ -44,13 +44,32 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','nameWizardNext'])
+        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','nameWizardNext','lead','activeShare','activeTerm','activeValueLoan','activeValueLoan'])
         
     },
     methods:{
-        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken']),
+        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','fillLead']),
         nextWindow(){
             this.$refs.wizardLendingMod.nextTab();
+        },
+        
+        getLeadClient:function(){
+            loanDA.doRequestLead(this.person.idLead).then((res) =>{
+                let lead_data = res.data;
+                console.log("LEAD: ",lead_data)
+                this.fillLead(lead_data);
+            }).catch(error=>{
+
+                //if(!this.person.idLead){                      
+                    Swal.fire({
+                        title: 'Error',
+                        type: 'error',
+                        text: 'Error en la captura del Lead del cliente'
+                    });
+                    this.$router.push('/');
+                //}
+
+            })
         },
         verificationToken(){
             
@@ -82,8 +101,10 @@ export default {
                           //ya tiene prestamos en proceso
                           router.push('/LendingActive');
                         }else{
+
                           if(this.person.activeCampaigns){
                             //tiene campañas entonces sigue el flujo
+                            this.getLeadClient();
                             return true;
                           }else{
                             //no tiene campañas 
@@ -108,10 +129,22 @@ export default {
                     title: 'Error',
                     type: 'error',
                     text: 'Cantidad de intentos superados.'
-                })
+                });
                 this.$router.push('/');
             }
             
+        },
+        validateSimulation(){
+            if (this.activeShare!=null && this.activeTerm!=null && this.activeValueLoan!=0 && this.activeValueLoan>0){
+                return true;
+            }else{
+                Swal.fire({
+                    title: 'Información incompleta',
+                    type: 'warning',
+                    text: 'Debe ingresar completar todos los campos requeridos'
+                });
+                return false;
+            }
         }
     },    
     mounted(){

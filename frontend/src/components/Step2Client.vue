@@ -98,30 +98,30 @@ export default {
         },
         openAccount: function(accountType){
         
-        var i, tabcontent, tablinks, btn, buttons;
-        if(accountType === 'simpleAccount'){
-            btn = 'btnSimple';
-        }
-        else if(accountType === 'millionaireAccount'){
-            btn = 'btnMillionaire'
-        }
-        else if(accountType === 'superRate'){
-            btn = 'btnSuperRate';
-        }
-        
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
+                var i, tabcontent, tablinks, btn, buttons;
+                if(accountType === 'simpleAccount'){
+                    btn = 'btnSimple';
+                }
+                else if(accountType === 'millionaireAccount'){
+                    btn = 'btnMillionaire'
+                }
+                else if(accountType === 'superRate'){
+                    btn = 'btnSuperRate';
+                }
+                
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
 
-       
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("active");
-        }
+            
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].classList.remove("active");
+                }
 
-        document.getElementById(accountType).style.display = "block";
-        document.getElementById(btn).classList.add('active');
+                document.getElementById(accountType).style.display = "block";
+                document.getElementById(btn).classList.add('active');
         },
         changeCurr(cur){
             this.changeCurrency(cur);

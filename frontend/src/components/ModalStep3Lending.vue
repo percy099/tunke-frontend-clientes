@@ -89,7 +89,6 @@
 
 import {mapActions,mapState} from 'vuex'
 
-
 export default {
     props:{
         next: { type: Function }
@@ -100,10 +99,10 @@ export default {
         };
     },
     computed:{
-        ...mapState(['person','showModalSchedule','simulationList','simulationShareSelected']) 
+        ...mapState(['person','showModalSchedule','simulationList','simulationShareSelected','selectedFirstButton']) 
     },
     methods:{
-        ...mapActions(['changeCurrency','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected']),
+        ...mapActions(['changeCurrency','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected','setSelectedFirstButton']),
         activaModalSch: function(simulationOption){
             let data={
                 "status":true,
@@ -114,6 +113,7 @@ export default {
         },
         requestLoan: function(simulationOption){
             this.setSimulationShareSelected(simulationOption);
+            this.setSelectedFirstButton(false);
             this.next();
         },
         updateCurrencySymbol:function(){

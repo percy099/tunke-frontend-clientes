@@ -35,25 +35,33 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','processId'])
+        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','processId','parameterSetting'])
         
     },
     methods:{
         ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','setActiveProcessId']),
         onComplete (){
-
-            accountDA.doCreateAccount(this.person.idPerson,this.currency).then((res) =>{
-                  let response_create = res.data;
-                  this.captureResponse(response_create);
-                  this.$router.push('/summarySale');
-              }).catch(error=>
-              {
-                  Swal.fire({
-                  title: 'Error',
-                  type: 'error',
-                  text: 'Error al crear la cuenta'
-                  })
-              })
+            if(this.person.totalAccounts+1<=this.parameterSetting.maxAccountsNumber){
+                    accountDA.doCreateAccount(this.person.idPerson,this.currency).then((res) =>{
+                        let response_create = res.data;
+                        this.captureResponse(response_create);
+                        this.$router.push('/summarySale');
+                    }).catch(error=>
+                    {
+                        Swal.fire({
+                        title: 'Error',
+                        type: 'error',
+                        text: 'Error al crear la cuenta'
+                        })
+                    })
+            }else{
+                Swal.fire({
+                        title: 'Se superó el límite de cuentas abiertas',
+                        type: 'error',
+                        text: 'Estimado cliente, usted ya cuenta con muchas cuentas abiertas en Tunke.'
+                    });
+                this.$router.push('/');
+            }
         },
         verificationToken(){
             

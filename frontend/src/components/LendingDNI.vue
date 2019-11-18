@@ -8,9 +8,11 @@
             <div class="col-sm-6 container-fluid d-flex justify-content-center mt-5 mb-4">
               <form id="form_openAcount" @submit.prevent='enterDni'>
                       <h2 class="text-center mt-5">Ingresa tu DNI</h2>
-                      <h6 class="ml-5 mt-4">Número de DNI</h6>
+                      <h6 class="ml-5 mt-4">Tipo de documento</h6>
+                      <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTypeDoc" :required="!selectedTypeDoc" :options="optionsTypeDoc"  label="text" @input="setActiveTypeDocF"/></div>
+                      <h6 class="ml-5 mt-4">Número de documento</h6>
                       <input id="txt_dni" type="text" class="form-control ml-5 mt-1" maxlength="8" minlength="8"
-                      @keypress="isNumber($event)" placeholder="DNI"
+                      @keypress="isNumber($event)" placeholder="N° documento"
                        v-model.trim="$v.dni.$model" :class="{
                          'is-invalid' : $v.dni.$error, 'is-valid' : !$v.dni.$invalid }">
                       <div class="valid-feedback ml-5">Dni Válido</div>
@@ -31,7 +33,7 @@
                           <br> Personales</a>
                           </h6> 
                           </label>
-                          <button class="mt-4 text-white btn" type="submit">Empieza ahora</button>
+                          <button class="mt-4 text-white btn" align="center" type="submit">Empieza ahora</button>
                       </div>           
               </form>
             </div>
@@ -50,6 +52,7 @@
     import {mapActions} from 'vuex'
     import router from '@/router.js'
     import * as personDA from '@/dataAccess/personDA.js'
+    import * as loanDA from '@/dataAccess/loanDA.js'
     import Swal from 'sweetalert2'
 
     import { required, minLength, maxLength, numeric} from 'vuelidate/lib/validators'
@@ -58,6 +61,12 @@
       name: 'openingDNI',
       data(){
         return {
+          selectedTypeDoc:false,
+          optionsTypeDoc: [{
+              value:1, text:'DNI'
+            },{
+              value:2, text:'Carnét de extranjería'
+            }],
           dni : '',
           termsAccept:false,
           termsRead:false
@@ -72,10 +81,10 @@
         }
       },
       computed:{
-        ...mapState(['person','processId']) 
+        ...mapState(['person','processId','parameterSetting','activeTypeDoc']) 
       },
       methods:{
-          ...mapActions(['fill','setActiveProcessId']),
+          ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs']),
           enterDni(){
               if (this.termsAccept){
                   //1: apertura de cuentas
@@ -120,6 +129,9 @@
               return true;
             }
           },
+          setActiveTypeDocF:function(val){
+            this.setActiveTypeDocs(val);
+          },
           acceptTerms: function(){
             this.termsAccept=!this.termsAccept;
           } ,
@@ -147,7 +159,25 @@
                             ,
                       showCloseButton: true
                       })
-          }    
+          },
+          getParameterSettings:function(){
+            loanDA.doRequestParameters().then((res) =>{
+                        let response_create = res.data;
+                        this.fillParameterSettings(response_create);
+                        console.log("PARAMETROS DE CONFIGURACION")
+                        console.log(this.parameterSetting);
+                    }).catch(error=>
+                    {
+                        Swal.fire({
+                        title: 'Error',
+                        type: 'error',
+                        text: 'Error en la captura de parámetros de configuración'
+                        })
+                    })
+          }  
+      },
+      mounted(){
+        this.getParameterSettings();
       }
       
     }

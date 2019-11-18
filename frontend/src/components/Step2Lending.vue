@@ -21,7 +21,7 @@
                 </div>
             </div>
             </div>
-            <div class="listing-item" @click="activaVentana">
+            <div class="listing-item" @click="enableWindow">
                 <figure class="image">
                     <img src="@/images/vehicular.jpeg" alt="image">
                     <figcaption>
@@ -61,7 +61,7 @@
             </div>
         </div>
         <!--Ventana modal de información de la campaña-->  
-        <ModalStep2Lending v-if="showModal" @close="desactivaVentana">
+        <ModalStep2Lending v-if="showModal" @close="disableWindow">
             <h3 slot="header">custom header</h3>
         </ModalStep2Lending>
                
@@ -87,10 +87,10 @@ export default {
     },
     methods:{
         ...mapActions(['changeCurrency']),
-        desactivaVentana: function(){
+        disableWindow: function(){
             this.showModal=false;
         },
-        activaVentana: function(){
+        enableWindow: function(){
             this.showModal=true;
         }
     },

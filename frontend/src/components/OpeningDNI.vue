@@ -52,6 +52,7 @@
     import {mapActions} from 'vuex'
     import router from '@/router.js'
     import * as personDA from '@/dataAccess/personDA.js'
+    import * as loanDA from '@/dataAccess/loanDA.js'
     import Swal from 'sweetalert2'
 
     import { required, minLength, maxLength, numeric} from 'vuelidate/lib/validators'
@@ -74,10 +75,10 @@
         }
       },
       computed:{
-        ...mapState(['person','processId'])
+        ...mapState(['person','processId','parameterSetting'])
       },
       methods:{
-          ...mapActions(['fill','setActiveProcessId']),
+          ...mapActions(['fill','setActiveProcessId','fillParameterSettings']),
           enterDni(){
               //let res = personDA.doDniValidation(this.dni);
               if (this.termsAccept){
@@ -154,7 +155,25 @@
                             ,
                       showCloseButton: true
                       })
-          } 
+          },
+          getParameterSettings:function(){
+            loanDA.doRequestParameters().then((res) =>{
+                        let response_create = res.data;
+                        this.fillParameterSettings(response_create);
+                        console.log("PARAMETROS DE CONFIGURACION")
+                        console.log(this.parameterSetting);
+                    }).catch(error=>
+                    {
+                        Swal.fire({
+                        title: 'Error',
+                        type: 'error',
+                        text: 'Error en la captura de parámetros de configuración'
+                        })
+                    })
+          }   
+      },
+      mounted(){
+        this.getParameterSettings();
       }
       
     }
