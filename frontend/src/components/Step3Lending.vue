@@ -31,7 +31,7 @@
                     <div class=" col-sm-3 slidecontainer">
                         <h5>{{minLoan}}</h5>
                         <!--input type="range" class="custom-range my-4" min="10" max="20" step="10" id="customRange3"-->
-                        <input type="range" :min="minLoan" :max="maxLoan" step="10" v-model="valueLoan"  class="slider" id="myRange">
+                        <input type="range" min="200" max="800" step="10" v-model="valueLoan"  class="slider" id="myRange">
                         
                     </div>
                         <div>{{valueLoan}}</div>
