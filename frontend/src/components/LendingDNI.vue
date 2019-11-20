@@ -7,7 +7,7 @@
             
             <div class="col-sm-6 container-fluid d-flex justify-content-center mt-5 mb-4">
               <form id="form_openAcount" @submit.prevent='enterDni'>
-                      <h2 class="text-center mt-5">Ingresa tu DNI</h2>
+                      <h2 class="text-center mt-5">Ingresa tus datos</h2>
                       <h6 class="ml-5 mt-4">Tipo de documento</h6>
                       <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTypeDoc" :required="!selectedTypeDoc" :options="optionsTypeDoc"  label="text" @input="setActiveTypeDocF"/></div>
                       <h6 class="ml-5 mt-4">Número de documento</h6>

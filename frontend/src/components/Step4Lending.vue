@@ -101,30 +101,43 @@ export default {
             
             if (this.activeAccountLoan!='' && this.activeAccountLoan.idCurrency==this.person.campaign.idCurrency){
                 let shareLoan=0;
+                let shareTerm=0;
                 //obtain share
                 console.log("simulationSelected:", this.simulationShareSelected);
                 if (this.simulationShareSelected!=-1 && !this.selectedFirstButton ){
                     console.log("Se ingreso desde alguna simulacion")
                     shareLoan=this.simulationList[this.simulationShareSelected].share;
+                    shareTerm=this.simulationList[this.simulationShareSelected].term;
+
                 }else if (this.selectedFirstButton){
                         //calcular share
                     console.log("Se ingreso desde pidelo aqui")
-                    shareLoan=this.activeTerm.value;
+
+                    shareTerm=this.activeTerm.value;
+                    //calcular cuota
+                    let tea=this.person.campaign.interestRate;      
+                    let tem=Math.pow(1+(tea/100),1/12)-1;
+                    let amount=this.activeValueLoan;                  
+                    let amortization=amount*(1/shareTerm);
+                    let interesA=amount*tem;
+                    let comisionAmount=amount*this.parameterSetting.commissionPercentage/100;
+                    let shareNumber=amortization+interesA+comisionAmount;
+                    shareLoan=shareNumber.toFixed(2);  //cuota mensual
                 }
                 
                 let commissionLoan=(this.parameterSetting.commissionPercentage*this.activeValueLoan/100).toFixed(2);
 
                 /**/
-                console.log(this.person.idClient);
-                console.log(this.activeTerm.value);
-                console.log(this.activeValueLoan);
-                console.log(this.person.campaign.interestRate);
-                console.log(this.person.campaign.idCampaign);
-                console.log("shareLoan",shareLoan);
-                console.log(this.activeAccountLoan.idAccount);
-                console.log(commissionLoan);
+                console.log(this.person.idClient);              //cliente
+                console.log(shareTerm);                         //plazos
+                console.log(this.activeValueLoan);              //monto
+                console.log(this.person.campaign.interestRate); //interes
+                console.log(this.person.campaign.idCampaign);   //id campaña
+                console.log("shareLoan",shareLoan);             //cuota
+                console.log(this.activeAccountLoan.idAccount);  //idcuenta
+                console.log(commissionLoan);                    //comision
 
-                loanDA.doCreateLoan(this.person.idClient,this.activeTerm.value,parseFloat(this.activeValueLoan),parseFloat(this.person.campaign.interestRate),this.person.campaign.idCampaign,1,shareLoan, this.activeAccountLoan.idAccount, parseFloat(commissionLoan)).then((res) =>{
+                loanDA.doCreateLoan(this.person.idClient,shareTerm,parseFloat(this.activeValueLoan),parseFloat(this.person.campaign.interestRate),this.person.campaign.idCampaign,1,shareLoan, this.activeAccountLoan.idAccount, parseFloat(commissionLoan)).then((res) =>{
                     let response_create = res.data;
                     console.log("Resultado query cuentas: ",response_create);
                     this.$router.push('/summaryLoan');

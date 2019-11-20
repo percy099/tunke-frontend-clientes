@@ -28,12 +28,13 @@
                 <div class="row"> 
                     <div class="col-sm-3"><h3></h3></div>
                     <div class="col-sm-3"><input disabled type="text" class="form-control inpt" v-model="selectedCurrency" @input="setActiveTypeCurrencyF"></div>
-                    <div class="col-sm-3"><input class="inpt" type="number" v-model="valueLoan"></div>
-                    <div class="slidecontainer">
+                    <div class=" col-sm-3 slidecontainer">
                         <h5>{{minLoan}}</h5>
-                        <!--input type="range" class="custom-range my-4" min="minLoan" max="maxLoan" step="10" id="customRange3"-->
-                        <input type="range" min=minLoan max=maxLoan value="50" class="slider" id="myRange">
+                        <!--input type="range" class="custom-range my-4" min="10" max="20" step="10" id="customRange3"-->
+                        <input type="range" :min="minLoan" :max="maxLoan" step="10" v-model="valueLoan"  class="slider" id="myRange">
+                        
                     </div>
+                        <div>{{valueLoan}}</div>
                         <h5>{{maxLoan}}</h5>
                     <div class="col-sm-3"><h3></h3></div>
                 </div>
@@ -62,17 +63,6 @@
 </style>
 
 <script>
-/*
-:bg-style="bgStyle" :tooltip-style="tooltipStyle" :process-style="processStyle"
- :min="minLoan" :max="maxLoan"
-
-<h1> {{lead.idShareType}}</h1>
-        <h1> {{lead.minimumLoan}}</h1>
-        <h1> {{lead.maximumLoan}}</h1>
-        <h1> {{lead.active}}</h1>
-        <h1> {{lead.idCampaign}}</h1>
-        <h1> {{lead.idClient}}</h1>*/
-
 
 import * as loanDA from '@/dataAccess/loanDA.js'
 import {mapActions,mapState} from 'vuex'
@@ -136,6 +126,7 @@ export default {
                 //4: cuando no se ha simulado
                 //this.setSimulationShareSelected(4);
                 //this.setSelectedFirstButton(true);
+                console.log("monto de prestamo: ",this.activeValueLoan);
                 this.method();
             }else{
                 Swal.fire({
@@ -147,6 +138,7 @@ export default {
         },
         solicitudeHere(){
             this.setSelectedFirstButton(true);
+            console.log("pidelo aqui");
             this.loanSolicitude();
         }
         ,

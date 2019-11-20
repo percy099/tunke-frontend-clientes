@@ -8,9 +8,10 @@
             
             <div class="col-sm-6 container-fluid d-flex justify-content-center mt-5 mb-4">
               <form id="form_openAcount" @submit.prevent='enterDni'>
-                      <h2 class="text-center mt-5">Ingresa tu DNI</h2>
-                      <h6 class="ml-5 mt-4">Número de DNI</h6>
-  
+                      <h2 class="text-center mt-5">Ingresa tus datos</h2>
+                      <h6 class="ml-5 mt-4">Tipo de documento</h6>
+                      <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTypeDoc" :required="!selectedTypeDoc" :options="optionsTypeDoc"  label="text" @input="setActiveTypeDocF"/></div>
+                      <h6 class="ml-5 mt-4">Número de documento</h6>
                       <input id="txt_dni" type="text" class="form-control ml-5 mt-1" maxlength="8" minlength="8"
                       @keypress="isNumber($event)" placeholder="DNI"
                        v-model.trim="$v.dni.$model" :class="{
@@ -61,6 +62,12 @@
       name: 'openingDNI',
       data(){
         return {
+          selectedTypeDoc:false,
+          optionsTypeDoc: [{
+              value:1, text:'DNI'
+            },{
+              value:2, text:'Carnét de extranjería'
+            }],
           dni : '',
           termsAccept:false,
           termsRead:false
@@ -75,10 +82,10 @@
         }
       },
       computed:{
-        ...mapState(['person','processId','parameterSetting'])
+        ...mapState(['person','processId','parameterSetting','activeTypeDoc'])
       },
       methods:{
-          ...mapActions(['fill','setActiveProcessId','fillParameterSettings']),
+          ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs']),
           enterDni(){
               //let res = personDA.doDniValidation(this.dni);
               if (this.termsAccept){
@@ -131,6 +138,9 @@
           acceptTerms: function(){
             this.termsAccept=!this.termsAccept;
           } ,
+          setActiveTypeDocF:function(val){
+            this.setActiveTypeDocs(val);
+          },
           goPolitics(){
             this.termsRead=true;
             Swal.fire({
