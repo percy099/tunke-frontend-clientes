@@ -21,7 +21,7 @@
                   
                     <div class="col-sm-3"><h3></h3></div>
                     <div class="col-sm-3"><h3>Tipo de moneda</h3></div>
-                    <div class="col-sm-3"><h3>Monto</h3></div>
+                    <div class="col-sm-3"><h3>Monto  {{valueLoan}}</h3></div>
                     <div class="col-sm-3"><h3></h3></div>
                   
                 </div>
@@ -32,7 +32,6 @@
                         <h5>{{minLoan}}</h5>
                         <input type="range" :min="minLoan" :max="maxLoan" step="10" v-model="valueLoan"  class="slider" id="myRange">            
                     </div>
-                        <div>{{valueLoan}}</div>
                         <h5>{{maxLoan}}</h5>
                     <div class="col-sm-3"><h3></h3></div>
                 </div>
