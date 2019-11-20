@@ -30,9 +30,7 @@
                     <div class="col-sm-3"><input disabled type="text" class="form-control inpt" v-model="selectedCurrency" @input="setActiveTypeCurrencyF"></div>
                     <div class=" col-sm-3 slidecontainer">
                         <h5>{{minLoan}}</h5>
-                        <!--input type="range" class="custom-range my-4" min="10" max="20" step="10" id="customRange3"-->
-                        <input type="range" min="200" max="800" step="10" v-model="valueLoan"  class="slider" id="myRange">
-                        
+                        <input type="range" :min="minLoan" :max="maxLoan" step="10" v-model="valueLoan"  class="slider" id="myRange">            
                     </div>
                         <div>{{valueLoan}}</div>
                         <h5>{{maxLoan}}</h5>
@@ -79,21 +77,11 @@ export default {
             value:1,
             showModal:false,
             comision:'',
-            minLoan:550,
-            maxLoan:1000,
+            minLoan:200,
+            maxLoan:800,
             valueLoan: '',
             sliderValue:0,
-         /*   bgStyle : {
-        backgroundColor: '#fff',
-        boxShadow: 'inset 0.5px 0.5px 3px 1px rgba(0,0,0,.36)'
-        },
-        tooltipStyle : {
-        backgroundColor: '#666',
-        borderColor: '#666'
-        },
-        processStyle : {
-        backgroundColor: '#999'
-        },*/
+
             //Tipo de prestamo
             selectedTypeLoan:'Préstamo Efectivo',
             optionsTypeLoan: [{
@@ -122,10 +110,6 @@ export default {
         ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected','setSelectedFirstButton']),
         loanSolicitude(){
             if (this.activeShare!=null && this.activeTerm!=null && this.activeValueLoan!=0 && this.activeValueLoan>0){
-                ////simulationShareSelected
-                //4: cuando no se ha simulado
-                //this.setSimulationShareSelected(4);
-                //this.setSelectedFirstButton(true);
                 console.log("monto de prestamo: ",this.activeValueLoan);
                 this.method();
             }else{
@@ -308,19 +292,6 @@ export default {
     created() {
         this.fillDataTerms();
         this.comision=this.parameterSetting.commissionPercentage;
-        /*
-        this.enableCross = false;
-        this.bgStyle = {
-        backgroundColor: '#fff',
-        boxShadow: 'inset 0.5px 0.5px 3px 1px rgba(0,0,0,.36)'
-        };
-        this.tooltipStyle = {
-        backgroundColor: '#666',
-        borderColor: '#666'
-        };
-        this.processStyle = {
-        backgroundColor: '#999'
-        };*/
     },
     updated(){
         this.setActiveValueLoans(this.valueLoan);
