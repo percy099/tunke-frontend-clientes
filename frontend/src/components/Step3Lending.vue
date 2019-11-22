@@ -30,7 +30,7 @@
                     <div class="col-sm-3"><input disabled type="text" class="form-control inpt" v-model="selectedCurrency" @input="setActiveTypeCurrencyF"></div>
                     <div class=" col-sm-3 slidecontainer">
                         <h5>{{minLoan}}</h5>
-                        <input type="range" :min="minLoan" :max="maxLoan" step="10" v-model="valueLoan"  class="slider" id="myRange">            
+                        <input type="range" :min="minLoan" :max="maxLoan" step="50" v-model="valueLoan"  class="slider" id="myRange">            
                     </div>
                         <h5>{{maxLoan}}</h5>
                     <div class="col-sm-3"><h3></h3></div>
@@ -232,10 +232,6 @@ export default {
             this.setActiveValueLoans(val);
         },
         fillDataTerms: function(){
-            this.minLoan=this.lead.minimumLoan;
-            this.maxLoan=this.lead.maximumLoan;
-
-
             let min_Periodo=this.person.campaign.minimumPeriod;
             let max_Periodo=this.person.campaign.maximumPeriod;
             
@@ -294,9 +290,12 @@ export default {
     created() {
         this.fillDataTerms();
         this.comision=this.parameterSetting.commissionPercentage;
+        
     },
     updated(){
         this.setActiveValueLoans(this.valueLoan);
+        this.minLoan=this.lead.minimumLoan;
+        this.maxLoan=this.lead.maximumLoan;
     }
 }
 </script>

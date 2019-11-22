@@ -2,10 +2,16 @@
 <template id="modal-template" >
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-wrapper" @click="$emit('close')">
-        <div class="modal-container">
-          <div class="closeModalSimulation"><button @click="$emit('close')">X</button></div>
+      <div class="modal-wrapper printable" @click="$emit('close')">
+        <div class="modal-container printable">
+          <div class="closeModalSimulation non-printable"><button @click="$emit('close')">X</button></div>
           <div id="modalCalendar">
+              <!--h2 class="printable2">HOLA ESTO ES UNA PRUEBA</h2-->
+                <div class="printable2">
+                        <img class="logo" href="#" src="@/images/logo-tunke.png"  width="150" height="85">
+                </div>
+
+
               <h1 class="text-center">Detalles de la</h1>
               <h1 class="text-center">simulación</h1>
               <div class="container mt-5">
@@ -103,6 +109,11 @@
                       </div>
                   </div>
               </div>
+              <div align='center'><button class="non-printable"  @click="exportPDF">Exportar a PDF</button></div>
+              <div class="printable2">
+                        <div class="client" align="right">Cliente: {{person.firstName}} {{person.middleName}} {{person.fatherLastname}} {{person.motherLastname}}</div>
+                        <div class="dayToday" align="right">Fecha de simulación: {{todayDate}}</div>
+              </div>
           </div>
           
         </div>
@@ -130,7 +141,8 @@ export default {
             totalComission:'',
             totalAmortization:'',
             totalShare:'',
-            shares : []
+            shares : [],
+            todayDate: new Date
         }
     },
     computed:{
@@ -138,6 +150,9 @@ export default {
     },
     methods:{
         ...mapActions(['changeCurrency']),
+        exportPDF:function(){
+            window.print();
+        },
         updateData:function(){
             this.comision=this.parameterSetting.commissionPercentage;
             if (this.person.campaign.idCurrency==1){
@@ -193,6 +208,9 @@ export default {
               this.totalAmortization=parseFloat(this.totalAmortization)+parseFloat(amortization_);
               this.totalShare=parseFloat(this.totalShare)+parseFloat(fee);
             }
+
+            //para el pdf
+            this.todayDate=this.shares[0].date;
 
             this.totalInterest=(this.totalInterest).toFixed(2);
             this.totalComission=(this.totalComission).toFixed(2);
