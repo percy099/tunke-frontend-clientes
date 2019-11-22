@@ -54,13 +54,13 @@
                         <h5 class="detail" align="center"></h5>
                     </div>
                     <div class="col-sm-3 benefit" align="center">
-                        <a class="simulation" @click="activaModalSch(0)">Detalle de crédito</a>
+                        <a class="simulation" @click="activeModalSch(0)">Detalle de crédito</a>
                     </div>
                     <div class="col-sm-3 benefit" align="center">
-                        <a class="simulation" @click="activaModalSch(1)">Detalle de crédito</a>
+                        <a class="simulation" @click="activeModalSch(1)">Detalle de crédito</a>
                     </div>  
                     <div class="col-sm-3 benefit" align="center">
-                        <a class="simulation" @click="activaModalSch(2)">Detalle de crédito</a>
+                        <a class="simulation" @click="activeModalSch(2)">Detalle de crédito</a>
                     </div>  
                 </div> 
                 <div class="row">                  
@@ -103,7 +103,7 @@ export default {
     },
     methods:{
         ...mapActions(['changeCurrency','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected','setSelectedFirstButton']),
-        activaModalSch: function(simulationOption){
+        activeModalSch: function(simulationOption){
             let data={
                 "status":true,
                 "simulation":simulationOption

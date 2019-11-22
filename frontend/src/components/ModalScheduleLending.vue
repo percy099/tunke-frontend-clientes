@@ -213,7 +213,6 @@ export default {
     components:{
     },
     created(){
-        //this.updateData();
     }
     
 }

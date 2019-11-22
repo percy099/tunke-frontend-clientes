@@ -73,11 +73,10 @@ export default {
     },
     data(){
         return {
-            value:1,
             showModal:false,
             comision:'',
-            minLoan:200,
-            maxLoan:800,
+            minLoan:0,
+            maxLoan:0,
             valueLoan: '',
             sliderValue:0,
 
@@ -233,6 +232,10 @@ export default {
             this.setActiveValueLoans(val);
         },
         fillDataTerms: function(){
+            this.minLoan=this.lead.minimumLoan;
+            this.maxLoan=this.lead.maximumLoan;
+
+
             let min_Periodo=this.person.campaign.minimumPeriod;
             let max_Periodo=this.person.campaign.maximumPeriod;
             
