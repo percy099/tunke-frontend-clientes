@@ -210,7 +210,7 @@ export default {
             }
 
             //para el pdf
-            this.todayDate=this.shares[0].date;
+            this.todayDate=moment().format("DD/MM/YYYY");
 
             this.totalInterest=(this.totalInterest).toFixed(2);
             this.totalComission=(this.totalComission).toFixed(2);
