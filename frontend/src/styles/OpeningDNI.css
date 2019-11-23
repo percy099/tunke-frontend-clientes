@@ -42,8 +42,7 @@ input{
   font-size: 18px;
   font-weight: 350; 
   width: 44vh;
-  height: 8vh;
-  
+  height: 8vh;  
 }
 .form-control{
   height: 8%;
@@ -127,5 +126,5 @@ h6{
   background: #ffffff;
   border: none;
   font-weight: 360;
-
+  
 }

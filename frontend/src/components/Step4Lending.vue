@@ -137,7 +137,7 @@ export default {
                 console.log(this.activeAccountLoan.idAccount);  //idcuenta
                 console.log(commissionLoan);                    //comision
 
-                loanDA.doCreateLoan(this.person.idClient,shareTerm,parseFloat(this.activeValueLoan),parseFloat(this.person.campaign.interestRate),this.person.campaign.idCampaign,1,shareLoan, this.activeAccountLoan.idAccount, parseFloat(commissionLoan)).then((res) =>{
+                loanDA.doCreateLoan(this.person.idClient,shareTerm,parseFloat(this.activeValueLoan),parseFloat(this.person.campaign.interestRate),this.person.campaign.idCampaign,this.activeShare,shareLoan, this.activeAccountLoan.idAccount, parseFloat(commissionLoan)).then((res) =>{
                     let response_create = res.data;
                     console.log("Resultado query cuentas: ",response_create);
                     this.$router.push('/summaryLoan');

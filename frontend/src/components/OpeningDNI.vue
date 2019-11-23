@@ -10,9 +10,9 @@
               <form id="form_openAcount" @submit.prevent='enterDni'>
                       <h2 class="text-center mt-5">Ingresa tus datos</h2>
                       <h6 class="ml-5 mt-4">Tipo de documento</h6>
-                      <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTypeDoc" :required="!selectedTypeDoc" :options="optionsTypeDoc"  label="text" @input="setActiveTypeDocF"/></div>
+                      <div class="col-sm-4"> <v-select class="inpt" placeholder="   Tipo de documento" v-model="selectedTypeDoc" :required="!selectedTypeDoc" :options="optionsTypeDoc"  label="text" @input="setActiveTypeDocF"/></div>
                       <h6 class="ml-5 mt-4">Número de documento</h6>
-                      <input id="txt_dni" type="text" class="form-control ml-5 mt-1" maxlength="8" minlength="8"
+                      <input id="txt_dni" type="text" class="form-control ml-5 mt-1" :maxlength="maxLNumber" :minlength="minLNumber"
                       @keypress="isNumber($event)" placeholder="DNI"
                        v-model.trim="$v.dni.$model" :class="{
                          'is-invalid' : $v.dni.$error, 'is-valid' : !$v.dni.$invalid }">
@@ -70,7 +70,9 @@
             }],
           dni : '',
           termsAccept:false,
-          termsRead:false
+          termsRead:false,
+          minLNumber:-1,
+          maxLNumber:-1
         };
       },
       validations: {
@@ -89,6 +91,7 @@
           enterDni(){
               //let res = personDA.doDniValidation(this.dni);
               if (this.termsAccept){
+                if(this.activeTypeDoc!=null){
                   personDA.doDniValidation(this.dni).then((res) =>{
                     //1 : apertura de cuentas
                     //2 : prestamos
@@ -117,6 +120,12 @@
                       text: 'DNI inválido'
                       })
                   })  
+                  }else{
+                  Swal.fire({
+                      title: 'Tipo de documento',
+                      text: 'Es necesario seleccionar un tipo de documento'
+                      })
+                }
               } else{
                 Swal.fire({
                       title: 'Política de Protección de datos',
@@ -184,6 +193,18 @@
       },
       mounted(){
         this.getParameterSettings();
+      },
+      updated(){
+        
+        if(this.selectedTypeDoc && this.selectedTypeDoc.value==1){
+          this.minLNumber=8;
+          this.maxLNumber=8;
+        }
+        if(this.selectedTypeDoc && this.selectedTypeDoc.value==2){
+          this.minLNumber=12;
+          this.maxLNumber=12;
+          
+        }
       }
       
     }
