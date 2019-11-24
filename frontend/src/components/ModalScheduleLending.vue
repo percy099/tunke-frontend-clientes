@@ -30,7 +30,7 @@
                   <div class="row">
                       <div class="col-2"></div>
                       <div class="col-5 firstWord">Monto a financiar</div>
-                      <div class="col-4">{{activeValueLoan}}</div>
+                      <div class="col-4">{{currencySymbol}} {{activeValueLoan}}</div>
                   </div>
                   <hr>
                   <div class="row">

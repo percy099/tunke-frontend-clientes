@@ -139,10 +139,9 @@ export default {
                 return true;
             }else{
                 Swal.fire({
-                    title: 'Información incompleta',
-                    type: 'warning',
-                    text: 'Debe ingresar completar todos los campos requeridos'
-                });
+                      title: 'Datos incompletos',
+                      text: 'Por favor, complete todos los campos requeridos para solicitar un préstamo'
+                      })
                 return false;
             }
         }

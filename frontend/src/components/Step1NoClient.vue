@@ -5,7 +5,7 @@
             <h2>{{person.documentNumber}}</h2>
         </div>
         <div class="text-center"> 
-            <router-link :to="{path : '/openingDNI'}" href="#">¿Este no es tu DNI?</router-link>
+            <router-link :to="{path : '/openingDNI'}" href="#">¿Este no es tu {{activeTypeDoc.text}}?</router-link>
         </div>
         <p class="mt-3" align="justify">Para tu seguridad, por favor responde estas preguntas para ayudarnos a evitar fraudes.</p>
         <div class="mt-3 row justify-content-between">
@@ -77,10 +77,10 @@ import {mapState,mapActions} from 'vuex'
 export default {
     name : 'Step1NoClient',
     computed:{
-        ...mapState(['person','securityQuestions','answersSecurityQuestions'])
+        ...mapState(['person','securityQuestions','answersSecurityQuestions','activeTypeDoc'])
     },
     methods:{
-        ...mapActions(['completePosAnswerQuestion']),
+        ...mapActions(['completePosAnswerQuestion','setActiveTypeDocs']),
         posCheckBoxQuestions(question,position){
             let body={
                 "ques" : question,

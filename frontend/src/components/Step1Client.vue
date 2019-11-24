@@ -4,7 +4,7 @@
             <h1>¡Hola {{person.firstName}} {{person.fatherLastname}}!</h1>
             <h2>{{person.documentNumber}}</h2>
             <div class="text-center"> 
-                <router-link :to="{path : '/openingDNI'}" href="#">¿Este no es tu DNI?</router-link>
+                <router-link :to="{path : '/openingDNI'}" href="#">¿Este no es tu {{activeTypeDoc.text}}?</router-link>
             </div>
             <p></p>
             <button :disabled="tokenSended" type='button' class="btn btn-primary text-white btn-lg bnt-md btn-block" @click="sendToSMS">Enviar código por SMS a {{hiddenNumber}}</button>            
@@ -65,10 +65,10 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','token','flagRestartTimer','parameterSetting'])
+        ...mapState(['person','token','flagRestartTimer','parameterSetting','activeTypeDoc']) 
     },
     methods:{
-        ...mapActions(['fillToken','changeFlagTimer','fillParameterSettings']),
+        ...mapActions(['fillToken','changeFlagTimer','fillParameterSettings','setActiveTypeDocs']),
         getToken(){
             const TokenGenerator = require('uuid-token-generator');
             const tokgen = new TokenGenerator(128, TokenGenerator.BASE62);

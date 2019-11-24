@@ -47,7 +47,30 @@
 </style>
 
 <script>
-    
+/*
+window.onload=function(){
+    function ParseURLParameter(Parameter){
+      let FullURL=window.location.search.substring(1);
+      let ParametersArray=FullURL.split('&');
+      for (let i=0; i<ParametersArray.length;i++){
+        let CurrentParameter=ParametersArray[i].split('=');
+        if (CurrentParameter[0]==Parameter){
+          return CurrentParameter[1];
+        }
+      }
+    }
+
+    let PageName=ParseURLParameter('page');
+
+    if (typeof PageName!= 'undefined'){
+      if(PageName=='contact_us'){
+        alert(PageName);
+      }
+    }else{
+      alert('No Page Parameter found...');
+    }
+}
+  */  
     import {mapState} from 'vuex'
     import {mapActions} from 'vuex'
     import router from '@/router.js'
@@ -83,7 +106,7 @@
         }
       },
       computed:{
-        ...mapState(['person','processId','parameterSetting','activeTypeDoc']) 
+        ...mapState(['person','processId','parameterSetting','activeTypeDoc'])  
       },
       methods:{
           ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs']),
@@ -112,7 +135,7 @@
                       Swal.fire({
                       title: 'Error',
                       type: 'error',
-                      text: 'DNI inválido'
+                      text: 'Número de documento inválido'
                       })
                   })  
                 }else{

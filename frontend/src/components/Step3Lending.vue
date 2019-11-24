@@ -21,7 +21,9 @@
                   
                     <div class="col-sm-3"><h3></h3></div>
                     <div class="col-sm-3"><h3>Tipo de moneda</h3></div>
-                    <div class="col-sm-3"><h3>Monto  {{valueLoan}}</h3></div>
+                    <div class="col-sm-3">
+                            <h3>Monto a solicitar </h3><h3 align='center' style="font-weight:bold;font-size:12px;">{{selectedCurrencySymbol}} {{valueLoan}}</h3>  
+                    </div>
                     <div class="col-sm-3"><h3></h3></div>
                   
                 </div>
@@ -30,9 +32,9 @@
                     <div class="col-sm-3"><input disabled type="text" class="form-control inpt" v-model="selectedCurrency" @input="setActiveTypeCurrencyF"></div>
                     <div class=" col-sm-3 slidecontainer">
                         <h5>{{minLoan}}</h5>
-                        <input type="range" :min="minLoan" :max="maxLoan" step="50" v-model="valueLoan"  class="slider" id="myRange">            
+                        <input type="range"  :min="minLoan" :max="maxLoan" step="50" v-model="valueLoan"  class="slider" id="myRange">            
                     </div>
-                        <h5>{{maxLoan}}</h5>
+                        <h5 align='left'>{{maxLoan}}</h5>
                     <div class="col-sm-3"><h3></h3></div>
                 </div>
                 <div class="row"> 
@@ -98,7 +100,8 @@ export default {
             selectedTerm:false,
             optionsTerm: [],
             //Tipo de moneda
-            selectedCurrency:''
+            selectedCurrency:'',
+            selectedCurrencySymbol:''
         }
     },
     computed:{
@@ -112,8 +115,7 @@ export default {
                 this.method();
             }else{
                 Swal.fire({
-                      title: 'Error',
-                      type: 'error',
+                      title: 'Datos incompletos',
                       text: 'Por favor, complete todos los campos requeridos para solicitar un préstamo'
                       })
             }
@@ -177,6 +179,11 @@ export default {
                 this.fillSimulationsData(simulations);
                 console.log(this.simulationList);
                 this.showModal=true;
+            }else{
+                Swal.fire({
+                      title: 'Datos incompletos',
+                      text: 'Por favor, complete todos los campos requeridos para solicitar realizar la simulación'
+                      })
             }
         },
         calculateDataGeneral:function(termInput){
@@ -244,8 +251,10 @@ export default {
         updateTypeCurrency:function(){
             if (this.person.campaign.idCurrency==1){
                 this.selectedCurrency="Soles";
+                //this.selectedCurrencySymbol="S/.";
             }else if (this.person.campaign.idCurrency==2){
                 this.selectedCurrency="Dólares";
+                //this.selectedCurrencySymbol="$";
             }          
         } , 
         calculateTCEA :function(amount,share, termInput){
@@ -296,6 +305,13 @@ export default {
         this.setActiveValueLoans(this.valueLoan);
         this.minLoan=this.lead.minimumLoan;
         this.maxLoan=this.lead.maximumLoan;
+        if (this.valueLoan!=''){
+            if (this.person.campaign.idCurrency==1){
+                    this.selectedCurrencySymbol="S/.";
+            }else if (this.person.campaign.idCurrency==2){
+                    this.selectedCurrencySymbol="$";
+            }
+        }
     }
 }
 </script>
