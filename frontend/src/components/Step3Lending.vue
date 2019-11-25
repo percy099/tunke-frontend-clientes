@@ -341,6 +341,10 @@ export default {
                     this.selectedCurrencySymbol="$";
             }
         }
+
+        if(this.showModal){
+            this.activaVentana();
+        }
     }
 }
 </script>
