@@ -117,12 +117,21 @@ export default {
                     //calcular cuota
                     let tea=this.person.campaign.interestRate;      
                     let tem=Math.pow(1+(tea/100),1/12)-1;
-                    let amount=this.activeValueLoan;                  
+                    let amount=this.activeValueLoan;    
+                    /*
                     let amortization=amount*(1/shareTerm);
                     let interesA=amount*tem;
                     let comisionAmount=amount*this.parameterSetting.commissionPercentage/100;
                     let shareNumber=amortization+interesA+comisionAmount;
                     shareLoan=shareNumber.toFixed(2);  //cuota mensual
+                    */
+                   
+                    //calculo de la cuota
+                    let shareNumber=amount*(Math.pow(1+tem,shareTerm)*tem)/(Math.pow(1+tem,shareTerm)-1);
+                    console.log("cuota calculada: ",shareNumber);           
+                    let comisionAmount=amount*this.parameterSetting.commissionPercentage/100;
+                    shareLoan=(comisionAmount+shareNumber).toFixed(2); //per month
+                    console.log("cuota mensual: ",shareLoan);    
                 }
                 
                 let commissionLoan=(this.parameterSetting.commissionPercentage*this.activeValueLoan/100).toFixed(2);

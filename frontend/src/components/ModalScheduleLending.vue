@@ -166,20 +166,19 @@ export default {
             this.shareCalculated=this.simulationList[this.showModalSchedule.simulation].share;
             this.termSelected=this.simulationList[this.showModalSchedule.simulation].term;
 
-            //let dateToPay=this.currentday();
             let moment = require('moment');
-            let dateToPay=moment()//new Date()).format("DD/MM/YYYY")
+            let dateToPay=moment()
             
-            let amortization_=this.activeValueLoan/this.termSelected;
-
             let tea=this.person.campaign.interestRate;
             let tem=Math.pow(1+(tea/100),1/12)-1;
-            let interestCampaign=(this.activeValueLoan*tem).toFixed(2);
-
             this.comisionAmount=this.activeValueLoan*this.comision/100;
-
-            let amountBalance=parseFloat(this.activeValueLoan);
+            
+            //inicializamos
+            let amountBalance=parseFloat(this.activeValueLoan);       
+            let interestCampaign=(amountBalance*tem).toFixed(2);
+            let amortization_= parseFloat(this.shareCalculated)-parseFloat(interestCampaign)-this.comisionAmount;//cuota selectionada menos el interes 
             let fee=parseFloat(this.shareCalculated);
+
             //totales
             this.totalInterest=0;
             this.totalComission=0;
@@ -201,12 +200,20 @@ export default {
               }
               dateToPay=dateAdded;
               this.shares.push(n_share);
-              amountBalance=amountBalance-amortization_;
-        
+
+              //suma de totales
               this.totalInterest=parseFloat(this.totalInterest)+parseFloat(interestCampaign);
               this.totalComission=parseFloat(this.totalComission)+parseFloat(this.comisionAmount);
               this.totalAmortization=parseFloat(this.totalAmortization)+parseFloat(amortization_);
               this.totalShare=parseFloat(this.totalShare)+parseFloat(fee);
+              //actualizamos
+              amountBalance=amountBalance-amortization_;
+              interestCampaign=(amountBalance*tem).toFixed(2);
+              amortization_= parseFloat(this.shareCalculated)-parseFloat(interestCampaign)-this.comisionAmount;//cuota selectionada menos el interes 
+              if((i+2==this.termSelected) && (amortization_!=amountBalance)){
+                  amortization_=parseFloat(amountBalance);
+                  fee=parseFloat(amortization_)+parseFloat(interestCampaign)+parseFloat(this.comisionAmount);
+              }
             }
 
             //para el pdf
