@@ -5,6 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    flagErrorLead:false,
+    termsLead:[],
     selectedFirstButton:false, /* false: "pidelo aqui"  true:"simulation"*/
     simulationShareSelected:-1,
     showModalAccount:false,
@@ -56,11 +58,6 @@ export default new Vuex.Store({
           endDate:'',
           idCampaign:'',
           idCurrency: '',
-          interestRate: '',
-          maximumLoan: '',
-          maximumPeriod: '',
-          minimumLoan: '',
-          minimumPeriod: '',
           month: '',
           name: '',
           startDate: ''
@@ -74,12 +71,15 @@ export default new Vuex.Store({
       received:''
     },
     lead:{
-      idShareType:'',
       minimumLoan:'',
       maximumLoan:'',
       active:'',
       idCampaign:'',
-      idClient:''
+      idClient:'',
+      idLead:-1,
+      interestRate:-1,
+      minimumPeriod:-1,
+      maximumPeriod:-1,
     },
     flagRestartTimer:false,
     clientAcceptedTerms:false,
@@ -217,12 +217,16 @@ export default new Vuex.Store({
        state.token.received=tok.received;
      },
     fillLeadData(state,lead){
-      state.lead.idShareType=lead.idShareType;
+
       state.lead.minimumLoan=lead.minimumLoan;
       state.lead.maximumLoan=lead.maximumLoan;
       state.lead.active=lead.active;
       state.lead.idCampaign=lead.idCampaign;
       state.lead.idClient=lead.idClient;
+      state.lead.idLead=lead.idLead;
+      state.lead.interestRate=lead.interestRate;
+      state.lead.minimumPeriod=lead.minimumPeriod;
+      state.lead.maximumPeriod=lead.maximumPeriod;
     },
     fillSimulationList(state, res_answer){
       state.simulationList=[];
@@ -240,6 +244,18 @@ export default new Vuex.Store({
       state.parameterSetting.legalAge=data.legalAge;
       state.parameterSetting.maxAccountsNumber=data.maxAccountsNumber;
       state.parameterSetting.commissionPercentage=data.commissionPercentage;
+    },
+    fillTermsLeads(state, data){
+      state.termsLead=[]; 
+      for (let i=0;i<data.length;i++){
+        state.termsLead.push({
+          value:data[i].value,
+          text: data[i].text
+        });
+      }
+    },
+    fillFlagErrorLead(state,data){ 
+      state.flagErrorLead=data;
     }
   },
   actions: {
@@ -314,7 +330,14 @@ export default new Vuex.Store({
       context.commit('setParameters',parameters);
     },
     setSelectedFirstButton(context,selectedFirstButton){
-      context.commit('changeSelectedFirstButton',selectedFirstButton)
+      context.commit('changeSelectedFirstButton',selectedFirstButton);
+    },
+    fillTermsLead(context,data){
+      context.commit('fillTermsLeads',data);
+    },
+    //flagErrorLead setFlagErrorLead
+    setFlagErrorLead(context,data){
+      context.commit('fillFlagErrorLead',data);
     }
   }
 })

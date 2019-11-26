@@ -67,7 +67,7 @@ export default {
         };
     },
     computed:{
-        ...mapState(['person','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList','selectedFirstButton']) //showModalAccount
+        ...mapState(['person',,'lead','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList','selectedFirstButton']) //showModalAccount
     },
     methods:{
         ...mapActions(['changeCurrency','setActiveAccountLoans','setShowModalAccount','setSimulationShareSelected','setSelectedFirstButton']),
@@ -114,8 +114,10 @@ export default {
                     console.log("Se ingreso desde pidelo aqui")
 
                     shareTerm=this.activeTerm.value;
+                    let shareNumber=0;
+                    let numberExtra=0;
                     //calcular cuota
-                    let tea=this.person.campaign.interestRate;      
+                    let tea=this.lead.interestRate;      
                     let tem=Math.pow(1+(tea/100),1/12)-1;
                     let amount=this.activeValueLoan;    
                     /*
@@ -125,9 +127,16 @@ export default {
                     let shareNumber=amortization+interesA+comisionAmount;
                     shareLoan=shareNumber.toFixed(2);  //cuota mensual
                     */
-                   
+                    if (this.activeShare.value==2){                          //cuota extraordinaria
+                        //buscar si hay julio y diciembre
+                        numberExtra=this.findExtraMonths(termInput); //0, 1, 2
+                        if (numberExtra==0){
+                            shareNumber=-1; //ya se vera que se hace
+                        }
+                    }
+
                     //calculo de la cuota
-                    let shareNumber=amount*(Math.pow(1+tem,shareTerm)*tem)/(Math.pow(1+tem,shareTerm)-1);
+                    shareNumber=amount*(Math.pow(1+tem,shareTerm+numberExtra)*tem)/(Math.pow(1+tem,shareTerm+numberExtra)-1);
                     console.log("cuota calculada: ",shareNumber);           
                     let comisionAmount=amount*this.parameterSetting.commissionPercentage/100;
                     shareLoan=(comisionAmount+shareNumber).toFixed(2); //per month
@@ -137,14 +146,14 @@ export default {
                 let commissionLoan=(this.parameterSetting.commissionPercentage*this.activeValueLoan/100).toFixed(2);
 
                 /**/
-                console.log(this.person.idClient);              //cliente
-                console.log(shareTerm);                         //plazos
-                console.log(this.activeValueLoan);              //monto
-                console.log(this.person.campaign.interestRate); //interes
-                console.log(this.person.campaign.idCampaign);   //id campaña
-                console.log("shareLoan",shareLoan);             //cuota
-                console.log(this.activeAccountLoan.idAccount);  //idcuenta
-                console.log(commissionLoan);                    //comision
+                console.log("idclient",this.person.idClient);              //cliente
+                console.log("num meses",shareTerm);                         //plazos
+                console.log("monto",this.activeValueLoan);              //monto
+                console.log("interes tea",this.lead.interestRate); //interes
+                console.log("idcampaign",this.person.campaign.idCampaign);   //id campaña
+                console.log("cuota mensual",shareLoan);             //cuota
+                console.log("idcuenta",this.activeAccountLoan.idAccount);  //idcuenta
+                console.log("comision monto",commissionLoan);                    //comision
 
                 loanDA.doCreateLoan(this.person.idClient,shareTerm,parseFloat(this.activeValueLoan),parseFloat(this.person.campaign.interestRate),this.person.campaign.idCampaign,this.activeShare,shareLoan, this.activeAccountLoan.idAccount, parseFloat(commissionLoan)).then((res) =>{
                     let response_create = res.data;
@@ -178,6 +187,21 @@ export default {
         activaVentana: function(){
             this.showModalAccount=true;
             //this.setShowModalAccount(true);
+        },
+        findExtraMonths(termInput){
+            let moment = require('moment');
+            let month=moment();
+            let countExtraMonths=0;
+            for (let i=0;i<this.termInput;i++){
+              let dateAdded=this.addDays(month,30);  
+              month=moment(dateAdded).format("MM");
+
+              if (month=='07' || month=='12'){
+                  countExtraMonths=countExtraMonths+1;
+              }
+              month=dateAdded;
+            }
+            return countExtraMonths;
         }
     },
     components:{

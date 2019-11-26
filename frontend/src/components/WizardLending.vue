@@ -44,32 +44,13 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','nameWizardNext','lead','activeShare','activeTerm','activeValueLoan','activeValueLoan'])
+        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','nameWizardNext','lead','activeShare','activeTerm','activeValueLoan','activeValueLoan','termsLead','flagErrorLead'])
         
     },
     methods:{
-        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','fillLead']),
+        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','fillLead','fillTermsLead','setFlagErrorLead']),
         nextWindow(){
             this.$refs.wizardLendingMod.nextTab();
-        },
-        
-        getLeadClient:function(){
-            loanDA.doRequestLead(this.person.idLead).then((res) =>{
-                let lead_data = res.data;
-                console.log("LEAD: ",lead_data)
-                this.fillLead(lead_data);
-            }).catch(error=>{
-
-                //if(!this.person.idLead){                      
-                    Swal.fire({
-                        title: 'Error',
-                        type: 'error',
-                        text: 'Error en la captura del Lead del cliente'
-                    });
-                    this.$router.push('/');
-                //}
-
-            })
         },
         verificationToken(){
             
@@ -100,19 +81,16 @@ export default {
                    if (this.person.activeLoans){
                           //ya tiene prestamos en proceso
                           router.push('/LendingActive');
-                        }else{
+                    }else{
 
                           if(this.person.activeCampaigns){
                             //tiene campañas entonces sigue el flujo
-                            this.getLeadClient();
                             return true;
                           }else{
                             //no tiene campañas 
                             router.push('/LendingWithoutCampaign');
-                          }
-                          
+                          }                  
                     }
-                   
                }
                else {
                    Swal.fire({
@@ -154,6 +132,42 @@ export default {
         Step2Lending,
         Step3Lending,
         Step4Lending
+    },
+    beforeMount(){
+        if (!this.person.activeLoans & this.person.activeCampaigns){
+            loanDA.doRequestLead(this.person.idLead).then((res) =>{
+                let lead_data = res.data;
+                console.log("LEAD: ",lead_data);
+                this.fillLead(lead_data);
+                let min_Periodo=this.lead.minimumPeriod;
+                let max_Periodo=this.lead.maximumPeriod;
+
+                let optionsTerm=[];
+
+                for (let period=min_Periodo;period<=max_Periodo;period++){
+                    let resto=period%6;
+                    if(!resto){
+                        let text_period=period + ' meses';
+                        let reg={value: period, text: text_period};
+                        optionsTerm.push(reg);
+                    }             
+                }
+                this.fillTermsLead(optionsTerm);
+            }).catch(error=>{
+
+                //if(!this.person.idLead){                      
+                    Swal.fire({
+                        title: 'Error',
+                        type: 'error',
+                        text: 'Error en la captura del Lead del cliente'
+                    });
+                    this.$router.push('/');
+                //}
+
+            })
+
+            
+        }
     }
 
 }

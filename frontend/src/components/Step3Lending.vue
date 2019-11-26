@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-sm-4"><input disabled type="text" class="form-control inpt" v-model="selectedTypeLoan" @input="setActiveTypeLoanF"></div>
                     <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTypeShare" :required="!selectedTypeShare" :options="optionsShare"  label="text" @input="setActiveShareF"/></div>
-                    <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTerm" :required="!selectedTerm" :options="optionsTerm"  label="text" @input="setActiveTermF"/></div>
+                    <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTerm" :required="!selectedTerm" :options="termsLead"  label="text" @input="setActiveTermF"/></div>
                 </div>
             </div>
             <div class="parameters2">
@@ -98,17 +98,17 @@ export default {
             }],
             //Plazo de prestamo
             selectedTerm:false,
-            optionsTerm: [],
+            currentTerm:0,
             //Tipo de moneda
             selectedCurrency:'',
             selectedCurrencySymbol:''
         }
     },
     computed:{
-        ...mapState(['person','currency','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList','parameterSetting','simulationShareSelected','selectedFirstButton'])
+        ...mapState(['person','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList','parameterSetting','simulationShareSelected','selectedFirstButton','termsLead'])
     },
     methods:{
-        ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected','setSelectedFirstButton']),
+        ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected','setSelectedFirstButton','fillTermsLead']),
         loanSolicitude(){
             if (this.activeShare!=null && this.activeTerm!=null && this.activeValueLoan!=0 && this.activeValueLoan>0){
                 console.log("monto de prestamo: ",this.activeValueLoan);
@@ -130,37 +130,47 @@ export default {
             this.showModal=false;
         },
         activaVentana: function(){
+            console.log("tipo de cuota",this.activeShare.value);
             /*
             console.log(this.activeTypeLoan);
             console.log(this.activeShare);
             console.log(this.activeTerm);
             console.log(this.activeTypeCoin);
             console.log(this.activeValueLoan);*/
+
             if (this.activeShare!=null && this.activeTerm!=null && this.activeValueLoan!=0 && this.activeValueLoan>0){
                 
                 //buscar la posicion del regMain y escoger dos simulaciones adicionales
                 let periodsList=[]
                 
-                for (let i=this.person.campaign.minimumPeriod;i<=this.person.campaign.maximumPeriod;i++){
-                    periodsList.push(i);
+                for (let i=this.lead.minimumPeriod;i<=this.lead.maximumPeriod;i++){
+                    let resto=i%6;
+                    if(!resto){
+                        periodsList.push(i);
+                    }
                 }
+                
                 let termMain=this.activeTerm.value;         
                 let termMainPos=periodsList.indexOf(termMain);
 
-                let primero=this.optionsTerm[0];
-                let tercero=this.optionsTerm[periodsList.length-1];
+                let primero=this.termsLead[0];
+                let tercero=this.termsLead[periodsList.length-1];
                 let segundo=null;
 
                 if (termMainPos==0 || termMainPos==(periodsList.length-1)){
                     //esta en el inicio o en el final
-                     segundo=this.optionsTerm[1];
+                    
+                    if(periodsList.length==1){
+                     segundo=this.termsLead[0];
+                    }else{
+                     segundo=this.termsLead[1];
+                    }
                 }else{
-                    //esta en otra posicion
-                     segundo=this.optionsTerm[termMainPos];
+                    //esta en otra posicion     
+                     segundo=this.termsLead[termMainPos];
                 }
-                
+
                 let terms=[primero.value,segundo.value, tercero.value];
-                
                 let simGeneral1=this.calculateDataGeneral(terms[0]);
                 let simGeneral2=this.calculateDataGeneral(terms[1]);
                 let simGeneral3=this.calculateDataGeneral(terms[2]);
@@ -187,21 +197,32 @@ export default {
             }
         },
         calculateDataGeneral:function(termInput){
-            let tea=this.person.campaign.interestRate;      
+            let tea=this.lead.interestRate;      
             //console.log("tea: ",this.person.campaign.interestRate);
 
             let tem=Math.pow(1+(tea/100),1/12)-1;
             //console.log("tem: ",tem);
             let amount=this.activeValueLoan;
-
-            //calculo de la cuota
-            let shareNumber=amount*(Math.pow(1+tem,termInput)*tem)/(Math.pow(1+tem,termInput)-1);
-            console.log("cuota calculada: ",shareNumber);           
             let comisionAmount=amount*this.comision/100;
-            let share=(comisionAmount+shareNumber).toFixed(2); //per month
-            console.log("cuota mensual: ",share);    
+            let shareBase=0;
+            let share=0;
+            let numberExtra=0;
+            //calculo de la cuota
+                  
+            if (this.activeShare.value==2){                          //cuota extraordinaria
+                //buscar si hay julio y diciembre
+                numberExtra=this.findExtraMonths(termInput); //0, 1, 2
+                /*if (numberExtra==0){
+                    shareBase=-1; //ya se vera que se hace
+                }*/
+            }
 
-            let tcea=(this.calculateTCEA(amount,share, termInput)).toFixed(2);
+            shareBase=amount*(Math.pow(1+tem,termInput+numberExtra)*tem)/(Math.pow(1+tem,termInput+numberExtra)-1);
+            console.log("cuota base: ",shareBase);     
+            share=(comisionAmount+shareBase).toFixed(2); //per month
+            console.log("cuota mensual: ",share); 
+
+            let tcea=(this.calculateTCEA(amount,comisionAmount,shareBase,termInput,numberExtra)).toFixed(2);
             let response=[share,tcea];  //share, tcea
 
             return response;
@@ -217,6 +238,7 @@ export default {
         },
         setActiveTermF:function(val){
             this.setActiveTerms(val);
+            this.currentTerm=val.value;
         },
         setActiveTypeCurrencyF:function(val){
             this.setActiveTypeCurrencys(val);
@@ -224,34 +246,28 @@ export default {
         setActiveValueLoanF:function(val){
             this.setActiveValueLoans(val);
         },
-        fillDataTerms: function(){
-            let min_Periodo=this.person.campaign.minimumPeriod;
-            let max_Periodo=this.person.campaign.maximumPeriod;
-            
-            for (let period=min_Periodo;period<=max_Periodo;period++){
-                let text_period=period + ' meses';
-                let reg={value: period, text:text_period};
-                this.optionsTerm.push(reg);
-            }
-        },
         updateTypeCurrency:function(){
             if (this.person.campaign.idCurrency==1){
                 this.selectedCurrency="Soles";
-                //this.selectedCurrencySymbol="S/.";
             }else if (this.person.campaign.idCurrency==2){
                 this.selectedCurrency="Dólares";
-                //this.selectedCurrencySymbol="$";
             }          
         } , 
-        calculateTCEA :function(amount,share, termInput){
-          
+        calculateTCEA :function(amount,comisionAmount, shareBase, termInput,numberExtra){
             let entry=(-1)*amount;
             let arr=[];
-
             arr.push(entry);
-            for (let i=0;i<termInput;i++){
-                arr.push(parseFloat(share));
+            let share=(comisionAmount+shareBase).toFixed(2); //simple
+            for (let i=0;i<termInput-numberExtra;i++){
+                    arr.push(parseFloat(share));
             }
+
+            if (this.activeShare.value==2){ //cuota extraordinaria
+                let extraShare=((shareBase*2)+comisionAmount).toFixed(2);
+                for (let i=0;i<numberExtra;i++){
+                    arr.push(parseFloat(extraShare));
+                }
+            }          
 
             let tir=this.computeIRR(arr,termInput+1);
             let tcea=(Math.pow(1+(tir/100),12)-1)*100;
@@ -313,8 +329,27 @@ export default {
                 newguessRate = guessRate;
             }
             return guessRate*100;
-        }
-        
+        },
+        addDays:function (dateIn_, n) {
+            let moment = require('moment');
+            let days = parseInt(n);
+            let result = moment(dateIn_).add(days, 'days');
+            return result;
+        },
+        findExtraMonths:function(termInput){
+            let moment = require('moment');
+            let month=moment();
+            let countExtraMonths=0;
+            for (let i=0;i<termInput;i++){
+              let dateAdded=this.addDays(month,30);  
+              month=moment(dateAdded).format("MM");
+              if (month=='07' || month=='12'){
+                  countExtraMonths=countExtraMonths+1;
+              }
+              month=dateAdded;
+            }
+            return countExtraMonths;
+        }   
     },
     mounted() {
         this.fillShowModalSchedule(false,'');
@@ -326,14 +361,14 @@ export default {
         ModalScheduleLending
     },
     created() {
-        this.fillDataTerms();
         this.comision=this.parameterSetting.commissionPercentage;
-        
     },
     updated(){
+        console.log("updateando");
         this.setActiveValueLoans(this.valueLoan);
+
         this.minLoan=this.lead.minimumLoan;
-        this.maxLoan=this.lead.maximumLoan;
+        this.maxLoan=this.lead.maximumLoan; 
         if (this.valueLoan!=''){
             if (this.person.campaign.idCurrency==1){
                     this.selectedCurrencySymbol="S/.";
@@ -345,6 +380,7 @@ export default {
         if(this.showModal){
             this.activaVentana();
         }
+        
     }
 }
 </script>

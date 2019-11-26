@@ -105,11 +105,11 @@ window.onload=function(){
           numeric
         }
       },
-      computed:{
-        ...mapState(['person','processId','parameterSetting','activeTypeDoc'])  
+      computed:{//flagErrorLead setFlagErrorLead
+        ...mapState(['person','processId','parameterSetting','activeTypeDoc','flagErrorLead'])  
       },
       methods:{
-          ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs']),
+          ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs','setFlagErrorLead']),
           enterDni(){
               if (this.termsAccept){
                 if(this.activeTypeDoc!=null){
@@ -122,6 +122,10 @@ window.onload=function(){
                       console.log(person_data);
                       this.fill(person_data);
                       if(person_data.type==1){ //CLIENT
+                            //#############
+                            //this.getLeadClient();
+
+                            //##############
                           router.push('/Lending');
                       }
                       else if(person_data.type==2){//NO CLIENT
@@ -152,6 +156,28 @@ window.onload=function(){
                       })
               }         
           },
+          getLeadClient:function(){
+            console.log("person lead:",this.person.idLead);
+            loanDA.doRequestLead(this.person.idLead).then((res) =>{
+                let lead_data = res.data;
+                //console.log("LEAD: ",lead_data);
+                this.fillLead(lead_data);
+                console.log("LEAD guardado: ",this.lead);
+                //this.fillDataTerms();
+            }).catch(error=>{
+                //this.setFlagErrorLead(true);
+                //console.log("error en la captura del lead");
+                                    
+                    Swal.fire({
+                        title: 'Error',
+                        type: 'error',
+                        text: 'Error en la captura del Lead del cliente'
+                    });
+                    this.$router.push('/');
+                
+
+            })
+        },
           isNumber: function(evt) {
             evt = (evt) ? evt : window.event;
             var charCode = (evt.which) ? evt.which : evt.keyCode;
