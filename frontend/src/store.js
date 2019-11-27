@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    valStep2: false,
     selectedFirstButton:false, /* false: "pidelo aqui"  true:"simulation"*/
     simulationShareSelected:-1,
     showModalAccount:false,
@@ -83,7 +84,10 @@ export default new Vuex.Store({
     },
     flagRestartTimer:false,
     clientAcceptedTerms:false,
-    currency : 1,
+    currency1 : 1,
+    currency2 : 1,
+    currency3 : 1,
+    accountType : 1,
     responseCreateAccount:{
       accountDetail : '',
       accountNumber : '',
@@ -240,7 +244,23 @@ export default new Vuex.Store({
       state.parameterSetting.legalAge=data.legalAge;
       state.parameterSetting.maxAccountsNumber=data.maxAccountsNumber;
       state.parameterSetting.commissionPercentage=data.commissionPercentage;
+    },
+    setValS2(state, flag){
+      state.valStep2 = flag;
+    },
+    setAccType(state, flag){
+      state.accountType = flag;
+    },
+    changeCur1(state, flag){
+      state.currency1 = flag;
+    },
+    changeCur2(state, flag){
+      state.currency2 = flag;
+    },
+    changeCur3(state, flag){
+      state.currency3 = flag;
     }
+
   },
   actions: {
     fill(context,person_data){
@@ -315,6 +335,21 @@ export default new Vuex.Store({
     },
     setSelectedFirstButton(context,selectedFirstButton){
       context.commit('changeSelectedFirstButton',selectedFirstButton)
+    },
+    setValStep2(context, flag){
+      context.commit('setValS2', flag);
+    },
+    setAccountType(context, flag){
+      context.commit('setAccType', flag);
+    },
+    changeCurrency1(context, flag){
+      context.commit('changeCur1', flag);
+    },
+    changeCurrency2(context, flag){
+      context.commit('changeCur2', flag);
+    },
+    changeCurrency3(context, flag){
+      context.commit('changeCur3', flag);
     }
   }
 })

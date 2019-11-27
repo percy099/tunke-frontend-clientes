@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-export function doCreateAccount(idPer,cur){
+export function doCreateAccount(idPer,cur, type){
     let url =  process.env.VUE_APP_API_URL + 'api/openAccount/';
     var body ={
         "idPerson" : idPer,
         "currency" : cur,
-        "origin" : 1
+        "origin" : 1,
+        "accountType" : type
     }
     
     return axios.post(url,body);
