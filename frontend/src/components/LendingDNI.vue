@@ -47,7 +47,30 @@
 </style>
 
 <script>
-    
+/*
+window.onload=function(){
+    function ParseURLParameter(Parameter){
+      let FullURL=window.location.search.substring(1);
+      let ParametersArray=FullURL.split('&');
+      for (let i=0; i<ParametersArray.length;i++){
+        let CurrentParameter=ParametersArray[i].split('=');
+        if (CurrentParameter[0]==Parameter){
+          return CurrentParameter[1];
+        }
+      }
+    }
+
+    let PageName=ParseURLParameter('page');
+
+    if (typeof PageName!= 'undefined'){
+      if(PageName=='contact_us'){
+        alert(PageName);
+      }
+    }else{
+      alert('No Page Parameter found...');
+    }
+}
+  */  
     import {mapState} from 'vuex'
     import {mapActions} from 'vuex'
     import router from '@/router.js'
@@ -82,11 +105,11 @@
           numeric
         }
       },
-      computed:{
-        ...mapState(['person','processId','parameterSetting','activeTypeDoc']) 
+      computed:{//flagErrorLead setFlagErrorLead
+        ...mapState(['person','processId','parameterSetting','activeTypeDoc','flagErrorLead'])  
       },
       methods:{
-          ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs']),
+          ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs','setFlagErrorLead']),
           enterDni(){
               if (this.termsAccept){
                 if(this.activeTypeDoc!=null){
@@ -99,6 +122,10 @@
                       console.log(person_data);
                       this.fill(person_data);
                       if(person_data.type==1){ //CLIENT
+                            //#############
+                            //this.getLeadClient();
+
+                            //##############
                           router.push('/Lending');
                       }
                       else if(person_data.type==2){//NO CLIENT
@@ -112,7 +139,7 @@
                       Swal.fire({
                       title: 'Error',
                       type: 'error',
-                      text: 'DNI inválido'
+                      text: 'Número de documento inválido'
                       })
                   })  
                 }else{
@@ -129,6 +156,28 @@
                       })
               }         
           },
+          getLeadClient:function(){
+            console.log("person lead:",this.person.idLead);
+            loanDA.doRequestLead(this.person.idLead).then((res) =>{
+                let lead_data = res.data;
+                //console.log("LEAD: ",lead_data);
+                this.fillLead(lead_data);
+                console.log("LEAD guardado: ",this.lead);
+                //this.fillDataTerms();
+            }).catch(error=>{
+                //this.setFlagErrorLead(true);
+                //console.log("error en la captura del lead");
+                                    
+                    Swal.fire({
+                        title: 'Error',
+                        type: 'error',
+                        text: 'Error en la captura del Lead del cliente'
+                    });
+                    this.$router.push('/');
+                
+
+            })
+        },
           isNumber: function(evt) {
             evt = (evt) ? evt : window.event;
             var charCode = (evt.which) ? evt.which : evt.keyCode;

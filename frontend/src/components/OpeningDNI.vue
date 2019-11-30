@@ -84,7 +84,7 @@
         }
       },
       computed:{
-        ...mapState(['person','processId','parameterSetting','activeTypeDoc'])
+        ...mapState(['person','processId','parameterSetting','activeTypeDoc']) 
       },
       methods:{
           ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs']),
@@ -117,7 +117,7 @@
                       Swal.fire({
                       title: 'Error',
                       type: 'error',
-                      text: 'DNI inválido'
+                      text: 'Número de documento inválido'
                       })
                   })  
                   }else{

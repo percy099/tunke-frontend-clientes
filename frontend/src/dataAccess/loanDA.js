@@ -18,7 +18,7 @@ export function doRequestAccountsByClient(idClient){
     return axios.post(url,body);
 }
 
-export function doCreateLoan(idClient,totalShares,amount,interestRate,idCampaign,idShareType,share,idAccount,commission){
+export function doCreateLoan(idClient,totalShares,amount,interestRate,idCampaign,idShareType,share,idAccount,commission,idLead){
     let url =  process.env.VUE_APP_API_URL + 'api/requestLoan/';
     var body ={
         "idClient" : idClient,
@@ -29,8 +29,18 @@ export function doCreateLoan(idClient,totalShares,amount,interestRate,idCampaign
         "idShareType" : idShareType,
         "share": share,
         "idAccount":idAccount,
-        "commission":commission
+        "commission":commission,
+        "idLead":idLead
     }
+    console.log("idClient",idClient);
+    console.log("total shares",totalShares);
+    console.log("amount",amount);
+    console.log("interestRate-----",interestRate);
+    console.log("idcampaign",idCampaign);
+    console.log("idSharet",idShareType);
+    console.log("share",share);
+    console.log("idaccount",idAccount);
+    console.log("commission",commission);
 /*
     console.log("tipos");
                 console.log(typeof(idClient));

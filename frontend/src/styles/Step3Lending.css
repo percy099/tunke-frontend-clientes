@@ -36,6 +36,11 @@ h5{
 .inpt{
     margin-bottom: 8%;    
 }
+.msgExtraordinario{
+  font-size: 1.5vh;
+  text-align: center;
+  padding-bottom: 10%;
+}
 
 .row div button .simulation{
     margin-left: 30%;
@@ -80,4 +85,15 @@ h5{
     border-radius: 50%;
     background:rgba(0,203,138,0.66);; /* Green background */
     cursor: pointer; /* Cursor on hover */
+  }
+
+  button{
+    margin-top: 1.5%;
+    margin-bottom: 1%;
+    border-radius: 5px;
+    border:0;
+    color: rgb(255, 255, 255);
+    background:rgb(9, 13, 77);
+    width: 20vh;
+    height: 5vh;
   }

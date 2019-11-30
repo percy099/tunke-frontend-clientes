@@ -30,13 +30,13 @@
                   <div class="row">
                       <div class="col-2"></div>
                       <div class="col-5 firstWord">Monto a financiar</div>
-                      <div class="col-4">{{activeValueLoan}}</div>
+                      <div class="col-4">{{currencySymbol}} {{activeValueLoan}}</div>
                   </div>
                   <hr>
                   <div class="row">
                       <div class="col-2"></div>
                       <div class="col-5 firstWord">Tasa de Costo Efectiva</div>
-                      <div class="col-4">{{person.campaign.interestRate}}% anual</div>
+                      <div class="col-4">{{lead.interestRate}}% anual</div>
                   </div>
                   <hr>
                   <div class="row">
@@ -146,7 +146,7 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','activeValueLoan','simulationList','showModalSchedule','activeShare','parameterSetting'])
+        ...mapState(['person','lead','activeValueLoan','simulationList','showModalSchedule','activeShare','parameterSetting'])
     },
     methods:{
         ...mapActions(['changeCurrency']),
@@ -155,31 +155,52 @@ export default {
         },
         updateData:function(){
             this.comision=this.parameterSetting.commissionPercentage;
-            if (this.person.campaign.idCurrency==1){
+            if (this.person.campaigns[0].idCurrency==1){
                 this.currencySymbol="S/.";
                 this.currencyName="Soles";
-            }else if (this.person.campaign.idCurrency==2){
+            }else if (this.person.campaigns[0].idCurrency==2){
                 this.currencySymbol="$";
                 this.currencyName="Dólares";
             }          
 
-            this.shareCalculated=this.simulationList[this.showModalSchedule.simulation].share;
-            this.termSelected=this.simulationList[this.showModalSchedule.simulation].term;
-
-            //let dateToPay=this.currentday();
-            let moment = require('moment');
-            let dateToPay=moment()//new Date()).format("DD/MM/YYYY")
-            
-            let amortization_=this.activeValueLoan/this.termSelected;
-
-            let tea=this.person.campaign.interestRate;
-            let tem=Math.pow(1+(tea/100),1/12)-1;
-            let interestCampaign=(this.activeValueLoan*tem).toFixed(2);
-
             this.comisionAmount=this.activeValueLoan*this.comision/100;
 
-            let amountBalance=parseFloat(this.activeValueLoan);
-            let fee=parseFloat(this.shareCalculated);
+            let share=this.simulationList[this.showModalSchedule.simulation].share; 
+            let shareBase=(share- this.comisionAmount ).toFixed(2);
+
+            this.shareCalculated=(this.comisionAmount+(1*shareBase)).toFixed(2); //per month
+            let shareCalculatedExtra=(this.comisionAmount+(2*shareBase)).toFixed(2); //extraordinario
+            console.log("cuota doble:", shareCalculatedExtra);
+            this.termSelected=this.simulationList[this.showModalSchedule.simulation].term;
+
+            let moment = require('moment');
+            let dateToPay=moment();
+            
+            let tea=this.lead.interestRate;
+            let tem=Math.pow(1+(tea/100),1/12)-1;
+                        
+            //inicializamos
+            let month="";
+            let amountBalance=parseFloat(this.activeValueLoan);       
+            let interestCampaign=(amountBalance*tem).toFixed(2);
+            let amortization_=0;
+
+            let firstDay=this.addDays(dateToPay,30);  
+            if (this.activeShare.value==2){
+                month=moment(firstDay).format("MM");
+                console.log("mes_next",month=="12");
+                if (month=="07" || month=="12"){
+                    amortization_=shareCalculatedExtra-parseFloat(interestCampaign)-this.comisionAmount;
+                }else{
+                    amortization_= parseFloat(this.shareCalculated)-parseFloat(interestCampaign)-this.comisionAmount;//cuota selectionada menos el interes     
+                }
+            }
+            else if (this.activeShare.value==1){
+                amortization_= parseFloat(this.shareCalculated)-parseFloat(interestCampaign)-this.comisionAmount;//cuota selectionada menos el interes 
+            } 
+
+            let fee=1*0;
+            
             //totales
             this.totalInterest=0;
             this.totalComission=0;
@@ -188,25 +209,50 @@ export default {
 
             //schedule
             this.shares=[];
+            let datenext;
+             
             for (let i=0;i<this.termSelected;i++){
-              let dateAdded=this.addDays(dateToPay,30);  
-              dateToPay=moment(dateAdded).format("DD/MM/YYYY");
-              let n_share={
-                'date': dateToPay,
-                'initialBalance':(amountBalance).toFixed(2),
-                'amortization':(amortization_).toFixed(2),
-                'interest':interestCampaign,
-                'commission':(this.comisionAmount).toFixed(2),
-                'feeAmount':(fee).toFixed(2)
-              }
+                let dateAdded=this.addDays(dateToPay,30);  
+                dateToPay=moment(dateAdded).format("DD/MM/YYYY");
+                fee=(amortization_*1)+(interestCampaign*1)+(this.comisionAmount*1);
+                let n_share={
+                        'date': dateToPay,
+                        'initialBalance':(amountBalance).toFixed(2),
+                        'amortization':(amortization_).toFixed(2),
+                        'interest':interestCampaign,
+                        'commission':(this.comisionAmount).toFixed(2),
+                        'feeAmount':(fee).toFixed(2)
+                }
               dateToPay=dateAdded;
               this.shares.push(n_share);
-              amountBalance=amountBalance-amortization_;
-        
+
+              //suma de totales
               this.totalInterest=parseFloat(this.totalInterest)+parseFloat(interestCampaign);
               this.totalComission=parseFloat(this.totalComission)+parseFloat(this.comisionAmount);
               this.totalAmortization=parseFloat(this.totalAmortization)+parseFloat(amortization_);
               this.totalShare=parseFloat(this.totalShare)+parseFloat(fee);
+              //actualizamos
+              amountBalance=amountBalance-amortization_;
+              interestCampaign=(amountBalance*tem).toFixed(2);
+
+              datenext=this.addDays(dateAdded,30);  
+              if (this.activeShare.value==2){
+                month=moment(datenext).format("MM");
+                console.log("aer",month);
+                if (month=="07" || month=="12"){
+                        amortization_=shareCalculatedExtra-parseFloat(interestCampaign)-this.comisionAmount;
+                }else{
+                    amortization_= parseFloat(this.shareCalculated)-parseFloat(interestCampaign)-this.comisionAmount;//cuota selectionada menos el interes 
+                }
+              }
+                else if (this.activeShare.value==1){
+                    amortization_= parseFloat(this.shareCalculated)-parseFloat(interestCampaign)-this.comisionAmount;//cuota selectionada menos el interes 
+              } 
+
+              if((i+2==this.termSelected) && (amortization_!=amountBalance)){
+                  amortization_=parseFloat(amountBalance);
+                  //fee=parseFloat(amortization_)+parseFloat(interestCampaign)+parseFloat(this.comisionAmount);
+              }
             }
 
             //para el pdf
