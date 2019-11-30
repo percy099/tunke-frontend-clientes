@@ -43,8 +43,63 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','securityQuestions','answersSecurityQuestions','response1',
-                     'response2','response3','response4']),        
+        ...mapState(['person','currency','securityQuestions','answersSecurityQuestions','valStep2','currency1','currency2','currency3','accountType','response1',
+                     'response2','response3','response4'])
+        
+    },
+    methods:{
+        ...mapActions(['captureResponse','completeSecurityQuestion','changeCurrency3','changeCurrency2','changeCurrency1','setAccountType']),
+        onComplete (){
+            if(this.accountType == 1){
+                accountDA.doCreateAccount(this.person.idPerson,this.currency1, this.accountType).then((res) =>{
+                    let response_create = res.data;
+                    this.captureResponse(response_create);
+                    this.$router.push('/summarySale');
+                }).catch(error=>
+                {
+                    Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Error al crear la cuenta'
+                    })
+                })
+            }
+            if(this.accountType == 2){
+                accountDA.doCreateAccount(this.person.idPerson,this.currency2, this.accountType).then((res) =>{
+                    let response_create = res.data;
+                    this.captureResponse(response_create);
+                    this.$router.push('/summarySale');
+                }).catch(error=>
+                {
+                    Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Error al crear la cuenta'
+                    })
+                })
+            }
+            if(this.accountType == 3){
+                accountDA.doCreateAccount(this.person.idPerson,this.currency3, this.accountType).then((res) =>{
+                    let response_create = res.data;
+                    this.captureResponse(response_create);
+                    this.$router.push('/summarySale');
+                }).catch(error=>
+                {
+                    Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Error al crear la cuenta'
+                    })
+                })
+                this.changeCurrency1(1);
+                this.changeCurrency2(1);
+                this.changeCurrency3(1);
+                this.setAccountType(1);
+                console.log(this.currency1);
+                console.log(this.currency2);
+                console.log(this.currency3);
+                console.log(this.accountType);
+            }    
     },
     methods:{
         ...mapActions(['captureResponse','completeSecurityQuestion','fillResponses']),
@@ -64,7 +119,6 @@ export default {
               })
         },
         verificacionV1(){
-            
             if (this.counterTries>0){
 
                 if (this.answersSecurityQuestions.posAnswer1==-1 || this.answersSecurityQuestions.posAnswer2==-1 
@@ -121,20 +175,30 @@ export default {
                 this.$router.push('/');
             }
             
+            
         },
         registerCurrency(){
-            personDA.doRegisterProspect(this.person.idPerson,this.person.email1,this.person.email2,this.person.cellphone1,this.person.cellphone2).then((res) =>{
-                console.log(res.data);
-                
-            }).catch(error=>
-            {
+            if(this.valStep2 == false){
                 Swal.fire({
                     title: 'Error',
                     type: 'error',
                     text: 'Error en los datos'
                 })
-            })
-            return true;
+                return false;
+            } else {
+                personDA.doRegisterProspect(this.person.idPerson,this.person.email1,this.person.email2,this.person.cellphone1,this.person.cellphone2).then((res) =>{
+                    console.log(res.data);
+                    
+                }).catch(error=>
+                {
+                    Swal.fire({
+                        title: 'Error',
+                        type: 'error',
+                        text: 'Error en los datos'
+                    })
+                })
+                return true;
+            }
         }
     },
     mounted() {

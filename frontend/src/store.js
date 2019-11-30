@@ -5,12 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    /*Ronaldo*/
+    flagErrorLead:false,
+    termsLead:[],
+    valStep2: false,
+    selectedFirstButton:false, /* false: "pidelo aqui"  true:"simulation"*/
     response1: '',
     response2: '',
     response3: '',
     response4: '',
-    /*Ronaldo*/
     simulationShareSelected:-1,
     showModalAccount:false,
     termsReadLoan:false,
@@ -26,6 +28,7 @@ export default new Vuex.Store({
       status:false,
       simulation:''
     },
+    activeTypeDoc:null,
     activeTypeLoan:null,
     activeShare:null,
     activeTerm:null,
@@ -55,21 +58,18 @@ export default new Vuex.Store({
       vehicle2Plate : '',
       activeCampaigns:'',
       activeLoans: '',
-      campaign:{
+      campaigns:[],
+      /*{
           active:'',
           endDate:'',
           idCampaign:'',
           idCurrency: '',
-          interestRate: '',
-          maximumLoan: '',
-          maximumPeriod: '',
-          minimumLoan: '',
-          minimumPeriod: '',
           month: '',
           name: '',
           startDate: ''
-      },
-      idLead:''
+      },*/
+      idLeads:[],
+      totalAccounts: 0
 
     },
     token:{
@@ -77,16 +77,22 @@ export default new Vuex.Store({
       received:''
     },
     lead:{
-      idShareType:'',
       minimumLoan:'',
       maximumLoan:'',
       active:'',
       idCampaign:'',
-      idClient:''
+      idClient:'',
+      idLead:-1,
+      interestRate:-1,
+      minimumPeriod:-1,
+      maximumPeriod:-1,
     },
     flagRestartTimer:false,
     clientAcceptedTerms:false,
-    currency : 1,
+    currency1 : 1,
+    currency2 : 1,
+    currency3 : 1,
+    accountType : 1,
     responseCreateAccount:{
       accountDetail : '',
       accountNumber : '',
@@ -134,6 +140,9 @@ export default new Vuex.Store({
     }, 
     setActiveAccountLoan(state, activeAccountLoan) {
       state.activeAccountLoan = activeAccountLoan;
+    }, 
+    setActiveTypeDoc(state, activeTypeDoc) {
+      state.activeTypeDoc = activeTypeDoc;
     },
     setTermsReadLoan(state, termsReadLoan) {
       state.termsReadLoan = termsReadLoan;
@@ -146,6 +155,9 @@ export default new Vuex.Store({
     },
     changeFlagTimer(state,flag){
       state.flagRestartTimer=flag;
+    }, 
+    changeSelectedFirstButton(state, selectedFirstButton){
+      state.selectedFirstButton=selectedFirstButton;
     },
     changeClientTerms(state,terms){
       state.clientAcceptedTerms=terms;
@@ -174,10 +186,13 @@ export default new Vuex.Store({
 
       state.person.activeCampaigns=person_data.activeCampaigns;
       state.person.activeLoans=person_data.activeLoans;
+      state.person.totalAccounts=person_data.totalAccounts;
 
-      if (person_data.activeCampaigns){        
-        state.person.campaign=person_data.campaign;
-        state.person.idLead=person_data.idLead;
+      if (person_data.activeCampaigns){     
+        state.person.campaigns=[];   
+        state.person.idLeads=[];   
+        state.person.campaigns=person_data.campaigns;
+        state.person.idLeads=person_data.idLeads;
       }
     },
     fillResponseCreateAccount(state,response_create){
@@ -219,12 +234,16 @@ export default new Vuex.Store({
        state.token.received=tok.received;
      },
     fillLeadData(state,lead){
-      state.lead.idShareType=lead.idShareType;
+
       state.lead.minimumLoan=lead.minimumLoan;
       state.lead.maximumLoan=lead.maximumLoan;
       state.lead.active=lead.active;
       state.lead.idCampaign=lead.idCampaign;
       state.lead.idClient=lead.idClient;
+      state.lead.idLead=lead.idLead;
+      state.lead.interestRate=lead.interestRate;
+      state.lead.minimumPeriod=lead.minimumPeriod;
+      state.lead.maximumPeriod=lead.maximumPeriod;
     },
     fillSimulationList(state, res_answer){
       state.simulationList=[];
@@ -242,7 +261,35 @@ export default new Vuex.Store({
       state.parameterSetting.legalAge=data.legalAge;
       state.parameterSetting.maxAccountsNumber=data.maxAccountsNumber;
       state.parameterSetting.commissionPercentage=data.commissionPercentage;
+    },
+    fillTermsLeads(state, data){
+      state.termsLead=[]; 
+      for (let i=0;i<data.length;i++){
+        state.termsLead.push({
+          value:data[i].value,
+          text: data[i].text
+        });
+      }
+    },
+    fillFlagErrorLead(state,data){ 
+      state.flagErrorLead=data;
+    },
+    setValS2(state, flag){
+      state.valStep2 = flag;
+    },
+    setAccType(state, flag){
+      state.accountType = flag;
+    },
+    changeCur1(state, flag){
+      state.currency1 = flag;
+    },
+    changeCur2(state, flag){
+      state.currency2 = flag;
+    },
+    changeCur3(state, flag){
+      state.currency3 = flag;
     }
+
   },
   actions: {
     fill(context,person_data){
@@ -293,6 +340,9 @@ export default new Vuex.Store({
     },
     setActiveProcessId(context, processId) {
       context.commit('setProcessId', processId);
+    }, 
+    setActiveTypeDocs(context, activeTypeDoc) {
+      context.commit('setActiveTypeDoc', activeTypeDoc);
     },
     setTermsReadLoans(context, status) {
       context.commit('setTermsReadLoan', status);
@@ -311,6 +361,31 @@ export default new Vuex.Store({
     },
     fillParameterSettings(context,parameters){
       context.commit('setParameters',parameters);
+    },
+    setSelectedFirstButton(context,selectedFirstButton){
+      context.commit('changeSelectedFirstButton',selectedFirstButton);
+    },
+    fillTermsLead(context,data){
+      context.commit('fillTermsLeads',data);
+    },
+    //flagErrorLead setFlagErrorLead
+    setFlagErrorLead(context,data){
+      context.commit('fillFlagErrorLead',data);
+    },
+    setValStep2(context, flag){
+      context.commit('setValS2', flag);
+    },
+    setAccountType(context, flag){
+      context.commit('setAccType', flag);
+    },
+    changeCurrency1(context, flag){
+      context.commit('changeCur1', flag);
+    },
+    changeCurrency2(context, flag){
+      context.commit('changeCur2', flag);
+    },
+    changeCurrency3(context, flag){
+      context.commit('changeCur3', flag);
     },
     fillResponses(context,responsesData){
       context.commit('setResponses',responsesData);

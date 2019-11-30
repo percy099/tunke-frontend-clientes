@@ -54,13 +54,13 @@
                         <h5 class="detail" align="center"></h5>
                     </div>
                     <div class="col-sm-3 benefit" align="center">
-                        <a class="simulation" @click="activaModalSch(0)">Detalle de crédito</a>
+                        <a class="simulation" @click="activeModalSch(0)">Detalle de crédito</a>
                     </div>
                     <div class="col-sm-3 benefit" align="center">
-                        <a class="simulation" @click="activaModalSch(1)">Detalle de crédito</a>
+                        <a class="simulation" @click="activeModalSch(1)">Detalle de crédito</a>
                     </div>  
                     <div class="col-sm-3 benefit" align="center">
-                        <a class="simulation" @click="activaModalSch(2)">Detalle de crédito</a>
+                        <a class="simulation" @click="activeModalSch(2)">Detalle de crédito</a>
                     </div>  
                 </div> 
                 <div class="row">                  
@@ -89,22 +89,26 @@
 
 import {mapActions,mapState} from 'vuex'
 
-
 export default {
     props:{
         next: { type: Function }
     },
     data(){
         return {   
-            selectedCurrencySymbol:''     
+            selectedCurrencySymbol:''  /*,
+            calculatedShares:[]  ,
+            termLoanAux:this.simulationList[0].term,
+            shareLoanAux:this.simulationList[0].share,
+            tceaLoanAux:this.simulationList[0].tcea,
+            valueLoanAux:this.activeValueLoan*/
         };
     },
     computed:{
-        ...mapState(['person','showModalSchedule','simulationList','simulationShareSelected']) 
+        ...mapState(['person','showModalSchedule','simulationList','simulationShareSelected','selectedFirstButton','activeValueLoan','parameterSetting','activeValueLoan'])  
     },
     methods:{
-        ...mapActions(['changeCurrency','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected']),
-        activaModalSch: function(simulationOption){
+        ...mapActions(['changeCurrency','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected','setSelectedFirstButton']),
+        activeModalSch: function(simulationOption){
             let data={
                 "status":true,
                 "simulation":simulationOption
@@ -114,18 +118,35 @@ export default {
         },
         requestLoan: function(simulationOption){
             this.setSimulationShareSelected(simulationOption);
+            this.setSelectedFirstButton(false);
             this.next();
         },
-        updateCurrencySymbol:function(){
-            if (this.person.campaign.idCurrency==1){
+        updateData:function(){
+            if (this.person.campaigns[0].idCurrency==1){
                 this.selectedCurrencySymbol="S/.";
-            }else if (this.person.campaign.idCurrency==2){
+            }else if (this.person.campaigns[0].idCurrency==2){
                 this.selectedCurrencySymbol="$";
-            }          
+            }   
+            /*
+            let amount=this.activeValueLoan;
+            let comisionAmount=amount*this.parameterSetting.commissionPercentage/100; 
+
+            this.calculatedShares=[];
+            let calculatedShare=0;
+            for(let i=0;i<3;i++){
+                //calculatedShare=(this.simulationList[i].share+ comisionAmount).toFixed(2); //per month
+                calculatedShare=(this.simulationList[i].share).toFixed(2); //per month
+                console.log("calculated share",calculatedShare);
+                this.calculatedShares.push(calculatedShare);
+            }
+            console.log("los que se estan mostrando",this.calculatedShares);*/
         }    
     },
     mounted() {
-        this.updateCurrencySymbol();
+        this.updateData(); 
+    },
+    updated(){
+        //this.updateData();
     },
     components:{
         

@@ -7,10 +7,12 @@
             
             <div class="col-sm-6 container-fluid d-flex justify-content-center mt-5 mb-4">
               <form id="form_openAcount" @submit.prevent='enterDni'>
-                      <h2 class="text-center mt-5">Ingresa tu DNI</h2>
-                      <h6 class="ml-5 mt-4">Número de DNI</h6>
-                      <input id="txt_dni" type="text" class="form-control ml-5 mt-1" maxlength="8" minlength="8"
-                      @keypress="isNumber($event)" placeholder="DNI"
+                      <h2 class="text-center mt-5">Ingresa tus datos</h2>
+                      <h6 class="ml-5 mt-4">Tipo de documento</h6>
+                      <div class="col-sm-4"> <v-select class="inpt" placeholder="   Tipo de documento" v-model="selectedTypeDoc" :required="!selectedTypeDoc" :options="optionsTypeDoc"  label="text" @input="setActiveTypeDocF"/></div>
+                      <h6 class="ml-5 mt-4">Número de documento</h6>
+                      <input id="txt_dni" type="text" class="form-control ml-5 mt-1" :maxlength="maxLNumber" :minlength="minLNumber"
+                      @keypress="isNumber($event)" placeholder="N° documento"
                        v-model.trim="$v.dni.$model" :class="{
                          'is-invalid' : $v.dni.$error, 'is-valid' : !$v.dni.$invalid }">
                       <div class="valid-feedback ml-5">Dni Válido</div>
@@ -31,7 +33,7 @@
                           <br> Personales</a>
                           </h6> 
                           </label>
-                          <button class="mt-4 text-white btn" type="submit">Empieza ahora</button>
+                          <button class="mt-4 text-white btn" align="center" type="submit">Empieza ahora</button>
                       </div>           
               </form>
             </div>
@@ -45,11 +47,35 @@
 </style>
 
 <script>
-    
+/*
+window.onload=function(){
+    function ParseURLParameter(Parameter){
+      let FullURL=window.location.search.substring(1);
+      let ParametersArray=FullURL.split('&');
+      for (let i=0; i<ParametersArray.length;i++){
+        let CurrentParameter=ParametersArray[i].split('=');
+        if (CurrentParameter[0]==Parameter){
+          return CurrentParameter[1];
+        }
+      }
+    }
+
+    let PageName=ParseURLParameter('page');
+
+    if (typeof PageName!= 'undefined'){
+      if(PageName=='contact_us'){
+        alert(PageName);
+      }
+    }else{
+      alert('No Page Parameter found...');
+    }
+}
+  */  
     import {mapState} from 'vuex'
     import {mapActions} from 'vuex'
     import router from '@/router.js'
     import * as personDA from '@/dataAccess/personDA.js'
+    import * as loanDA from '@/dataAccess/loanDA.js'
     import Swal from 'sweetalert2'
 
     import { required, minLength, maxLength, numeric} from 'vuelidate/lib/validators'
@@ -58,9 +84,17 @@
       name: 'openingDNI',
       data(){
         return {
+          selectedTypeDoc:false,
+          optionsTypeDoc: [{
+              value:1, text:'DNI'
+            },{
+              value:2, text:'Carnét de extranjería'
+            }],
           dni : '',
           termsAccept:false,
-          termsRead:false
+          termsRead:false,
+          minLNumber:0,
+          maxLNumber:0
         };
       },
       validations: {
@@ -71,13 +105,14 @@
           numeric
         }
       },
-      computed:{
-        ...mapState(['person','processId']) 
+      computed:{//flagErrorLead setFlagErrorLead
+        ...mapState(['person','processId','parameterSetting','activeTypeDoc','flagErrorLead'])  
       },
       methods:{
-          ...mapActions(['fill','setActiveProcessId']),
+          ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs','setFlagErrorLead']),
           enterDni(){
               if (this.termsAccept){
+                if(this.activeTypeDoc!=null){
                   //1: apertura de cuentas
                   //2: prestamos             
                   this.setActiveProcessId(2);
@@ -87,6 +122,10 @@
                       console.log(person_data);
                       this.fill(person_data);
                       if(person_data.type==1){ //CLIENT
+                            //#############
+                            //this.getLeadClient();
+
+                            //##############
                           router.push('/Lending');
                       }
                       else if(person_data.type==2){//NO CLIENT
@@ -100,9 +139,15 @@
                       Swal.fire({
                       title: 'Error',
                       type: 'error',
-                      text: 'DNI inválido'
+                      text: 'Número de documento inválido'
                       })
                   })  
+                }else{
+                  Swal.fire({
+                      title: 'Tipo de documento',
+                      text: 'Es necesario seleccionar un tipo de documento'
+                      })
+                }
               } else{
                 Swal.fire({
                       title: 'Política de Protección de datos',
@@ -111,6 +156,28 @@
                       })
               }         
           },
+          getLeadClient:function(){
+            console.log("person lead:",this.person.idLead);
+            loanDA.doRequestLead(this.person.idLead).then((res) =>{
+                let lead_data = res.data;
+                //console.log("LEAD: ",lead_data);
+                this.fillLead(lead_data);
+                console.log("LEAD guardado: ",this.lead);
+                //this.fillDataTerms();
+            }).catch(error=>{
+                //this.setFlagErrorLead(true);
+                //console.log("error en la captura del lead");
+                                    
+                    Swal.fire({
+                        title: 'Error',
+                        type: 'error',
+                        text: 'Error en la captura del Lead del cliente'
+                    });
+                    this.$router.push('/');
+                
+
+            })
+        },
           isNumber: function(evt) {
             evt = (evt) ? evt : window.event;
             var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -119,6 +186,9 @@
             } else {
               return true;
             }
+          },
+          setActiveTypeDocF:function(val){
+            this.setActiveTypeDocs(val);
           },
           acceptTerms: function(){
             this.termsAccept=!this.termsAccept;
@@ -147,7 +217,35 @@
                             ,
                       showCloseButton: true
                       })
-          }    
+          },
+          getParameterSettings:function(){
+            loanDA.doRequestParameters().then((res) =>{
+                        let response_create = res.data;
+                        this.fillParameterSettings(response_create);
+                        console.log("PARAMETROS DE CONFIGURACION")
+                        console.log(this.parameterSetting);
+                    }).catch(error=>
+                    {
+                        Swal.fire({
+                        title: 'Error',
+                        type: 'error',
+                        text: 'Error en la captura de parámetros de configuración'
+                        })
+                    })
+          }  
+      },
+      mounted(){
+        this.getParameterSettings();
+      },
+      updated(){
+        if(this.selectedTypeDoc && this.selectedTypeDoc.value==1){
+          this.minLNumber=8;
+          this.maxLNumber=8;
+        }
+        if(this.selectedTypeDoc && this.selectedTypeDoc.value==2){
+          this.minLNumber=12;
+          this.maxLNumber=12;
+        }
       }
       
     }

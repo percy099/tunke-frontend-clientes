@@ -46,4 +46,8 @@ footer{
   background-color: rgba(0,203,138,0.66);;
 }
 
+.swal2-container{
+  z-index: 10000 !important;
+}
+
 </style>

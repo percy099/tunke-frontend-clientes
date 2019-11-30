@@ -66,16 +66,15 @@
     }
 }
 
-
-
 .modal-container .closeModalSimulation{
   float: right;
 }
 
 .modal-container .closeModalSimulation button{
   border: 0;
-  color: rgb(255, 255, 255);
-  background: rgba(204, 204, 204, 0.459);
+  color:rgba(204, 204, 204, 0.795);
+  background: rgb(255, 255, 255);
+  padding: 1%;
 }
 
 #modalCalendar{
@@ -144,4 +143,59 @@ tfoot .table-dark td{
   color: black;
   font-weight: 600;
   font-size: 1.1rem;
+}
+
+.row .col-6{
+  margin-top: 2%;
+  margin-bottom: 1%;
+}
+
+/***/
+button{
+  margin-top: 1.5%;
+  margin-bottom: 1%;
+  border-radius: 5px;
+  border:0;
+  color: rgb(255, 255, 255);
+  background:rgb(9, 13, 77);
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+
+.printable2{
+  display: none;
+}
+
+@media print
+{
+    .non-printable { display: none; }
+    .printable { 
+      display: block; 
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin: 0;
+      padding: 0;
+      overflow: visible!important;
+    }
+    .printable2 { 
+      display: block; 
+    }
+    .printable2 .logo{ 
+      display: block; 
+      margin-top: 3%;
+      margin-left: 10%;
+      margin-bottom: 2%;
+    }
+    .printable2 .client{
+      margin-top: 5%;
+      margin-right: 10%;
+    }
+    .printable2 .dayToday{
+      margin-right: 10%;
+    }
+
 }

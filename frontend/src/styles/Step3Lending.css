@@ -14,6 +14,10 @@ h3{
     color: rgb(72, 84, 100);
 }
 
+h5{
+    font-size:1vw;
+}
+
 .container-ext{
     background-color: rgba(221, 221, 221, 0.39);
     max-width: 100%;
@@ -32,7 +36,64 @@ h3{
 .inpt{
     margin-bottom: 8%;    
 }
+.msgExtraordinario{
+  font-size: 1.5vh;
+  text-align: center;
+  padding-bottom: 10%;
+}
 
 .row div button .simulation{
     margin-left: 30%;
 }
+
+
+/*SLIDER*/
+ 
+  /* The slider itself */
+  .slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 3px;
+    border-radius: 5px;  /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+  }
+  
+  /* Mouse-over effects */
+  .slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+  }
+  
+  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 15px; /* Set a specific slider handle width */
+    height: 15px;
+    border-radius: 50%; /* Slider handle height */
+    background:rgba(0,203,138,0.66);; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 15px; /* Set a specific slider handle width */
+    height: 15px; /* Slider handle height */
+    border-radius: 50%;
+    background:rgba(0,203,138,0.66);; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+
+  button{
+    margin-top: 1.5%;
+    margin-bottom: 1%;
+    border-radius: 5px;
+    border:0;
+    color: rgb(255, 255, 255);
+    background:rgb(9, 13, 77);
+    width: 20vh;
+    height: 5vh;
+  }

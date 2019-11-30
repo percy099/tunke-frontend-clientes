@@ -6,11 +6,12 @@ export function doCreateAccount(idPer,cur,ans1,ans2,ans3,ans4){
     var body ={
         "idPerson" : idPer,
         "currency" : cur,
+        "origin" : 1,
+        "accountType" : type
         "response1" : ans1,
         "response2" : ans2,
         "response3" : ans3,
         "response4" : ans4,
-        "origin" : 1,
     }
     
     return axios.post(url,body);

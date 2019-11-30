@@ -21,7 +21,7 @@
                 </div>
             </div>
             </div>
-            <div class="listing-item" @click="activaVentana">
+            <div class="listing-item" @click="enableWindow">
                 <figure class="image">
                     <img src="@/images/vehicular.jpeg" alt="image">
                     <figcaption>
@@ -31,7 +31,7 @@
                     </figcaption>
                 </figure>
                 <div class="titleCamp">
-                    <h5 align="center">{{person.campaign.name}}</h5>
+                    <h5 align="center">{{campaignsActive[0].name}}</h5>
                     <h5 align="center"></h5>
                 </div>      
                 <div class="listing">
@@ -61,7 +61,7 @@
             </div>
         </div>
         <!--Ventana modal de información de la campaña-->  
-        <ModalStep2Lending v-if="showModal" @close="desactivaVentana">
+        <ModalStep2Lending v-if="showModal" @close="disableWindow">
             <h3 slot="header">custom header</h3>
         </ModalStep2Lending>
                
@@ -79,7 +79,37 @@ import ModalStep2Lending from '@/components/ModalStep2Lending.vue'
 export default {
     data(){
         return {
-            showModal:false
+            showModal:false,
+            campaignsActive:[
+                {
+                    active:'',
+                    endDate:'',
+                    idCampaign:'',
+                    idCurrency: '',
+                    month: '',
+                    name: '',
+                    startDate: ''
+                },
+                {
+                    active:'',
+                    endDate:'',
+                    idCampaign:'',
+                    idCurrency: '',
+                    month: '',
+                    name: '',
+                    startDate: ''
+                },
+                {
+                    active:'',
+                    endDate:'',
+                    idCampaign:'',
+                    idCurrency: '',
+                    month: '',
+                    name: '',
+                    startDate: ''
+                },
+
+            ]
         };
     },
     computed:{
@@ -87,14 +117,21 @@ export default {
     },
     methods:{
         ...mapActions(['changeCurrency']),
-        desactivaVentana: function(){
+        disableWindow: function(){
             this.showModal=false;
         },
-        activaVentana: function(){
+        enableWindow: function(){
             this.showModal=true;
+        },
+        fillCampaigns: function(){
+            if (this.person.campaigns.length!=0){
+                this.campaignsActive=[];
+                this.campaignsActive=this.person.campaigns;
+            }
         }
     },
     mounted() {
+        this.fillCampaigns();
     },
     components:{
         ModalStep2Lending

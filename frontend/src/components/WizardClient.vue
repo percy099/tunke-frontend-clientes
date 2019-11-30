@@ -39,8 +39,88 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','processId',
-                     'response1','response2','response3','response4']),        
+        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','processId','parameterSetting','response1','response2','response3','response4'])      
+    },
+    methods:{
+        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','setActiveProcessId']),
+        onComplete (){
+            if(this.accountType == 1){
+                if(this.person.totalAccounts+1<=this.parameterSetting.maxAccountsNumber){
+                accountDA.doCreateAccount(this.person.idPerson,this.currency1, this.accountType).then((res) =>{
+                    let response_create = res.data;
+                    this.captureResponse(response_create);
+                    this.$router.push('/summarySale');
+                }).catch(error=>
+                {
+                    Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Error al crear la cuenta'
+                    })
+                })
+                }else{
+                    Swal.fire({
+                            title: 'Se superó el límite de cuentas abiertas',
+                            type: 'error',
+                            text: 'Estimado cliente, usted ya cuenta con muchas cuentas abiertas en Tunke.'
+                        });
+                    this.$router.push('/');
+                }
+            }
+            if(this.accountType == 2){
+                if(this.person.totalAccounts+1<=this.parameterSetting.maxAccountsNumber){
+                accountDA.doCreateAccount(this.person.idPerson,this.currency2, this.accountType).then((res) =>{
+                    let response_create = res.data;
+                    this.captureResponse(response_create);
+                    this.$router.push('/summarySale');
+                }).catch(error=>
+                {
+                    Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Error al crear la cuenta'
+                    })
+                })
+                }else{
+                    Swal.fire({
+                            title: 'Se superó el límite de cuentas abiertas',
+                            type: 'error',
+                            text: 'Estimado cliente, usted ya cuenta con muchas cuentas abiertas en Tunke.'
+                        });
+                    this.$router.push('/');
+                }
+            }
+            if(this.accountType == 3){
+                if(this.person.totalAccounts+1<=this.parameterSetting.maxAccountsNumber){
+                accountDA.doCreateAccount(this.person.idPerson,this.currency3, this.accountType).then((res) =>{
+                    let response_create = res.data;
+                    this.captureResponse(response_create);
+                    this.$router.push('/summarySale');
+                }).catch(error=>
+                {
+                    Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Error al crear la cuenta'
+                    })
+                })
+                }else{
+                    Swal.fire({
+                            title: 'Se superó el límite de cuentas abiertas',
+                            type: 'error',
+                            text: 'Estimado cliente, usted ya cuenta con muchas cuentas abiertas en Tunke.'
+                        });
+                    this.$router.push('/');
+                }
+            }
+            this.changeCurrency1(1);
+            this.changeCurrency2(1);
+            this.changeCurrency3(1);
+            this.setAccountType(1);
+            console.log(this.currency1);
+            console.log(this.currency2);
+            console.log(this.currency3);
+            console.log(this.accountType);
     },
     methods:{
         ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','setActiveProcessId',
@@ -75,7 +155,7 @@ export default {
                    this.changeFlagTimer(true);
                    return false;
                }
-
+               this.token.input = this.token.input.toUpperCase();
                if(this.token.input==this.token.received){
                    console.log("token igual");
                    let body={

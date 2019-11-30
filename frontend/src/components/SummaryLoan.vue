@@ -29,13 +29,13 @@
                 </div>
                 <div class="col-7">
                     <h5>
-                        {{activeAccountLoan}} {{activeValueLoan}}
+                        {{activeAccountLoan.currencySymbol}} {{activeValueLoan}}
                     </h5>
                 </div>
             </div>
         </div>
         <div class="text-center mt-5">
-            <button class="btn btn-primary text-white p-2 mt-5">Página Principal</button>
+            <button class="btn btn-primary text-white p-2 mt-5"  @click="goPrincipal">Página Principal</button>
         </div>
     </div>
 </template>
@@ -43,6 +43,10 @@
 
 
 <script>
+
+import {mapActions,mapState} from 'vuex'
+import router from '@/router.js'
+
 export default {
     data(){
         return {
@@ -55,6 +59,11 @@ export default {
     mounted(){
         let moment = require('moment');
         this.currentDate=moment().format("DD/MM/YYYY");
+    },
+    methods:{
+        goPrincipal: function(){
+            this.$router.push('/');
+        }
     }
     
 }

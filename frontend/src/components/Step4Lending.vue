@@ -1,29 +1,49 @@
 <template>
     <div id="step4">
         <div class=""><h1 align="left">Selecciona tu cuenta</h1></div>
-        <div class="mt-4"><h4>Selecciona la cuenta donde se realizará el depósito</h4></div>
+        <div class="mt-4" v-if="hasAccounts"><h4>Selecciona la cuenta donde se realizará el depósito</h4></div>
         <div class="row">
             <div class="col-3"></div>
-            <div class="col-6"><div class="my-4 "> <v-select class="inpt" v-model="selectedAccount" :required="!selectedAccount" :options="optionsAccount"  label="accountNumber" @input="setActiveAccountF"/></div></div>
+            <div class="col-6">
+                <div class="my-4 "> 
+                    <v-select v-if="hasAccounts" class="inpt" v-model="selectedAccount" :required="!selectedAccount" :options="optionsAccount"  label="accountNumber" @input="setActiveAccountF"/>
+                    <h5 class="noAccounsts" align=center v-else>Usted no cuenta con cuentas de la moneda de la campaña</h5>
+                </div>
+            </div>
         </div>
-        <div class>
-            <h4>Cuenta Seleccionada: {{activeAccountLoan.accountNumber}}</h4>
-            <h4>Tipo de cuenta     : {{activeAccountLoan.idAccountType}}</h4>
-            <h4>Fecha de apertura  : {{activeAccountLoan.openingDate}}</h4>
-            <h4>Moneda             : {{activeAccountLoan.currencyName}}</h4>
+        <div class="row mt-4">                  
+            <div class="col-md-6 benefit"><h5 class="boldWords" align="left">Cuenta seleccionada</h5></div>
+            <div class="col-md-1 benefit"><h5 class="boldWords" align="left">:</h5></div>
+            <div class="col-md-4 benefit"><h5 class="detail" align="left">{{activeAccountLoan.accountNumber}}</h5></div>
+        </div>
+        <div class="row mt-4">                  
+            <div class="col-md-6 benefit"><h5 class="boldWords" align="left">Tipo de cuenta</h5></div>
+            <div class="col-md-1 benefit"><h5 class="boldWords" align="left">:</h5></div>
+            <div class="col-md-4 benefit"><h5 class="detail" align="left">{{typeAccount}}</h5></div>
+        </div>
+        <div class="row mt-4">                  
+            <div class="col-md-6 benefit"><h5 class="boldWords" align="left">Fecha de apertura</h5></div>
+            <div class="col-md-1 benefit"><h5 class="boldWords" align="left">:</h5></div>
+            <div class="col-md-4 benefit"><h5 class="detail" align="left">{{activeAccountLoan.openingDate}}</h5></div>
+        </div>
+        <div class="row mt-4">                  
+            <div class="col-md-6 benefit"><h5 class="boldWords" align="left">Moneda</h5></div>
+            <div class="col-md-1 benefit"><h5 class="boldWords" align="left">:</h5></div>
+            <div class="col-md-4 benefit"><h5 class="detail" align="left">{{activeAccountLoan.currencyName}}</h5></div>
         </div>
         <div align="center">
             <button class="openAccount text-white p-2 btn btn-primary" @click="activaVentana">Abrir cuenta</button>
-            <button class="finish ml-5 text-white p-2 btn btn-primary btnNu" @click="requestLoan">Finalizar</button>
+            <button class="finish ml-5 text-white p-2 btn btn-primary btnNu" @click="requestLoan" :disabled="!hasAccounts">Depositar</button>
         </div>
         <!--Ventana modal de la simulacion-->  
-        <ModalOpenAccount v-if="showModalAccount" @close="desactivaVentana">
-            <h3 slot="header">custom header</h3>
+        <ModalOpenAccount style="z-index:9000" v-if="showModalAccount" @close="desactivaVentana">
+            <h3 slot="header" style="z-index:9000">custom header</h3>
         </ModalOpenAccount>
     </div>
 </template>
 
 <style scoped src="@/styles/Step4Lending.css">
+
 
 </style>
 
@@ -33,6 +53,7 @@ import {mapActions,mapState} from 'vuex'
 import Swal from 'sweetalert2'
 import * as loanDA from '@/dataAccess/loanDA.js'
 import ModalOpenAccount from '@/components/ModalOpenAccount.vue'
+import * as accountDA from '@/dataAccess/accountDA.js';
 
 export default {
     data(){
@@ -40,23 +61,31 @@ export default {
             //Accounts
             selectedAccount:false,
             optionsAccount: [],
-            showModalAccount:false
+            showModalAccount:false,
+            hasAccounts : false,
+            typeAccount:''
         };
     },
     computed:{
-        ...mapState(['person','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList']) //showModalAccount
+        ...mapState(['person',,'lead','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList','selectedFirstButton']) //showModalAccount
     },
     methods:{
-        ...mapActions(['changeCurrency','setActiveAccountLoans','setShowModalAccount','setSimulationShareSelected']),
+        ...mapActions(['changeCurrency','setActiveAccountLoans','setShowModalAccount','setSimulationShareSelected','setSelectedFirstButton']),
         setActiveAccountF: function(val){
             this.setActiveAccountLoans(val);
+            if(this.activeAccountLoan.idAccountType) {this.typeAccount="Cuenta corriente";}
         },
         updateAccounts: function(){
             loanDA.doRequestAccountsByClient(this.person.idClient).then((res) =>{
+                console.log(res.data);
                   let response_create = res.data;
                   this.optionsAccount=[];                
                   for (let i=0; i<response_create.accounts.length;i++){
-                      this.optionsAccount.push(response_create.accounts[i]);
+                      if(this.person.campaigns[0].idCurrency==response_create.accounts[i].idCurrency)
+                        this.optionsAccount.push(response_create.accounts[i]);
+                      else 
+                        continue;
+                      this.hasAccounts = true;
                   }
               }).catch(error=>
               {
@@ -67,41 +96,74 @@ export default {
                   })
               })
         },
-        openAccount:function(){
-            //ir a la ventana de apertura de cuenta
-        },
         requestLoan:function(){
             //validar el tipo de moneda de la cuenta
             
-            if (this.activeAccountLoan!='' && this.activeAccountLoan.idCurrency==this.person.campaign.idCurrency){
+            if (this.activeAccountLoan!='' && this.activeAccountLoan.idCurrency==this.person.campaigns[0].idCurrency){
                 let shareLoan=0;
+                let shareTerm=0;
                 //obtain share
                 console.log("simulationSelected:", this.simulationShareSelected);
-                if (this.simulationShareSelected!=-1 && this.simulationShareSelected!=4 ){
+                if (this.simulationShareSelected!=-1 && !this.selectedFirstButton ){
+                    console.log("Se ingreso desde alguna simulacion")
                     shareLoan=this.simulationList[this.simulationShareSelected].share;
-                }else if (this.simulationShareSelected==4){
+                    shareTerm=this.simulationList[this.simulationShareSelected].term;
+
+                }else if (this.selectedFirstButton){
                         //calcular share
+                    console.log("Se ingreso desde pidelo aqui222");
+                    console.log("aheee:",this.activeTerm);
+                    shareTerm=this.activeTerm.value;
+                    
+                    let shareNumber=0;
+                    let numberExtra=0;
+                    //calcular cuota
+                    let tea=this.lead.interestRate;      
+                    let tem=Math.pow(1+(tea/100),1/12)-1;
+                    let amount=this.activeValueLoan;    
+                    /*
+                    let amortization=amount*(1/shareTerm);
+                    let interesA=amount*tem;
+                    let comisionAmount=amount*this.parameterSetting.commissionPercentage/100;
+                    let shareNumber=amortization+interesA+comisionAmount;
+                    shareLoan=shareNumber.toFixed(2);  //cuota mensual
+                    */
+                    if (this.activeShare.value==2){                          //cuota extraordinaria
+                        //buscar si hay julio y diciembre
+                        numberExtra=this.findExtraMonths(shareTerm); //0, 1, 2
+                        if (numberExtra==0){
+                            shareNumber=-1; //ya se vera que se hace
+                        }
+                    }
+
+                    //calculo de la cuota
+                    shareNumber=amount*(Math.pow(1+tem,shareTerm+numberExtra)*tem)/(Math.pow(1+tem,shareTerm+numberExtra)-1);
+                    console.log("cuota calculada: ",shareNumber);           
+                    let comisionAmount=amount*this.parameterSetting.commissionPercentage/100;
+                    shareLoan=(comisionAmount+shareNumber).toFixed(2); //per month
+                    console.log("cuota mensual: ",shareLoan);    
                 }
                 
                 let commissionLoan=(this.parameterSetting.commissionPercentage*this.activeValueLoan/100).toFixed(2);
 
                 /**/
-                console.log(this.person.idClient);
-                console.log(this.activeTerm.value);
-                console.log(this.activeValueLoan);
-                console.log(this.person.campaign.interestRate);
-                console.log(this.person.campaign.idCampaign);
-                console.log("shareLoan",shareLoan);
-                console.log(this.activeAccountLoan.idAccount);
-                console.log(commissionLoan);
+                console.log("idclient",this.person.idClient);              //cliente
+                console.log("num meses",shareTerm);                         //plazos
+                console.log("monto",this.activeValueLoan);              //monto
+                console.log("interes tea",this.lead.interestRate); //interes
+                console.log("idcampaign",this.person.campaigns[0].idCampaign);   //id campaña
+                console.log("cuota mensual",shareLoan);             //cuota
+                console.log("idcuenta",this.activeAccountLoan.idAccount);  //idcuenta
+                console.log("comision monto",commissionLoan);                    //comision
 
-                loanDA.doCreateLoan(this.person.idClient,this.activeTerm.value,parseFloat(this.activeValueLoan),parseFloat(this.person.campaign.interestRate),this.person.campaign.idCampaign,1,shareLoan, this.activeAccountLoan.idAccount, parseFloat(commissionLoan)).then((res) =>{
+                loanDA.doCreateLoan(this.person.idClient,shareTerm,parseFloat(this.activeValueLoan),parseFloat(this.lead.interestRate),this.person.campaigns[0].idCampaign,this.activeShare.value,shareLoan, this.activeAccountLoan.idAccount, parseFloat(commissionLoan),this.lead.idLead).then((res) =>{
                     let response_create = res.data;
                     console.log("Resultado query cuentas: ",response_create);
                     this.$router.push('/summaryLoan');
                     
                 }).catch(error=>
                 {
+                    console.log("error de registro de nuevo prestamo:",error);
                     Swal.fire({
                     title: 'Error',
                     type: 'error',
@@ -121,21 +183,41 @@ export default {
         },
         desactivaVentana: function(){
             this.showModalAccount=false;
+            this.updateAccounts();
             //this.setShowModalAccount(false);
         },
         activaVentana: function(){
             this.showModalAccount=true;
             //this.setShowModalAccount(true);
+        },
+        addDays:function (dateIn_, n) {
+            let moment = require('moment');
+            let days = parseInt(n);
+            let result = moment(dateIn_).add(days, 'days');
+            return result;
+        },
+        findExtraMonths(termInput){
+            let moment = require('moment');
+            console.log("ahhhhhhh:",termInput);
+            let month=moment();
+            let countExtraMonths=0;
+            for (let i=0;i<termInput;i++){
+              let dateAdded=this.addDays(month,30);  
+              month=moment(dateAdded).format("MM");
+
+              if (month=='07' || month=='12'){
+                  countExtraMonths=countExtraMonths+1;
+              }
+              month=dateAdded;
+            }
+            return countExtraMonths;
         }
     },
     components:{
         ModalOpenAccount
     },
     mounted() {
-        this.updateAccounts();
-    },
-    updated(){
-        //this.updateAccounts();
+        this.updateAccounts();   
     }
     
 }
