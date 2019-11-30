@@ -1,0 +1,76 @@
+  .modal-container {
+    width: 800px;
+    height: 400px;
+    margin-top: 5%;
+    margin-left: -14%;
+    margin-bottom: 3%;
+    padding-top: 30%;
+    background-color: #fff;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all .3s ease;
+    font-family: 'Montserrat';
+  }
+  
+  .modal-enter {
+    opacity: 0;
+  }
+  
+  .modal-leave-active {
+    opacity: 0;
+  }
+  
+  .modal-enter .modal-container,
+  .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  @media only screen {
+    .modal-container{
+        padding: 30px;
+        display: block;
+        width: -webkit-calc(130%);
+        width: -moz-calc(130%);
+        width: calc(130%);
+    }
+}
+
+.modal-content{
+    margin-top: 5%;
+    width: 100%;
+    border: 0;
+}
+
+h1{
+    font-weight:bold;
+    font-size:2.7vw;
+}
+
+.modal-container .closeModalSimulation{
+  float: right;
+}
+
+.modal-container .closeModalSimulation button{
+  border: 0;
+  color: rgb(255, 255, 255);
+  background: rgba(204, 204, 204, 0.459);
+}
+
+.req{
+  background-color: #090d4d;
+  font-weight: 600;  
+}
+
+a:not([href]):not([tabindex]){
+  color : #00CB8A;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.boldWords{
+  font-weight: bold;
+}

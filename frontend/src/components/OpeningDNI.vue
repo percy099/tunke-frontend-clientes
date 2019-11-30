@@ -8,10 +8,11 @@
             
             <div class="col-sm-6 container-fluid d-flex justify-content-center mt-5 mb-4">
               <form id="form_openAcount" @submit.prevent='enterDni'>
-                      <h2 class="text-center mt-5">Ingresa tu DNI</h2>
-                      <h6 class="ml-5 mt-4">Número de DNI</h6>
-  
-                      <input id="txt_dni" type="text" class="form-control ml-5 mt-1" maxlength="8" minlength="8"
+                      <h2 class="text-center mt-5">Ingresa tus datos</h2>
+                      <h6 class="ml-5 mt-4">Tipo de documento</h6>
+                      <div class="col-sm-4"> <v-select class="inpt" placeholder="   Tipo de documento" v-model="selectedTypeDoc" :required="!selectedTypeDoc" :options="optionsTypeDoc"  label="text" @input="setActiveTypeDocF"/></div>
+                      <h6 class="ml-5 mt-4">Número de documento</h6>
+                      <input id="txt_dni" type="text" class="form-control ml-5 mt-1" :maxlength="maxLNumber" :minlength="minLNumber"
                       @keypress="isNumber($event)" placeholder="DNI"
                        v-model.trim="$v.dni.$model" :class="{
                          'is-invalid' : $v.dni.$error, 'is-valid' : !$v.dni.$invalid }">
@@ -52,6 +53,7 @@
     import {mapActions} from 'vuex'
     import router from '@/router.js'
     import * as personDA from '@/dataAccess/personDA.js'
+    import * as loanDA from '@/dataAccess/loanDA.js'
     import Swal from 'sweetalert2'
 
     import { required, minLength, maxLength, numeric} from 'vuelidate/lib/validators'
@@ -60,9 +62,17 @@
       name: 'openingDNI',
       data(){
         return {
+          selectedTypeDoc:false,
+          optionsTypeDoc: [{
+              value:1, text:'DNI'
+            },{
+              value:2, text:'Carnét de extranjería'
+            }],
           dni : '',
           termsAccept:false,
-          termsRead:false
+          termsRead:false,
+          minLNumber:-1,
+          maxLNumber:-1
         };
       },
       validations: {
@@ -74,14 +84,18 @@
         }
       },
       computed:{
-        ...mapState(['person'])
+        ...mapState(['person','processId','parameterSetting','activeTypeDoc'])
       },
       methods:{
-          ...mapActions(['fill']),
+          ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs']),
           enterDni(){
               //let res = personDA.doDniValidation(this.dni);
               if (this.termsAccept){
+                if(this.activeTypeDoc!=null){
                   personDA.doDniValidation(this.dni).then((res) =>{
+                    //1 : apertura de cuentas
+                    //2 : prestamos
+                    this.setActiveProcessId(1);
                       let person_data = res.data;
                       if(person_data.type==1){ //CLIENT
                         /*alert('Cliente');
@@ -106,6 +120,12 @@
                       text: 'DNI inválido'
                       })
                   })  
+                  }else{
+                  Swal.fire({
+                      title: 'Tipo de documento',
+                      text: 'Es necesario seleccionar un tipo de documento'
+                      })
+                }
               } else{
                 Swal.fire({
                       title: 'Política de Protección de datos',
@@ -127,6 +147,9 @@
           acceptTerms: function(){
             this.termsAccept=!this.termsAccept;
           } ,
+          setActiveTypeDocF:function(val){
+            this.setActiveTypeDocs(val);
+          },
           goPolitics(){
             this.termsRead=true;
             Swal.fire({
@@ -151,7 +174,37 @@
                             ,
                       showCloseButton: true
                       })
-          } 
+          },
+          getParameterSettings:function(){
+            loanDA.doRequestParameters().then((res) =>{
+                        let response_create = res.data;
+                        this.fillParameterSettings(response_create);
+                        console.log("PARAMETROS DE CONFIGURACION")
+                        console.log(this.parameterSetting);
+                    }).catch(error=>
+                    {
+                        Swal.fire({
+                        title: 'Error',
+                        type: 'error',
+                        text: 'Error en la captura de parámetros de configuración'
+                        })
+                    })
+          }   
+      },
+      mounted(){
+        this.getParameterSettings();
+      },
+      updated(){
+        
+        if(this.selectedTypeDoc && this.selectedTypeDoc.value==1){
+          this.minLNumber=8;
+          this.maxLNumber=8;
+        }
+        if(this.selectedTypeDoc && this.selectedTypeDoc.value==2){
+          this.minLNumber=12;
+          this.maxLNumber=12;
+          
+        }
       }
       
     }

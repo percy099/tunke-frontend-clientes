@@ -1,7 +1,7 @@
 <template>
     <div class="">
-        <form-wizard next-button-text="Siguiente" title="" subtitle="" color="#2CFFBA" shape="circle" 
-        back-button-text="Atrás" finish-button-text="Finalizar" @on-complete="onComplete"
+        <form-wizard ref="wizardLendingMod" title="" next-button-text="Siguiente" subtitle="" color="#2CFFBA" shape="circle" 
+        back-button-text="Atrás" finish-button-text="Finalizar"
         step-size="sm" id="container">
             <tab-content title="Identifícate" class="" :before-change="verificationToken">
                <Step1Lending></Step1Lending>
@@ -9,12 +9,13 @@
             <tab-content title="Elige tu campaña" class="">
                 <Step2Lending></Step2Lending>
             </tab-content>
-            <tab-content title="Simula tu préstamo" class="">
-                <Step3Lending></Step3Lending>
+            <tab-content title="Simula tu préstamo" class="" :before-change="validateSimulation">
+                <Step3Lending :method="nextWindow"></Step3Lending>
             </tab-content>
             <tab-content title="Elige tu cuenta" class="">
                 <Step4Lending></Step4Lending>
             </tab-content>
+            <button style="display:none;" slot="finish">Finish</button>
         </form-wizard>
     </div>
 </template>
@@ -43,23 +44,32 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms'])
+        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','nameWizardNext','lead','activeShare','activeTerm','activeValueLoan','activeValueLoan'])
         
     },
     methods:{
-        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken']),
-        onComplete (){
+        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','fillLead']),
+        nextWindow(){
+            this.$refs.wizardLendingMod.nextTab();
+        },
+        
+        getLeadClient:function(){
+            loanDA.doRequestLead(this.person.idLead).then((res) =>{
+                let lead_data = res.data;
+                console.log("LEAD: ",lead_data)
+                this.fillLead(lead_data);
+            }).catch(error=>{
 
-            accountDA.doCreateAccount(this.person.idPerson,this.currency).then((res) =>{
-                  this.$router.push('/summaryLoan');
-              }).catch(error=>
-              {
-                  Swal.fire({
-                  title: 'Error',
-                  type: 'error',
-                  text: 'Error en la solicitud de préstamo'
-                  })
-              })
+                //if(!this.person.idLead){                      
+                    Swal.fire({
+                        title: 'Error',
+                        type: 'error',
+                        text: 'Error en la captura del Lead del cliente'
+                    });
+                    this.$router.push('/');
+                //}
+
+            })
         },
         verificationToken(){
             
@@ -77,7 +87,7 @@ export default {
                    this.changeFlagTimer(true);
                    return false;
                }
-
+               this.token.input = this.token.input.toUpperCase();
                if(this.token.input==this.token.received){
                    console.log("token igual");
                    let body={
@@ -91,8 +101,10 @@ export default {
                           //ya tiene prestamos en proceso
                           router.push('/LendingActive');
                         }else{
+
                           if(this.person.activeCampaigns){
                             //tiene campañas entonces sigue el flujo
+                            this.getLeadClient();
                             return true;
                           }else{
                             //no tiene campañas 
@@ -117,12 +129,27 @@ export default {
                     title: 'Error',
                     type: 'error',
                     text: 'Cantidad de intentos superados.'
-                })
+                });
                 this.$router.push('/');
             }
             
+        },
+        validateSimulation(){
+            if (this.activeShare!=null && this.activeTerm!=null && this.activeValueLoan!=0 && this.activeValueLoan>0){
+                return true;
+            }else{
+                Swal.fire({
+                    title: 'Información incompleta',
+                    type: 'warning',
+                    text: 'Debe ingresar completar todos los campos requeridos'
+                });
+                return false;
+            }
         }
     },    
+    mounted(){
+
+    },
     components:{
         Step1Lending,
         Step2Lending,

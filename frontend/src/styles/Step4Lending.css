@@ -1,0 +1,30 @@
+#step4{
+    font-family: 'Montserrat';
+  }
+
+h1 {
+    margin-top: 3%;
+    margin-left: 12%;
+    font-weight: bold;
+    font-size: 6.5vh;
+}
+
+button{
+  background-color: rgb(9, 13, 77);
+  font-weight: 600;  
+  margin-top:5%;
+}
+
+.btnNu{
+  width: 18%;
+}
+
+.noAccounsts{
+  background-color: rgba(111, 125, 151, 0.171);
+  padding: 5%;
+}
+
+.col-md-6 .boldWords{
+  font-weight: bold;
+  padding-left: 25%;
+}

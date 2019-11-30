@@ -1,0 +1,201 @@
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: table;
+    transition: opacity .3s ease;
+  }
+  
+  .modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+  .modal-container {
+    width: 1100px;
+    height: 600px;
+    padding-top: 10%;
+    margin: 0px auto;
+    padding: 10px 30px;
+    background-color: #fff;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all .3s ease;
+    font-family: 'Montserrat';
+    overflow-y: auto;
+    max-height: 1000px; 
+  }
+  
+  /*
+   * The following styles are auto-applied to elements with
+   * transition="modal" when their visibility is toggled
+   * by Vue.js.
+   *
+   * You can easily play with the modal transition by editing
+   * these styles.
+   */
+  
+  .modal-enter {
+    opacity: 0;
+  }
+  
+  .modal-leave-active {
+    opacity: 0;
+  }
+  
+  .modal-enter .modal-container,
+  .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  @media only screen {
+    .modal-container{
+        padding: 30px;
+        display: block;
+        width: -webkit-calc(100%*8/10);
+        width: -moz-calc(100%*8/10);
+        width: calc(100%*8/10);
+    }
+}
+
+.modal-container .closeModalSimulation{
+  float: right;
+}
+
+.modal-container .closeModalSimulation button{
+  border: 0;
+  color:rgba(204, 204, 204, 0.795);
+  background: rgb(255, 255, 255);
+  padding: 1%;
+}
+
+#modalCalendar{
+  font-family: 'Montserrat';
+  padding-top: 5%;
+}
+
+h1{
+  font-weight: 700;
+  background-color: rgba(150, 147, 147, 0.089);
+  
+}
+
+hr{
+  width : 66%;
+  height: 4px;
+  background-color: #E6E6E6;
+  margin-top : 0%;
+  margin-bottom: 0.5%;
+  border : none;
+  border-bottom: 1px solid #e6e6e6;
+box-shadow: 0 20px 20px -20px #e6e6e6;
+}
+
+.firstWord{
+  color :	#C0C0C0;
+  font-weight: bold;
+}
+
+.col-4{
+  font-weight: bold;
+}
+
+.table thead th{
+  border : 0px;
+  color : black;
+  font-size: 0.80rem;
+  font-weight: 600;
+}
+
+tbody tr td{
+ font-size: 0.80rem;
+ font-weight: 500;
+}
+tfoot tr td{
+  font-weight: bold;
+}
+
+.tdOneTwoFourSeven{
+  padding-left: 4%;
+}
+
+.tdThreeFive{
+  padding-left: 2%;
+}
+
+.tdSix{
+  padding-left: 2.5%;
+}
+
+thead .table-dark th{
+  background-color: #e6e6e6;
+}
+
+tfoot .table-dark td{
+  color: black;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.row .col-6{
+  margin-top: 2%;
+  margin-bottom: 1%;
+}
+
+/***/
+button{
+  margin-top: 1.5%;
+  margin-bottom: 1%;
+  border-radius: 5px;
+  border:0;
+  color: rgb(255, 255, 255);
+  background:rgb(9, 13, 77);
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+
+.printable2{
+  display: none;
+}
+
+@media print
+{
+    .non-printable { display: none; }
+    .printable { 
+      display: block; 
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin: 0;
+      padding: 0;
+      overflow: visible!important;
+    }
+    .printable2 { 
+      display: block; 
+    }
+    .printable2 .logo{ 
+      display: block; 
+      margin-top: 3%;
+      margin-left: 10%;
+      margin-bottom: 2%;
+    }
+    .printable2 .client{
+      margin-top: 5%;
+      margin-right: 10%;
+    }
+    .printable2 .dayToday{
+      margin-right: 10%;
+    }
+
+}

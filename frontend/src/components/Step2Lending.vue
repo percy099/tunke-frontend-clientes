@@ -13,15 +13,15 @@
                     </figcaption>
                 </figure>
                 <div class="titleCamp">
-                    <h5 align="center">Préstamo con Garantía</h5>
-                    <h5 align="center">Hipotecaria</h5>
+                    <h5 align="center">Préstamo con Garantía Hipotecaria</h5>
+                    <!--h5 align="center">Hipotecaria</h5-->
                 </div>      
                 <div class="listing">
                     <h4>El préstamo que necesitas en muy pocos pasos. ¡Consíguelo ahora!</h4>
                 </div>
             </div>
             </div>
-            <div class="listing-item" @click="activaVentana">
+            <div class="listing-item" @click="enableWindow">
                 <figure class="image">
                     <img src="@/images/vehicular.jpeg" alt="image">
                     <figcaption>
@@ -31,7 +31,7 @@
                     </figcaption>
                 </figure>
                 <div class="titleCamp">
-                    <h5 align="center">Crédito Vehicular</h5>
+                    <h5 align="center">{{person.campaign.name}}</h5>
                     <h5 align="center"></h5>
                 </div>      
                 <div class="listing">
@@ -51,8 +51,8 @@
                     </figcaption>
                 </figure>
                 <div class="titleCamp">
-                    <h5 align="center">Préstamos para</h5>
-                    <h5 align="center">estudios</h5>
+                    <h5 align="center">Préstamos para estudios</h5>
+                    <!--h5 align="center">estudios</h5-->
                 </div>      
                 <div class="listing">
                     <h4>Aprovecha la oportunidad e incrementa tu talento con este préstamo pensado para ti.</h4>
@@ -61,7 +61,7 @@
             </div>
         </div>
         <!--Ventana modal de información de la campaña-->  
-        <ModalStep2Lending v-if="showModal" @close="desactivaVentana">
+        <ModalStep2Lending v-if="showModal" @close="disableWindow">
             <h3 slot="header">custom header</h3>
         </ModalStep2Lending>
                
@@ -83,20 +83,14 @@ export default {
         };
     },
     computed:{
-        ...mapState(['currency'])
+        ...mapState(['person'])
     },
     methods:{
         ...mapActions(['changeCurrency']),
-        goCampaignDetail: function(){
-            Swal.fire({
-                    title: 'Mayor informacion',
-                    html: 'Dar mayor información de la campaña'
-                    })
-        },
-        desactivaVentana: function(){
+        disableWindow: function(){
             this.showModal=false;
         },
-        activaVentana: function(){
+        enableWindow: function(){
             this.showModal=true;
         }
     },

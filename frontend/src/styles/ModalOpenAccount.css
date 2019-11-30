@@ -1,0 +1,405 @@
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: table;
+    transition: opacity .3s ease;
+  }
+  
+  .modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+  .modal-container {
+    width: 800px;
+    height: 600px;
+    margin: 0px auto;
+    padding: 10px 30px;
+    background-color: #fff;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all .3s ease;
+    font-family: 'Montserrat';
+    overflow-y: auto;
+    max-height: 1000px; 
+  }
+
+  .modal-container .closeModalSimulation{
+    float: right;
+  }
+  
+  .modal-container .closeModalSimulation button{
+    border: 0;
+    color: rgb(255, 255, 255);
+    background: rgba(204, 204, 204, 0.459);
+  }
+
+  /*
+   * The following styles are auto-applied to elements with
+   * transition="modal" when their visibility is toggled
+   * by Vue.js.
+   *
+   * You can easily play with the modal transition by editing
+   * these styles.
+   */
+  
+  .modal-enter {
+    opacity: 0;
+  }
+  
+  .modal-leave-active {
+    opacity: 0;
+  }
+  
+  .modal-enter .modal-container,
+  .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  @media only screen {
+    .modal-container{
+        padding: 30px;
+        display: block;
+        width: -webkit-calc(100%*7/10);
+        width: -moz-calc(100%*7/10);
+        width: calc(100%*7/10);
+    }
+}
+
+/*img{
+    max-width: 100%;
+    width: 900px;
+}*/
+
+
+figure .caption{
+    position:relative;
+    
+    -moz-transform:translateY(-250%);
+    -webkit-transform:translateY(-250%);
+    transform:translateY(-250%);
+    margin-left: 1%;
+    text-align: left;
+    padding-left: 3%;
+    padding-right: 1%;
+    width : 43%;
+    color: rgb(255, 255, 255);
+    background-color: rgba(86, 86, 86, 0.411);
+}
+
+.top-part{
+    margin: 0px 0px 0px;
+    height: 63%;
+}
+
+figure .caption h2{
+    font-weight: bold;
+    padding-top: 6%;
+    padding-bottom: 2%;
+}
+
+figure .caption h5{
+    padding-bottom: 7%;
+}
+
+.modal-content{
+    margin-top: 5%;
+    width: 100%;
+    border: 0;
+}
+.modal-container .closeModalSimulation{
+  float: right;
+}
+
+
+
+.modal-container .closeModalSimulation button{
+  border: 0;
+  color: rgb(255, 255, 255);
+  background: rgba(204, 204, 204, 0.459);
+}
+h1{
+  background-color: rgba(223, 221, 221, 0.363);
+  font-weight: bold;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  /*margin-top: 3%;*/
+}
+
+.form-check-input{
+  width: 2.5vh;
+  height: 2.5vh;
+}
+
+#step3{
+  font-family: 'Montserrat';
+}
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    /*border: 1px solid #ccc;
+    background-color: #f1f1f1;*/
+  }
+  
+
+  /* Style the buttons that are used to open the tab content */
+.tab button {
+    float: left;
+    border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    border: 0px solid #000000;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-weight: 600;
+    margin:3.3%;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: #ddd;
+  }
+  
+  .inactive{
+    background-color: #F5F5F7;
+  }
+
+  /* Create an active/current tablink class */
+
+  .active {
+    background-color: #ddd;
+  }
+  
+  .icons{
+    margin: 0;
+  }
+
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    /*border: 1px solid #ccc;*/
+    border-top: none;
+  }
+
+  #simpleAccount{
+    padding: 6px 12px;
+    border-top: none;
+    display: block;
+  }
+
+h3{
+    font-weight: bold;
+}
+
+p{
+    font-weight: 600;
+}
+
+li h5{
+  font-weight: bold;
+  margin: 0;
+}
+
+li h6{
+  margin-left: 20px;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li:before {
+  content: '✓';
+  color : #2CCC2C;
+  float: left;
+  margin-right: 10px;
+}
+
+.radio {
+  position: relative;
+  cursor: pointer;
+  line-height: 20px;
+  font-size: 14px;
+  margin: 15px;
+}
+
+.radio .label {
+  position: relative;
+  display: block;
+  float: left;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #c8ccd4;
+  border-radius: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.radio .label:after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background: #2CFFBA;
+  transform: scale(0);
+  transition: all 0.2s ease;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.radio:hover .label:after {
+  transform: scale(3.6);
+}
+
+input[type="radio"]:checked + .label {
+  border-color: #25D49C;
+}
+
+input[type="radio"]:checked + .label:after {
+  transform: scale(1);
+  transition: all 0.2s cubic-bezier(0.35, 0.9, 0.4, 0.9);
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+@media screen and (min-width: 0) and (max-width: 320px){
+  #secondBlock{
+      margin-top: 30px;
+  }
+
+  #benefits{
+    margin : 0;
+    padding : 0;
+  }
+
+  .form-check-input{
+    width: 3.5vh;
+    height: 3.5vh;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 425px){
+  #benefits{
+    padding : 0;
+  }
+
+  #secondBlock{
+    margin-top : 30px;
+  }
+
+  .tablinks{
+    padding : 0;
+    height: 45px;
+    width: 95px;
+    font-size : 11px;
+  }
+
+  .tab button{
+    padding : 0px;
+    margin : 1.5%;
+  }
+
+  #firstBlock{
+    margin-top: 30px;
+    padding-left: 0;
+  }
+
+  #pig{
+    margin-left : 20px;
+  }
+
+  .form-check-input{
+    width: 3.5vh;
+    height: 3.5vh;
+  }
+}
+
+@media screen and (min-width: 426px) and (max-width: 768px){
+  .form-check-input{
+    width: 3.5vh;
+    height: 3.5vh;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px){
+  #benefits{
+    padding : 0;
+  }
+
+  #secondBlock{
+    margin-top : 30px;
+  }
+
+  .tablinks{
+    padding : 0;
+    height: 55px;
+    width: 170px;
+    font-size : 16px;
+  }
+
+  .tab button{
+    padding : 0px;
+    margin : 1.5%;
+  }
+
+  #firstBlock{
+    margin-top: 30px;
+    padding-left : 0px;
+  }
+
+  .form-check-input{
+    width: 3.5vh;
+    height: 3.5vh;
+  }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1440px){
+  #benefits{
+    padding : 0;
+  }
+
+  #secondBlock{
+    margin-top : 30px;
+  }
+
+  .tablinks{
+    padding : 0;
+    height: 55px;
+    width: 190px;
+    font-size : 16px;
+  }
+
+  .tab button{
+    padding : 0px;
+    margin : 4%;
+  }
+
+  #firstBlock{
+    margin-top: 30px;
+    padding-left : 0px;
+  }
+}
+
+#btnOpenAccount{
+  background-color: #090d4d;
+  font-weight: 600;  
+} 

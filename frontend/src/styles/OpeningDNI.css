@@ -7,11 +7,6 @@
     background-position: cover;
 }
 
-/*.box{
-    height: 60vh;
-    width: 50vh;
-  }*/
-
 #form_openAcount{
   background-color: rgba(255, 255, 255, 0.6);
   height: 65vh;
@@ -19,17 +14,12 @@
   width: 60vh;
 }
 
-/*#form_backgroundOpenAcount{
-  height: 90vh;
-  width: 100vh;
-}*/
-
 button{
   background-color: #090d4d;
   font-weight: 600;  
   width: 30vh;
-  margin-left : auto;
   margin-right: auto;
+  margin-left: auto;
 }
 
 a{
@@ -38,6 +28,9 @@ a{
     
 }
 
+#opening{
+  font-family: 'Montserrat';
+}
 .row{
   font-family: 'Montserrat';
 }
@@ -49,8 +42,14 @@ input{
   font-size: 18px;
   font-weight: 350; 
   width: 44vh;
-  height: 8vh;
-  
+  height: 8vh;  
+}
+.form-control{
+  height: 8%;
+}
+.col-sm-4 .inpt{
+  margin-left: 30%;
+  width: 285%;
 }
 
 .form-check-input{
@@ -61,6 +60,7 @@ input{
 h1{
     font-weight: 700;
     font-size: 50px;
+    margin-left: 10%;
 }
 
 h2{
@@ -119,4 +119,12 @@ h6{
     margin-right: vh;
     margin-bottom: 5vh;
   }
+}
+
+
+.col-sm-4 .inpt {
+  background: #ffffff;
+  border: none;
+  font-weight: 360;
+  
 }

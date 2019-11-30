@@ -20,8 +20,8 @@
                 <span v-if="!$v.tokenAux.maxLength">Debe ser a lo mucho de {{$v.tokenAux.$params.maxLength.max}} caracteres. </span>
             </div><p></p>
             <circular-count-down-timer 
-                :initial-value="30"
-                :steps="30" 
+                :initial-value="60"
+                :steps="60" 
                 :size=100
                 :show-negatives="true"
                 :paused="timerOff"
@@ -48,7 +48,7 @@ export default {
     name : 'Step1Lending',
     data(){
         return {
-            counter: 3,
+            counter: 0,
             tokenSended: false,
             hiddenNumber:'',
             hiddenEmail:'',
@@ -65,54 +65,35 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','token','flagRestartTimer'])
+        ...mapState(['person','token','flagRestartTimer','parameterSetting'])
     },
     methods:{
-        ...mapActions(['fillToken','changeFlagTimer']),
-        getToken(){
-            const TokenGenerator = require('uuid-token-generator');
-            const tokgen = new TokenGenerator(128, TokenGenerator.BASE62);
-            let aux= tokgen.generate().substring(0,6).toUpperCase();
-             //this.token.received=aux;
-            
-            let body={
-                "input":'',
-                "received":aux
-            }
-            this.fillToken(body);
-            console.log(this.token.received);
-            //return this.token.received;
-        },
+        ...mapActions(['fillToken','changeFlagTimer','fillParameterSettings']),
         updateCountdown: function() {
-            this.$refs.countdown.updateTime(31);
+            this.$refs.countdown.updateTime(61);
         },
         updated: function (status) {
             //console.log(status);    //{"value": 144, "seconds": 24, "minutes": 2, "hours": 0}
             if(status.value==-1){
                 this.timerOff=true;
                 this.tokenSended=false;
-                //this.updateCountdown();
-                this.$refs.countdown.updateTime(31);
+                this.$refs.countdown.updateTime(61);
             }
             if(this.flagRestartTimer){
                 this.timerOff=true;
                 this.tokenSended=false;
-                //this.updateCountdown();
-                this.$refs.countdown.updateTime(30-status.value);
+                this.$refs.countdown.updateTime(60-status.value);
                 this.changeFlagTimer(false);
             }
             
         },
         sendToSMS(){    
             if(this.counter>0){
-                this.timerOff=false;
-                //if(this.counter!=3) this.updateCountdown();                   
+                this.timerOff=false;            
                 this.counter = this.counter - 1;
                 this.tokenSended=true;                
                 
-                //enviar señal al back para enviar SMS
-                //this.getToken();
-                
+                //enviar señal al back para enviar SMS              
                 accountDA.doGetToken(this.person.email1,this.person.cellphone1,0).then((res) =>{
                       let token_data = res.data;
                       console.log(res.data);
@@ -125,6 +106,10 @@ export default {
                       console.log(this.person.cellphone1);
                   }).catch(error=>
                   {
+         
+                      this.counter = this.counter + 1;  
+                      this.changeFlagTimer(true);
+
                       Swal.fire({
                       title: 'Error',
                       type: 'error',
@@ -144,14 +129,14 @@ export default {
         },
         sendToEmail(){      
             if(this.counter>0){
-                this.timerOff=false;
-                //if(this.counter!=3) this.updateCountdown();                   
+                
+                this.timerOff=false;                 
                 this.counter = this.counter - 1;
-                this.tokenSended=true;                
+                this.tokenSended=true;       
                 
                 //enviar señal al back para enviar correo
-                //this.getToken();
                 accountDA.doGetToken(this.person.email1,this.person.cellphone1,1).then((res) =>{
+
                       let token_data = res.data;
                       
                       let body={
@@ -163,12 +148,15 @@ export default {
                       console.log(this.person.email1);
                       
                   }).catch(error=>
-                  {
+                  {                
+                      this.counter = this.counter + 1;
+                      this.changeFlagTimer(true);
+
                       Swal.fire({
                       title: 'Error',
                       type: 'error',
                       text: 'Error en la captura del Token'
-                      })
+                      });
                   }) 
             }else{
                 Swal.fire({
@@ -217,6 +205,9 @@ export default {
     },
     updated(){
         this.token.input = this.tokenAux;
+    },
+    mounted(){
+        this.counter=this.parameterSetting.maxTokenSends;      
     }
 }
 </script>

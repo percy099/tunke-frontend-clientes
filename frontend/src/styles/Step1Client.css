@@ -1,3 +1,7 @@
+#code{
+    text-transform: uppercase;
+}
+
 button{
     background-color: rgba(0,203,138,0.66);
     width: 50%;

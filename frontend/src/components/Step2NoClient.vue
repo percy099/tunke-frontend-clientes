@@ -5,9 +5,16 @@
             <div class="card-body">
                 <form>
                     <div class="form-group xs-12">
-                        <label>Teléfono Principal</label>
+                        <div class="row">
+                            <div class="col-9">
+                                <label>Teléfono Principal</label>
+                            </div>
+                            <div class="col-3">
+                                <label class="span_ob">*Campo Obligatorio </label>
+                            </div>  
+                        </div>
                         <input type="text" class="form-control"
-                        v-model.lazy="$v.phone1.$model" :class="{
+                        v-model.trim="$v.phone1.$model" :class="{
                         'is-invalid' : $v.phone1.$error, 'is-valid':!$v.phone1.$invalid }">
                         <div class="valid-feedback">Teléfono Válido</div>
                         <div class="invalid-feedback">
@@ -22,8 +29,8 @@
                     <div class="form-group xs-12">
                         <label>Teléfono Secundario</label>
                         <input type="text" class="form-control"
-                        v-model.lazy="$v.phone2.$model" :class="{
-                        'is-invalid' : $v.phone2.$error, 'is-valid':!$v.phone2.$invalid }">
+                        v-model.trim="$v.phone2.$model" :class="{
+                        'is-invalid' : $v.phone2.$error, 'is-valid':!$v.phone2.$invalid && phone2 != ''}">
                         <div class="valid-feedback">Teléfono Válido!</div>
                         <div class="invalid-feedback">
                             <span v-if="!$v.phone2.minLength">Debe ser de al menos {{
@@ -34,7 +41,14 @@
                         </div>
                     </div>
                     <div class="form-group xs-12">
-                        <label>Correo Principal</label>
+                        <div class="row">
+                            <div class="col-9">
+                                <label>Correo Principal</label>
+                            </div>
+                            <div class="col-3">
+                                <label class="span_ob">*Campo Obligatorio </label>
+                            </div>  
+                        </div>
                         <input type="text" class="form-control"
                         v-model.trim="$v.email1.$model" :class="{
                         'is-invalid' : $v.email1.$error, 'is-valid':!$v.email1.$invalid }">
@@ -48,10 +62,10 @@
                         <label>Correo Secundario</label>
                         <input type="text" class="form-control"
                         v-model.trim="$v.email2.$model" :class="{
-                        'is-invalid' : $v.email2.$error, 'is-valid':!$v.email2.$invalid }">
-                        <div class="valid-feedback">Email Válido!</div>
+                        'is-invalid' : $v.email2.$error, 'is-valid':!$v.email2.$invalid && email2 != ''}">
+                        <div v-if="email2 != ''" class="valid-feedback">Email Válido!</div>
                         <div class="invalid-feedback">
-                            <span v-if="!$v.email2.email">Formato inadecuado. </span>
+                            <span v-if="!$v.email2.email">Formato inadecuado</span>
                         </div>
                     </div>
                 </form>
@@ -65,7 +79,7 @@
 
 <script>
 
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 
 import { required, minLength, maxLength, email, numeric } from 'vuelidate/lib/validators'
 
@@ -87,7 +101,6 @@ export default {
             numeric
         },
         phone2: {
-            required,
             minLength: minLength(9),
             maxLength: maxLength(9),
             numeric
@@ -97,21 +110,27 @@ export default {
             email
         },
         email2: {
-            required,
             email
         }
     },
     computed:{
-        ...mapState(['person'])
+        ...mapState(['person','valStep2'])
     },
     methods:{
-
+        ...mapActions(['setValStep2'])
     },
     updated(){
         this.person.email1 = this.email1;
         this.person.email2 = this.email2;
         this.person.cellphone1 = this.phone1;
         this.person.cellphone2 = this.phone2;
+        if(this.$v.email1.$invalid || this.$v.email2.$invalid || this.$v.phone1.$invalid || this.$v.phone2.$invalid){
+            this.setValStep2(false)
+            console.log(this.valStep2)
+        } else {
+            this.setValStep2(true)
+            console.log(this.valStep2)
+        }
     }
 }
 </script>
