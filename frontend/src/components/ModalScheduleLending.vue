@@ -155,10 +155,10 @@ export default {
         },
         updateData:function(){
             this.comision=this.parameterSetting.commissionPercentage;
-            if (this.person.campaign.idCurrency==1){
+            if (this.person.campaigns[0].idCurrency==1){
                 this.currencySymbol="S/.";
                 this.currencyName="Soles";
-            }else if (this.person.campaign.idCurrency==2){
+            }else if (this.person.campaigns[0].idCurrency==2){
                 this.currencySymbol="$";
                 this.currencyName="Dólares";
             }          

@@ -247,9 +247,9 @@ export default {
             this.setActiveValueLoans(val);
         },
         updateTypeCurrency:function(){
-            if (this.person.campaign.idCurrency==1){
+            if (this.person.campaigns[0].idCurrency==1){
                 this.selectedCurrency="Soles";
-            }else if (this.person.campaign.idCurrency==2){
+            }else if (this.person.campaigns[0].idCurrency==2){
                 this.selectedCurrency="Dólares";
             }          
         } , 
@@ -370,9 +370,9 @@ export default {
         this.minLoan=this.lead.minimumLoan;
         this.maxLoan=this.lead.maximumLoan; 
         if (this.valueLoan!=''){
-            if (this.person.campaign.idCurrency==1){
+            if (this.person.campaigns[0].idCurrency==1){
                     this.selectedCurrencySymbol="S/.";
-            }else if (this.person.campaign.idCurrency==2){
+            }else if (this.person.campaigns[0].idCurrency==2){
                     this.selectedCurrencySymbol="$";
             }
         }

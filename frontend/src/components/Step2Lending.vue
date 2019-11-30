@@ -31,7 +31,7 @@
                     </figcaption>
                 </figure>
                 <div class="titleCamp">
-                    <h5 align="center">{{person.campaign.name}}</h5>
+                    <h5 align="center">{{campaignsActive[0].name}}</h5>
                     <h5 align="center"></h5>
                 </div>      
                 <div class="listing">
@@ -79,7 +79,37 @@ import ModalStep2Lending from '@/components/ModalStep2Lending.vue'
 export default {
     data(){
         return {
-            showModal:false
+            showModal:false,
+            campaignsActive:[
+                {
+                    active:'',
+                    endDate:'',
+                    idCampaign:'',
+                    idCurrency: '',
+                    month: '',
+                    name: '',
+                    startDate: ''
+                },
+                {
+                    active:'',
+                    endDate:'',
+                    idCampaign:'',
+                    idCurrency: '',
+                    month: '',
+                    name: '',
+                    startDate: ''
+                },
+                {
+                    active:'',
+                    endDate:'',
+                    idCampaign:'',
+                    idCurrency: '',
+                    month: '',
+                    name: '',
+                    startDate: ''
+                },
+
+            ]
         };
     },
     computed:{
@@ -92,9 +122,16 @@ export default {
         },
         enableWindow: function(){
             this.showModal=true;
+        },
+        fillCampaigns: function(){
+            if (this.person.campaigns.length!=0){
+                this.campaignsActive=[];
+                this.campaignsActive=this.person.campaigns;
+            }
         }
     },
     mounted() {
+        this.fillCampaigns();
     },
     components:{
         ModalStep2Lending

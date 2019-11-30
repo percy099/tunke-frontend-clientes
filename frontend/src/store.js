@@ -53,7 +53,8 @@ export default new Vuex.Store({
       vehicle2Plate : '',
       activeCampaigns:'',
       activeLoans: '',
-      campaign:{
+      campaigns:[],
+      /*{
           active:'',
           endDate:'',
           idCampaign:'',
@@ -61,8 +62,8 @@ export default new Vuex.Store({
           month: '',
           name: '',
           startDate: ''
-      },
-      idLead:'',
+      },*/
+      idLeads:[],
       totalAccounts: 0
 
     },
@@ -173,9 +174,11 @@ export default new Vuex.Store({
       state.person.activeLoans=person_data.activeLoans;
       state.person.totalAccounts=person_data.totalAccounts;
 
-      if (person_data.activeCampaigns){        
-        state.person.campaign=person_data.campaign;
-        state.person.idLead=person_data.idLead;
+      if (person_data.activeCampaigns){     
+        state.person.campaigns=[];   
+        state.person.idLeads=[];   
+        state.person.campaigns=person_data.campaigns;
+        state.person.idLeads=person_data.idLeads;
       }
     },
     fillResponseCreateAccount(state,response_create){

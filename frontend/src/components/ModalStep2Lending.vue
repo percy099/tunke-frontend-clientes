@@ -8,7 +8,7 @@
             <figure class="top-part">
               <img src="@/images/vehicularO.jpg" alt="image">            
                 <div class="caption">
-                  <h2 align="left">{{person.campaign.name}}</h2>
+                  <h2 align="left">{{person.campaigns[0].name}}</h2>
                   <h5 align="left">Aprovecha la oportunidad para obtener lo que tanto deseas</h5>
                 </div>              
             </figure>

@@ -135,37 +135,38 @@ export default {
     },
     beforeMount(){
         if (!this.person.activeLoans & this.person.activeCampaigns){
-            loanDA.doRequestLead(this.person.idLead).then((res) =>{
-                let lead_data = res.data;
-                console.log("LEAD: ",lead_data);
-                this.fillLead(lead_data);
-                let min_Periodo=this.lead.minimumPeriod;
-                let max_Periodo=this.lead.maximumPeriod;
+            if(this.person.idLeads.length!=0){
+                loanDA.doRequestLead(this.person.idLeads[0]).then((res) =>{
+                    let lead_data = res.data;
+                    console.log("LEAD: ",lead_data);
+                    this.fillLead(lead_data);
+                    let min_Periodo=this.lead.minimumPeriod;
+                    let max_Periodo=this.lead.maximumPeriod;
 
-                let optionsTerm=[];
+                    let optionsTerm=[];
 
-                for (let period=min_Periodo;period<=max_Periodo;period++){
-                    let resto=period%6;
-                    if(!resto){
-                        let text_period=period + ' meses';
-                        let reg={value: period, text: text_period};
-                        optionsTerm.push(reg);
-                    }             
-                }
-                this.fillTermsLead(optionsTerm);
-            }).catch(error=>{
+                    for (let period=min_Periodo;period<=max_Periodo;period++){
+                        let resto=period%6;
+                        if(!resto){
+                            let text_period=period + ' meses';
+                            let reg={value: period, text: text_period};
+                            optionsTerm.push(reg);
+                        }             
+                    }
+                    this.fillTermsLead(optionsTerm);
+                }).catch(error=>{
 
-                //if(!this.person.idLead){                      
-                    Swal.fire({
-                        title: 'Error',
-                        type: 'error',
-                        text: 'Error en la captura del Lead del cliente'
-                    });
-                    this.$router.push('/');
-                //}
+                    //if(!this.person.idLead){                      
+                        Swal.fire({
+                            title: 'Error',
+                            type: 'error',
+                            text: 'Error en la captura del Lead del cliente'
+                        });
+                        this.$router.push('/');
+                    //}
 
-            })
-
+                })
+            }
             
         }
     }
