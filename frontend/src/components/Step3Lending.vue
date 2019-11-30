@@ -12,7 +12,11 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-4"><input disabled type="text" class="form-control inpt" v-model="selectedTypeLoan" @input="setActiveTypeLoanF"></div>
-                    <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTypeShare" :required="!selectedTypeShare" :options="optionsShare"  label="text" @input="setActiveShareF"/></div>
+                    <div class="col-sm-4"> 
+                        <v-select class="inpt" v-model="selectedTypeShare" :required="!selectedTypeShare" :options="optionsShare"  label="text" @input="setActiveShareF"/>
+                        <h6 class="text-center msgExtraordinario" v-if="extraShareTypeSelected">Las cuotas dobles se aplican solo a Julio y Diciembre</h6>
+                    </div>
+                    
                     <div class="col-sm-4"> <v-select class="inpt" v-model="selectedTerm" :required="!selectedTerm" :options="termsLead"  label="text" @input="setActiveTermF"/></div>
                 </div>
             </div>
@@ -75,6 +79,7 @@ export default {
     },
     data(){
         return {
+            extraShareTypeSelected:false,
             showModal:false,
             comision:'',
             minLoan:0,
@@ -94,7 +99,7 @@ export default {
             optionsShare: [{
                 value:1, text:'Simple'
             },{
-                value:2, text:'Extraordinario'
+                value:2, text:'Extraordinaria'
             }],
             //Plazo de prestamo
             selectedTerm:false,
@@ -376,7 +381,11 @@ export default {
                     this.selectedCurrencySymbol="$";
             }
         }
-
+        if(this.activeShare.value==2){
+            this.extraShareTypeSelected=true;
+        }else if(this.activeShare.value==1){
+            this.extraShareTypeSelected=false;
+        }
         if(this.showModal){
             this.activaVentana();
         }

@@ -36,6 +36,11 @@ h5{
 .inpt{
     margin-bottom: 8%;    
 }
+.msgExtraordinario{
+  font-size: 1.5vh;
+  text-align: center;
+  padding-bottom: 10%;
+}
 
 .row div button .simulation{
     margin-left: 30%;
