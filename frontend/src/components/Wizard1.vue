@@ -12,6 +12,9 @@
             <tab-content title="Elige tu cuenta" class="">
                 <Step3NoClient></Step3NoClient>
             </tab-content>
+            <tab-content title="Preguntas" class="">
+                <Step4NoClient></Step4NoClient>
+            </tab-content>
         </form-wizard>
     </div>
 </template>
@@ -26,6 +29,7 @@ import Step1NoClient from "@/components/Step1NoClient.vue";
 import Step2NoClient from '@/components/Step2NoClient.vue';
 import * as S2NC from '@/components/Step2NoClient.vue'
 import Step3NoClient from '@/components/Step3NoClient.vue';
+import Step4NoClient from '@/components/Step4NoClient.vue';
 import * as accountDA from '@/dataAccess/accountDA.js';
 import * as personDA from '@/dataAccess/personDA.js';
 import {mapState, mapActions} from 'vuex';
@@ -39,18 +43,19 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','securityQuestions','answersSecurityQuestions'])
-        
+        ...mapState(['person','currency','securityQuestions','answersSecurityQuestions','response1',
+                     'response2','response3','response4']),        
     },
     methods:{
-        ...mapActions(['captureResponse','completeSecurityQuestion']),
+        ...mapActions(['captureResponse','completeSecurityQuestion','fillResponses']),
         onComplete (){
-            accountDA.doCreateAccount(this.person.idPerson,this.currency).then((res) =>{
+            accountDA.doCreateAccount(this.person.idPerson,this.currency,this.response1,this.response2,this.response3,this.response4).then((res) =>{
                   let response_create = res.data;
                   this.captureResponse(response_create);
                   this.$router.push('/summarySale');
               }).catch(error=>
               {
+                  console.log(error);
                   Swal.fire({
                   title: 'Error',
                   type: 'error',
@@ -149,7 +154,8 @@ export default {
     components:{
         Step1NoClient,
         Step2NoClient,
-        Step3NoClient
+        Step3NoClient,
+        Step4NoClient
     }
 
 }
