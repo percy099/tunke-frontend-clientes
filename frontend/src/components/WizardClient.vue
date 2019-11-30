@@ -9,6 +9,9 @@
             <tab-content title="Elige tu cuenta" :before-change="verification2" class="">
                 <Step2Client></Step2Client>
             </tab-content>
+            <tab-content title="Preguntas" class="">
+                <Step3Client></Step3Client>
+            </tab-content>
         </form-wizard>
     </div>
 </template>
@@ -21,6 +24,7 @@
 
 import Step1Client from "@/components/Step1Client.vue";
 import Step2Client from '@/components/Step2Client.vue';
+import Step3Client from '@/components/Step3Client.vue';
 import * as S2NC from '@/components/Step2Client.vue';
 import * as accountDA from '@/dataAccess/accountDA.js';
 import * as personDA from '@/dataAccess/personDA.js';
@@ -31,12 +35,11 @@ import Swal from 'sweetalert2'
 export default {
     data(){
         return{
-            counterTries: 3
+            counterTries: 3,
         }
     },
     computed:{
-        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','processId','parameterSetting'])
-        
+        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','processId','parameterSetting','response1','response2','response3','response4'])      
     },
     methods:{
         ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','setActiveProcessId']),
@@ -118,6 +121,23 @@ export default {
             console.log(this.currency2);
             console.log(this.currency3);
             console.log(this.accountType);
+    },
+    methods:{
+        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','setActiveProcessId',
+                       'fillResponses']),
+        onComplete (){                 
+            accountDA.doCreateAccount(this.person.idPerson,this.currency,this.response1,this.response2,this.response3,this.response4).then((res) =>{
+                  let response_create = res.data;               
+                  this.captureResponse(response_create);              
+                  this.$router.push('/summarySale');    
+              }).catch(error=>
+              {
+                  Swal.fire({
+                  title: 'Error',
+                  type: 'error',
+                  text: 'Error al crear la cuenta'
+                  });
+              })
         },
         verificationToken(){
             
@@ -176,13 +196,14 @@ export default {
                 })
                 return false;
             }
-        }      
+        },     
     },
     mounted() {        
     },
     components:{
         Step1Client,
-        Step2Client
+        Step2Client,
+        Step3Client
     }
 
 }

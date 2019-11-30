@@ -9,6 +9,10 @@ export default new Vuex.Store({
     termsLead:[],
     valStep2: false,
     selectedFirstButton:false, /* false: "pidelo aqui"  true:"simulation"*/
+    response1: '',
+    response2: '',
+    response3: '',
+    response4: '',
     simulationShareSelected:-1,
     showModalAccount:false,
     termsReadLoan:false,
@@ -109,6 +113,12 @@ export default new Vuex.Store({
     simulationList:[]
   },
   mutations: {
+    setResponses(state, responses){
+      state.response1=responses[0];
+      state.response2=responses[1];
+      state.response3=responses[2];
+      state.response4=responses[3];
+    },
     setShowModalSchedule(state, showModalSchedule){
       state.showModalSchedule.status = showModalSchedule.status;
       state.showModalSchedule.simulation = showModalSchedule.simulation;
@@ -376,6 +386,9 @@ export default new Vuex.Store({
     },
     changeCurrency3(context, flag){
       context.commit('changeCur3', flag);
+    },
+    fillResponses(context,responsesData){
+      context.commit('setResponses',responsesData);
     }
   }
 })
