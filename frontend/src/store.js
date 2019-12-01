@@ -5,6 +5,44 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    campaignWindowSelected:1,
+    currencyCampaignSelected:{
+      idCurrency:1,
+      name:"Soles"
+    },
+    availableCampaigns:[ //fillAvailableCampaigns availableCampaigns
+      {
+        imageSource:"@/images/hipotecario.jpg",
+        name:"Préstamo con Garantía Hipotecaria",
+        active:'',
+        endDate:'',
+        idCampaign:'',
+        idCurrency: '',
+        month: '',
+        startDate: '',
+        idLead:-1
+      },{
+        imageSource:"@/images/vehicular.jpeg",
+        name:"Campaña numero 2",
+        active:'',
+        endDate:'',
+        idCampaign:'',
+        idCurrency: '',
+        month: '',
+        startDate: '',
+        idLead:-1
+      },{
+        imageSource:"@/images/educativo.jpg",
+        name:"Préstamos para estudios",
+        active:'',
+        endDate:'',
+        idCampaign:'',
+        idCurrency: '',
+        month: '',
+        startDate: '',
+        idLead:-1
+      }
+    ],
     flagErrorLead:false,
     termsLead:[],
     valStep2: false,
@@ -30,7 +68,10 @@ export default new Vuex.Store({
     },
     activeTypeDoc:null,
     activeTypeLoan:null,
-    activeShare:null,
+    activeShare:{
+      value:0,
+      text:''
+    },
     activeTerm:null,
     activeTypeCurrency:null,
     activeValueLoan:0,
@@ -112,12 +153,32 @@ export default new Vuex.Store({
     },
     simulationList:[]
   },
-  mutations: {
+  mutations: { 
+    setCampaignWindowSelected(state, data){
+      state.campaignWindowSelected=data;
+    },
+    setCurrencyCampaignSelected(state,data){ 
+      state.currencyCampaignSelected.idCurrency=data.idCurrency;
+      state.currencyCampaignSelected.name=data.name;
+    },
     setResponses(state, responses){
       state.response1=responses[0];
       state.response2=responses[1];
       state.response3=responses[2];
       state.response4=responses[3];
+    },
+    setAvailableCampaigns(state,campaignsData){
+      if (campaignsData.pos<3){
+        state.availableCampaigns[campaignsData.pos].imageSource=campaignsData.data.imageSource;
+        state.availableCampaigns[campaignsData.pos].name=campaignsData.data.name;
+        state.availableCampaigns[campaignsData.pos].active=campaignsData.data.active;
+        state.availableCampaigns[campaignsData.pos].endDate=campaignsData.data.endDate;
+        state.availableCampaigns[campaignsData.pos].idCampaign=campaignsData.data.idCampaign;
+        state.availableCampaigns[campaignsData.pos].idCurrency=campaignsData.data.idCurrency;
+        state.availableCampaigns[campaignsData.pos].month=campaignsData.data.month;
+        state.availableCampaigns[campaignsData.pos].startDate=campaignsData.data.startDate;
+        state.availableCampaigns[campaignsData.pos].idLead=campaignsData.data.idLead;
+      }
     },
     setShowModalSchedule(state, showModalSchedule){
       state.showModalSchedule.status = showModalSchedule.status;
@@ -292,6 +353,12 @@ export default new Vuex.Store({
 
   },
   actions: {
+    fillCurrencyCampaignSelected(context, data){
+      context.commit('setCurrencyCampaignSelected',data);
+    },
+    fillcampaignWindowSelected(context, data){
+      context.commit('setCampaignWindowSelected',data);
+    },
     fill(context,person_data){
         context.commit('fillPersonData',person_data);
     },
@@ -389,6 +456,9 @@ export default new Vuex.Store({
     },
     fillResponses(context,responsesData){
       context.commit('setResponses',responsesData);
+    },
+    fillAvailableCampaigns(context,data){
+      context.commit('setAvailableCampaigns',data);
     }
   }
 })

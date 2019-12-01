@@ -8,7 +8,7 @@
             <figure class="top-part">
               <img src="@/images/vehicularO.jpg" alt="image">            
                 <div class="caption">
-                  <h2 align="left">{{person.campaigns[0].name}}</h2>
+                  <h2 align="left">{{availableCampaigns[campaignWindowSelected].name}}</h2>
                   <h5 align="left">Aprovecha la oportunidad para obtener lo que tanto deseas</h5>
                 </div>              
             </figure>
@@ -17,7 +17,7 @@
                 <div class="row">                  
                     <div class="col-sm-4 benefit">
                         <h5 class="detail" align="center">Plazos</h5>
-                        <h6 class="detail" align="justify">Tienes hasta 48 meses para pagar tus préstamos. No te compliques y solicita el préstamo que necesitas</h6>   
+                        <h6 class="detail" align="justify">Tienes hasta {{maxTerm}} meses para pagar tus préstamos. No te compliques y solicita el préstamo que necesitas</h6>   
                     </div>
                     <div class="col-sm-4 benefit">
                         <h5 class="detail" align="center">Cuotas flexibles</h5>
@@ -41,19 +41,36 @@
 <script>
 
 import {mapActions,mapState} from 'vuex'
-
+//fillcampaignWindowSelected  campaignWindowSelected
 export default {
     data(){
-        return {            
+        return {        
+          maxTerm:0
         };
     },
     computed:{
-        ...mapState(['person'])
+        ...mapState(['person','availableCampaigns','campaignWindowSelected'])
     },
     methods:{
-        ...mapActions(['changeCurrency'])
+        ...mapActions(['changeCurrency','fillAvailableCampaigns','fillcampaignWindowSelected']),
+        calculateMaxTerm: function(){
+            let maxPeriod=this.availableCampaigns[this.campaignWindowSelected].idLead.maximumPeriod;
+            let minPeriod=this.availableCampaigns[this.campaignWindowSelected].idLead.minimumPeriod;
+            let maxAux=0;
+            for(let i=minPeriod;i<=maxPeriod;i++){
+              let resto=i%6;
+              if(resto==0){
+                maxAux=i;
+              }
+            }
+            this.maxTerm=maxAux;
+        }
     },
     mounted() {
+      this.calculateMaxTerm();
+    },
+    updated(){
+      
     },
     components:{
     }

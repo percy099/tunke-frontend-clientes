@@ -6,7 +6,7 @@
             <tab-content title="Identifícate" class="" :before-change="verificationToken">
                <Step1Lending></Step1Lending>
             </tab-content>
-            <tab-content title="Elige tu campaña" class="">
+            <tab-content title="Elige tu campaña" class="" :before-change="updateSimulationVariables">
                 <Step2Lending></Step2Lending>
             </tab-content>
             <tab-content title="Simula tu préstamo" class="" :before-change="validateSimulation">
@@ -40,15 +40,16 @@ export default {
     
     data(){
         return {
-            counterTries:3
+            counterTries:3,
+            campaingsListAux:[]
         }
     },
     computed:{
-        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','nameWizardNext','lead','activeShare','activeTerm','activeValueLoan','activeValueLoan','termsLead','flagErrorLead'])
+        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','nameWizardNext','lead','activeShare','activeTerm','activeValueLoan','activeValueLoan','termsLead','flagErrorLead','availableCampaigns','campaignWindowSelected','currencyCampaignSelected']) 
         
     },
     methods:{
-        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','fillLead','fillTermsLead','setFlagErrorLead']),
+        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','fillLead','fillTermsLead','setFlagErrorLead','fillAvailableCampaigns','fillcampaignWindowSelected','fillCurrencyCampaignSelected']),
         nextWindow(){
             this.$refs.wizardLendingMod.nextTab();
         },
@@ -122,10 +123,43 @@ export default {
                       })
                 return false;
             }
-        }
-    },    
-    mounted(){
+        },
+        updateSimulationVariables: function(){
 
+            let leadSelected=this.availableCampaigns[this.campaignWindowSelected].idLead;
+            this.fillLead(leadSelected);
+            console.log("lead actualizado:", this.lead);
+            let min_Periodo=this.lead.minimumPeriod;
+            let max_Periodo=this.lead.maximumPeriod;
+
+            let optionsTerm=[];
+                    for (let period=min_Periodo;period<=max_Periodo;period++){
+                        let resto=period%6;
+                        if(!resto){
+                            let text_period=period + ' meses';
+                            let reg={value: period, text: text_period};
+                            optionsTerm.push(reg);
+                        }             
+                    }
+            this.fillTermsLead(optionsTerm);
+            
+            let currencyType=this.availableCampaigns[this.campaignWindowSelected].idCurrency;
+            let currencyName="";
+
+            if(currencyType==1){
+                currencyName="Soles";
+            }else if(currencyType==2){
+                currencyName="Dólares";
+            }
+
+            let reg={
+                idCurrency:currencyType,
+                name:currencyName
+            }
+
+            this.fillCurrencyCampaignSelected(reg);
+            return true;
+        }
     },
     components:{
         Step1Lending,
@@ -134,17 +168,17 @@ export default {
         Step4Lending
     },
     beforeMount(){
+        console.log("este es el before mount");
         if (!this.person.activeLoans & this.person.activeCampaigns){
             if(this.person.idLeads.length!=0){
                 loanDA.doRequestLead(this.person.idLeads[0]).then((res) =>{
                     let lead_data = res.data;
-                    console.log("LEAD: ",lead_data);
+                    console.log("LEAD llamado en el wizard: ",lead_data);
                     this.fillLead(lead_data);
                     let min_Periodo=this.lead.minimumPeriod;
                     let max_Periodo=this.lead.maximumPeriod;
 
                     let optionsTerm=[];
-
                     for (let period=min_Periodo;period<=max_Periodo;period++){
                         let resto=period%6;
                         if(!resto){
@@ -166,10 +200,80 @@ export default {
                     //}
 
                 })
-            }
-            
-        }
-    }
 
+                console.log("Person campaigns length" , this.person.campaigns.length);
+                let campaignsFiltered=[]; //las campañas del mes actual
+                if (this.person.campaigns.length==0){
+                    this.person.activeCampaigns=false;
+                }
+                else{
+                    for (let i=0;i<this.person.campaigns.length;i++){
+                        loanDA.doRequestLead(this.person.idLeads[i]).then((res) =>{
+                            let lead_data = res.data;
+                            let objCamp={
+                                "lead": lead_data,
+                                "campaignPos":i
+                            }
+                            campaignsFiltered.push(objCamp);
+                            if(i+1 == this.person.campaigns.length){
+                                campaignsFiltered.sort(function(a, b){return b.lead.maximumLoan-a.lead.maximumLoan});
+                                if(campaignsFiltered.length==1){ //ubicar en arreglo en las posicion central
+                                let posArrCampaign=campaignsFiltered[0].campaignPos;
+                                let dataCamp={
+                                    "pos":1,
+                                    "data":{
+                                        "imageSource":"@/images/educativo.jpg",
+                                        "name":this.person.campaigns[posArrCampaign].name,
+                                        "active":this.person.campaigns[posArrCampaign].active,
+                                        "endDate":this.person.campaigns[posArrCampaign].endDate,
+                                        "idCampaign":this.person.campaigns[posArrCampaign].idCampaign,
+                                        "idCurrency": this.person.campaigns[posArrCampaign].idCurrency,
+                                        "month": this.person.campaigns[posArrCampaign].month,
+                                        "startDate": this.person.campaigns[posArrCampaign].startDate,
+                                        "idLead":campaignsFiltered[0].lead
+                                    }
+                                }
+                                this.fillAvailableCampaigns(dataCamp);
+                                }
+                                else if (campaignsFiltered.length>1){
+                                    console.log("mayor a 1");
+                                    for(let i=0; i<3;i++){
+                                        if(campaignsFiltered.length>i){
+                                            let posArrCampaign=campaignsFiltered[i].campaignPos;
+                                            let dataCamp={
+                                                "pos":i,
+                                                "data":{
+                                                    "imageSource":"@/images/educativo.jpg",
+                                                    "name":this.person.campaigns[posArrCampaign].name,
+                                                    "active":this.person.campaigns[posArrCampaign].active,
+                                                    "endDate":this.person.campaigns[posArrCampaign].endDate,
+                                                    "idCampaign":this.person.campaigns[posArrCampaign].idCampaign,
+                                                    "idCurrency": this.person.campaigns[posArrCampaign].idCurrency,
+                                                    "month": this.person.campaigns[posArrCampaign].month,
+                                                    "startDate": this.person.campaigns[posArrCampaign].startDate,
+                                                    "idLead":campaignsFiltered[i].lead
+                                                }
+                                            } 
+                                            this.fillAvailableCampaigns(dataCamp);
+                                        }
+                                    }
+                            }
+                        }
+                        }).catch(error=>{
+                            console.log("Error en la captura de data en la lista de leads--WizardLending")
+                        })
+                        
+                    }
+                    console.log("campañas filtradas",campaignsFiltered);
+                    console.log("size:",campaignsFiltered.length);
+                }
+            }
+
+            
+            
+        } 
+    },    
+    mounted(){
+    }
 }
 </script>
