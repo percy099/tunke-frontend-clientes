@@ -95,16 +95,11 @@ export default {
     },
     data(){
         return {   
-            selectedCurrencySymbol:''  /*,
-            calculatedShares:[]  ,
-            termLoanAux:this.simulationList[0].term,
-            shareLoanAux:this.simulationList[0].share,
-            tceaLoanAux:this.simulationList[0].tcea,
-            valueLoanAux:this.activeValueLoan*/
+            selectedCurrencySymbol:'' 
         };
     },
     computed:{
-        ...mapState(['person','showModalSchedule','simulationList','simulationShareSelected','selectedFirstButton','activeValueLoan','parameterSetting','activeValueLoan'])  
+        ...mapState(['person','showModalSchedule','simulationList','simulationShareSelected','selectedFirstButton','activeValueLoan','parameterSetting','activeValueLoan','currencyCampaignSelected'])  
     },
     methods:{
         ...mapActions(['changeCurrency','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected','setSelectedFirstButton']),
@@ -122,31 +117,17 @@ export default {
             this.next();
         },
         updateData:function(){
-            if (this.person.campaigns[0].idCurrency==1){
+            if (this.currencyCampaignSelected.idCurrency==1){
                 this.selectedCurrencySymbol="S/.";
-            }else if (this.person.campaigns[0].idCurrency==2){
+            }else if (this.currencyCampaignSelected.idCurrency==2){
                 this.selectedCurrencySymbol="$";
             }   
-            /*
-            let amount=this.activeValueLoan;
-            let comisionAmount=amount*this.parameterSetting.commissionPercentage/100; 
-
-            this.calculatedShares=[];
-            let calculatedShare=0;
-            for(let i=0;i<3;i++){
-                //calculatedShare=(this.simulationList[i].share+ comisionAmount).toFixed(2); //per month
-                calculatedShare=(this.simulationList[i].share).toFixed(2); //per month
-                console.log("calculated share",calculatedShare);
-                this.calculatedShares.push(calculatedShare);
-            }
-            console.log("los que se estan mostrando",this.calculatedShares);*/
         }    
     },
     mounted() {
         this.updateData(); 
     },
     updated(){
-        //this.updateData();
     },
     components:{
         

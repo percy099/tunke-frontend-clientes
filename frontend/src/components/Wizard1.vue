@@ -45,13 +45,12 @@ export default {
     computed:{
         ...mapState(['person','currency','securityQuestions','answersSecurityQuestions','valStep2','currency1','currency2','currency3','accountType','response1',
                      'response2','response3','response4'])
-        
     },
     methods:{
         ...mapActions(['captureResponse','completeSecurityQuestion','changeCurrency3','changeCurrency2','changeCurrency1','setAccountType']),
         onComplete (){
             if(this.accountType == 1){
-                accountDA.doCreateAccount(this.person.idPerson,this.currency1, this.accountType).then((res) =>{
+                accountDA.doCreateAccount(this.person.idPerson,this.currency1, this.accountType, this.response1,this.response2,this.response3,this.response4).then((res) =>{
                     let response_create = res.data;
                     this.captureResponse(response_create);
                     this.$router.push('/summarySale');
@@ -65,7 +64,7 @@ export default {
                 })
             }
             if(this.accountType == 2){
-                accountDA.doCreateAccount(this.person.idPerson,this.currency2, this.accountType).then((res) =>{
+                accountDA.doCreateAccount(this.person.idPerson,this.currency2, this.accountType, this.response1,this.response2,this.response3,this.response4).then((res) =>{
                     let response_create = res.data;
                     this.captureResponse(response_create);
                     this.$router.push('/summarySale');
@@ -79,7 +78,7 @@ export default {
                 })
             }
             if(this.accountType == 3){
-                accountDA.doCreateAccount(this.person.idPerson,this.currency3, this.accountType).then((res) =>{
+                accountDA.doCreateAccount(this.person.idPerson,this.currency3, this.accountType, this.response1,this.response2,this.response3,this.response4).then((res) =>{
                     let response_create = res.data;
                     this.captureResponse(response_create);
                     this.$router.push('/summarySale');
@@ -99,26 +98,9 @@ export default {
                 console.log(this.currency2);
                 console.log(this.currency3);
                 console.log(this.accountType);
-            }    
-    },
-    methods:{
-        ...mapActions(['captureResponse','completeSecurityQuestion','fillResponses']),
-        onComplete (){
-            accountDA.doCreateAccount(this.person.idPerson,this.currency,this.response1,this.response2,this.response3,this.response4).then((res) =>{
-                  let response_create = res.data;
-                  this.captureResponse(response_create);
-                  this.$router.push('/summarySale');
-              }).catch(error=>
-              {
-                  console.log(error);
-                  Swal.fire({
-                  title: 'Error',
-                  type: 'error',
-                  text: 'Error al crear la cuenta'
-                  })
-              })
+            }
         },
-        verificacionV1(){
+                verificacionV1(){
             if (this.counterTries>0){
 
                 if (this.answersSecurityQuestions.posAnswer1==-1 || this.answersSecurityQuestions.posAnswer2==-1 
@@ -199,10 +181,9 @@ export default {
                 })
                 return true;
             }
-        }
+        }    
     },
     mounted() {
-   
             personDA.doQuestionsRequest(this.person.idPerson).then((res)=>{
                 let responseQuestionReq=res.data;
                 this.completeSecurityQuestion(responseQuestionReq);

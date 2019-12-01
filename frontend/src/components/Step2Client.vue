@@ -50,7 +50,7 @@
                     
                         </div>
                         <div class="ml-5">
-                            <input  class="form-check-input" :disabled="!termsRead" type="checkbox" id="autoSizingCheck">
+                            <input  class="form-check-input" :disabled="!termsRead" type="checkbox" id="autoSizingCheck" @click="changeTerms">
                             <label class="form-check-label" for="autoSizingCheck">
                             <h6>He leído y acepto los 
                             <a href="#" @click="goTermsAndConds()"> términos y condiciones
@@ -107,7 +107,7 @@
                     
                         </div>
                         <div class="ml-5">
-                            <input  class="form-check-input" :disabled="!termsRead" type="checkbox" id="autoSizingCheck">
+                            <input  class="form-check-input" :disabled="!termsRead" type="checkbox" id="autoSizingCheck" @click="changeTerms">
                             <label class="form-check-label" for="autoSizingCheck">
                             <h6>He leído y acepto los 
                             <a href="#" @click="goTermsAndConds()"> términos y condiciones
@@ -164,7 +164,7 @@
                     
                         </div>
                         <div class="ml-5">
-                            <input  class="form-check-input" :disabled="!termsRead" type="checkbox" id="autoSizingCheck">
+                            <input  class="form-check-input" :disabled="!termsRead" type="checkbox" id="autoSizingCheck" @click="changeTerms">
                             <label class="form-check-label" for="autoSizingCheck">
                             <h6>He leído y acepto los 
                             <a href="#" @click="goTermsAndConds()"> términos y condiciones
@@ -200,7 +200,7 @@ export default {
         ...mapState(['currency1','accountType','currency2','currency3'])
     },
     methods:{
-        ...mapActions(['changeCurrency1','setAccountType','changeCurrency2','changeCurrency3']),
+        ...mapActions(['changeCurrency1','setAccountType','changeCurrency2','changeCurrency3','changeClientTerms']),
         setCur1(value){
             this.changeCurrency1(value);
             console.log(this.currency1);
@@ -256,6 +256,9 @@ export default {
                       
                       text: 'TUNKE es una empresa privada que brinda servicios financieros en el Perú. En ese sentido, nos comprometemos a mantener la privacidad y la protección de información de nuestros clientes, proveedores y colaboradores de conformidad con lo establecido en la Ley No. 29733, Ley de Protección de datos personales y su reglamento, adoptando para ello las medidas técnicas y organizativas necesarias para evitar la pérdida, mal uso, alteración, acceso no autorizado y robo de los datos personales facilitados por los titulares de datos personales, asimismo garantizando la mejora continua de dichas medidas. En tal contexto, declaramos los siguientes lineamientos que debemos informar previamente a nuestros clientes, proveedores y colaboradores, de forma clara e inequívoca, cuando se recaben sus datos personales a través de cualquiera de nuestros canales:  \n La existencia del tratamiento de datos de carácter personal, la finalidad de la recolección y destinatarios de la información.'
 +'\n Carácter obligatorio o facultativo de la respuesta a las preguntas que en su caso les sean planteadas, así como de las consecuencias de la obtención de los datos personales o la negativa a suministrar los mismos.'                      })
+        },
+        changeTerms(){
+            this.changeClientTerms(true);
         }
     },
     mounted() {

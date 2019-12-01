@@ -43,7 +43,6 @@ import {mapState,mapActions} from 'vuex'
 import Swal from 'sweetalert2'
 import { required, minLength, maxLength} from 'vuelidate/lib/validators'
 import * as accountDA from '@/dataAccess/accountDA.js'
-
 export default {
     name : 'Step1Client',
     data(){
@@ -54,7 +53,7 @@ export default {
             hiddenEmail:'',
             timerOff:true,
             tokenAux:'',
-            submitStatus: null
+            submitStatus: null,
         }
     },
     validations: {
@@ -110,6 +109,7 @@ export default {
                 this.tokenSended=true;                
                 
                 //enviar señal al back para enviar SMS
+
                 accountDA.doGetToken(this.person.email1,this.person.cellphone1,0).then((res) =>{
                       let token_data = res.data;
                       console.log(res.data);

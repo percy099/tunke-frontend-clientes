@@ -60,7 +60,7 @@
                   <div class="row">
                       <div class="col-2"></div>
                       <div class="col-5 firstWord">Comisión</div>
-                      <div class="col-4">{{currencySymbol}} {{comisionAmount}}</div>
+                      <div class="col-4">{{currencySymbol}} {{comisionAmount.toFixed(2)}}</div>
                   </div>
                   <hr>
               </div>
@@ -146,7 +146,7 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','lead','activeValueLoan','simulationList','showModalSchedule','activeShare','parameterSetting'])
+        ...mapState(['person','lead','activeValueLoan','simulationList','showModalSchedule','activeShare','parameterSetting','currencyCampaignSelected'])
     },
     methods:{
         ...mapActions(['changeCurrency']),
@@ -155,10 +155,10 @@ export default {
         },
         updateData:function(){
             this.comision=this.parameterSetting.commissionPercentage;
-            if (this.person.campaigns[0].idCurrency==1){
+            if (this.currencyCampaignSelected.idCurrency==1){
                 this.currencySymbol="S/.";
                 this.currencyName="Soles";
-            }else if (this.person.campaigns[0].idCurrency==2){
+            }else if (this.currencyCampaignSelected.idCurrency==2){
                 this.currencySymbol="$";
                 this.currencyName="Dólares";
             }          
