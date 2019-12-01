@@ -39,14 +39,14 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','processId','parameterSetting','response1','response2','response3','response4'])      
+        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','processId','parameterSetting','response1','response2','response3','response4','currency1','currency2','currency3','accountType'])      
     },
     methods:{
-        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','setActiveProcessId']),
+        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','setActiveProcessId','changeCurrency3','changeCurrency2','changeCurrency1','setAccountType']),
         onComplete (){
             if(this.accountType == 1){
                 if(this.person.totalAccounts+1<=this.parameterSetting.maxAccountsNumber){
-                accountDA.doCreateAccount(this.person.idPerson,this.currency1, this.accountType).then((res) =>{
+                accountDA.doCreateAccount(this.person.idPerson,this.currency1, this.accountType, this.response1, this.response2, this.response3, this.response4).then((res) =>{
                     let response_create = res.data;
                     this.captureResponse(response_create);
                     this.$router.push('/summarySale');
@@ -69,7 +69,7 @@ export default {
             }
             if(this.accountType == 2){
                 if(this.person.totalAccounts+1<=this.parameterSetting.maxAccountsNumber){
-                accountDA.doCreateAccount(this.person.idPerson,this.currency2, this.accountType).then((res) =>{
+                accountDA.doCreateAccount(this.person.idPerson,this.currency2, this.accountType, this.response1, this.response2, this.response3, this.response4).then((res) =>{
                     let response_create = res.data;
                     this.captureResponse(response_create);
                     this.$router.push('/summarySale');
@@ -92,7 +92,7 @@ export default {
             }
             if(this.accountType == 3){
                 if(this.person.totalAccounts+1<=this.parameterSetting.maxAccountsNumber){
-                accountDA.doCreateAccount(this.person.idPerson,this.currency3, this.accountType).then((res) =>{
+                accountDA.doCreateAccount(this.person.idPerson,this.currency3, this.accountType, this.response1, this.response2, this.response3, this.response4).then((res) =>{
                     let response_create = res.data;
                     this.captureResponse(response_create);
                     this.$router.push('/summarySale');
@@ -121,25 +121,8 @@ export default {
             console.log(this.currency2);
             console.log(this.currency3);
             console.log(this.accountType);
-    },
-    methods:{
-        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','setActiveProcessId',
-                       'fillResponses']),
-        onComplete (){                 
-            accountDA.doCreateAccount(this.person.idPerson,this.currency,this.response1,this.response2,this.response3,this.response4).then((res) =>{
-                  let response_create = res.data;               
-                  this.captureResponse(response_create);              
-                  this.$router.push('/summarySale');    
-              }).catch(error=>
-              {
-                  Swal.fire({
-                  title: 'Error',
-                  type: 'error',
-                  text: 'Error al crear la cuenta'
-                  });
-              })
-        },
-        verificationToken(){
+            },
+                    verificationToken(){
             
             if (this.counterTries>0){
                this.counterTries=this.counterTries-1;
@@ -196,7 +179,7 @@ export default {
                 })
                 return false;
             }
-        },     
+        },
     },
     mounted() {        
     },
