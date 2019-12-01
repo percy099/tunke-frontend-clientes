@@ -1,5 +1,9 @@
 <template>
-    <div id="step4">
+    <div id="step4" class="vld-parent">
+        <loading :active.sync="isLoading" 
+        :can-cancel="false" 
+        :is-full-page="false"></loading>
+ 
         <div class=""><h1 align="left">Selecciona tu cuenta</h1></div>
         <div class="mt-4" v-if="hasAccounts"><h4>Selecciona la cuenta donde se realizará el depósito</h4></div>
         <div class="row">
@@ -54,7 +58,8 @@ import Swal from 'sweetalert2'
 import * as loanDA from '@/dataAccess/loanDA.js'
 import ModalOpenAccount from '@/components/ModalOpenAccount.vue'
 import * as accountDA from '@/dataAccess/accountDA.js';
-
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
     data(){
         return {
@@ -63,7 +68,8 @@ export default {
             optionsAccount: [],
             showModalAccount:false,
             hasAccounts : false,
-            typeAccount:''
+            typeAccount:'',
+            isLoading : false
         };
     },
     computed:{
@@ -155,14 +161,16 @@ export default {
                 console.log("cuota mensual",shareLoan);             //cuota
                 console.log("idcuenta",this.activeAccountLoan.idAccount);  //idcuenta
                 console.log("comision monto",commissionLoan);                    //comision
-
+                this.isLoading = true;
                 loanDA.doCreateLoan(this.person.idClient,shareTerm,parseFloat(this.activeValueLoan),parseFloat(this.lead.interestRate),this.person.campaigns[0].idCampaign,this.activeShare.value,shareLoan, this.activeAccountLoan.idAccount, parseFloat(commissionLoan),this.lead.idLead).then((res) =>{
+                    this.isLoading = false;
                     let response_create = res.data;
                     console.log("Resultado query cuentas: ",response_create);
                     this.$router.push('/summaryLoan');
                     
                 }).catch(error=>
                 {
+                    this.isLoading = false;
                     console.log("error de registro de nuevo prestamo:",error);
                     Swal.fire({
                     title: 'Error',
@@ -214,7 +222,8 @@ export default {
         }
     },
     components:{
-        ModalOpenAccount
+        ModalOpenAccount,
+        Loading
     },
     mounted() {
         this.updateAccounts();   

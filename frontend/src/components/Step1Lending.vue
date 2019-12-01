@@ -43,6 +43,8 @@ import {mapState,mapActions} from 'vuex'
 import Swal from 'sweetalert2'
 import { required, minLength, maxLength} from 'vuelidate/lib/validators'
 import * as accountDA from '@/dataAccess/accountDA.js'
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
     name : 'Step1Lending',
@@ -54,7 +56,7 @@ export default {
             hiddenEmail:'',
             timerOff:true,
             tokenAux:'',
-            submitStatus: null
+            submitStatus: null,
         }
     },
     validations: {
@@ -106,7 +108,6 @@ export default {
                       console.log(this.person.cellphone1);
                   }).catch(error=>
                   {
-         
                       this.counter = this.counter + 1;  
                       this.changeFlagTimer(true);
 
