@@ -171,83 +171,70 @@ export default {
                 moment.locale('es-es');
                 let todayMonth=moment().format("MMMM");
                 console.log(todayMonth);
-                console.log("..2..");
-
+                console.log("Person campaigns length" , this.person.campaigns.length);
                 let campaignsFiltered=[]; //las campañas del mes actual
-                for (let i=0;i<this.person.campaigns.length;i++){
-                    if(this.person.campaigns[i].month.toUpperCase()==todayMonth.toUpperCase()){
-
+                if (this.person.campaigns.length==0){
+                    this.person.activeCampaigns=false;
+                }
+                else{
+                    for (let i=0;i<this.person.campaigns.length;i++){
                         loanDA.doRequestLead(this.person.idLeads[i]).then((res) =>{
                             let lead_data = res.data;
-                            let set_={
+                            let objCamp={
                                 "lead": lead_data,
                                 "campaignPos":i
                             }
-                            campaignsFiltered.push(set_);
-                            console.log("size en push ...3...",campaignsFiltered.length);
-
+                            campaignsFiltered.push(objCamp);
+                            if(i+1 == this.person.campaigns.length){
+                                campaignsFiltered.sort(function(a, b){return b.lead.maximumLoan-a.lead.maximumLoan});
+                                if(campaignsFiltered.length==1){ //ubicar en arreglo en las posicion central
+                                let posArrCampaign=campaignsFiltered[0].campaignPos;
+                                let dataCamp={
+                                    "pos":1,
+                                    "data":{
+                                        "imageSource":"@/images/educativo.jpg",
+                                        "name":this.person.campaigns[posArrCampaign].name,
+                                        "active":this.person.campaigns[posArrCampaign].active,
+                                        "endDate":this.person.campaigns[posArrCampaign].endDate,
+                                        "idCampaign":this.person.campaigns[posArrCampaign].idCampaign,
+                                        "idCurrency": this.person.campaigns[posArrCampaign].idCurrency,
+                                        "month": this.person.campaigns[posArrCampaign].month,
+                                        "startDate": this.person.campaigns[posArrCampaign].startDate,
+                                        "idLead":campaignsFiltered[0].lead
+                                    }
+                                }
+                                this.fillAvailableCampaigns(dataCamp);
+                                }
+                                else if (campaignsFiltered.length>1){
+                                    console.log("mayor a 1");
+                                    for(let i=0; i<3;i++){
+                                        if(campaignsFiltered.length>i){
+                                            let posArrCampaign=campaignsFiltered[i].campaignPos;
+                                            let dataCamp={
+                                                "pos":i,
+                                                "data":{
+                                                    "imageSource":"@/images/educativo.jpg",
+                                                    "name":this.person.campaigns[posArrCampaign].name,
+                                                    "active":this.person.campaigns[posArrCampaign].active,
+                                                    "endDate":this.person.campaigns[posArrCampaign].endDate,
+                                                    "idCampaign":this.person.campaigns[posArrCampaign].idCampaign,
+                                                    "idCurrency": this.person.campaigns[posArrCampaign].idCurrency,
+                                                    "month": this.person.campaigns[posArrCampaign].month,
+                                                    "startDate": this.person.campaigns[posArrCampaign].startDate,
+                                                    "idLead":campaignsFiltered[i].lead
+                                                }
+                                            } 
+                                            this.fillAvailableCampaigns(dataCamp);
+                                        }
+                                    }
+                            }
+                        }
                         }).catch(error=>{
                             console.log("Error en la captura de data en la lista de leads--WizardLending")
                         })
+                        
                     }
                 }
-                this.campaingsListAux=[];
-                this.campaingsListAux=campaignsFiltered;
-                console.log("..4..");
-/*
-                //let campaignsFiltered=[];
-                //ordenamos las campañas por monto maximo de lead
-                campaignsFiltered.sort(function(a, b){return b.lead.maximumLoan-a.lead.maximumLoan});
-
-                console.log("CAMPAÑAS RECIBIDOS DEL MES (ordenadas):");
-                console.log(campaignsFiltered);
-                console.log("size:",campaignsFiltered.length);
-                if(campaignsFiltered.length==1){ //ubicar en arreglo en las posicion central
-                console.log("igual a 1");
-                    let posArrCampaign=campaignsFiltered[0].campaignPos;
-                    let dataCamp={
-                        "pos":1,
-                        "data":{
-                            "imageSource":"@/images/educativo.jpg",
-                            "name":this.person.campaigns[posArrCampaign].name,
-                            "active":this.person.campaigns[posArrCampaign].active,
-                            "endDate":this.person.campaigns[posArrCampaign].endDate,
-                            "idCampaign":this.person.campaigns[posArrCampaign].idCampaign,
-                            "idCurrency": this.person.campaigns[posArrCampaign].idCurrency,
-                            "month": this.person.campaigns[posArrCampaign].month,
-                            "startDate": this.person.campaigns[posArrCampaign].startDate,
-                            "idLead":campaignsFiltered[0].lead
-                        }
-                    }
-                    this.fillAvailableCampaigns(dataCamp);
-                }else if (campaignsFiltered.length>1){
-                    console.log("mayor a 1");
-                    for(let i=0; i<3;i++){
-                        if(campaignsFiltered.length>i){
-                           let posArrCampaign=campaignsFiltered[i].campaignPos;
-                            let dataCamp={
-                                "pos":i,
-                                "data":{
-                                    "imageSource":"@/images/educativo.jpg",
-                                    "name":this.person.campaigns[posArrCampaign].name,
-                                    "active":this.person.campaigns[posArrCampaign].active,
-                                    "endDate":this.person.campaigns[posArrCampaign].endDate,
-                                    "idCampaign":this.person.campaigns[posArrCampaign].idCampaign,
-                                    "idCurrency": this.person.campaigns[posArrCampaign].idCurrency,
-                                    "month": this.person.campaigns[posArrCampaign].month,
-                                    "startDate": this.person.campaigns[posArrCampaign].startDate,
-                                    "idLead":campaignsFiltered[i].lead
-                                }
-                            } 
-                            this.fillAvailableCampaigns(dataCamp);
-                        }
-                    }
-
-                }else{
-                    //tras filtrar campañas, no hay para este mes
-                    console.log("no tiene campañas");
-                    this.person.activeCampaigns=false;
-                }*/
             }
 
             
@@ -255,101 +242,6 @@ export default {
         } 
     },    
     mounted(){
-        console.log("este es el mounted");
-        if (!this.person.activeLoans & this.person.activeCampaigns){
-            if(this.person.idLeads.length!=0){
-/*
-                //fillAvailableCampaigns availableCampaigns
-                let moment = require('moment');
-                moment.locale('es-es');
-                let todayMonth=moment().format("MMMM");
-                console.log(todayMonth);
-
-                let campaignsFiltered=[]; //las campañas del mes actual
-                
-                for (let i=0;i<this.person.campaigns.length;i++){
-                    if(this.person.campaigns[i].month.toUpperCase()==todayMonth.toUpperCase()){
-
-                        loanDA.doRequestLead(this.person.idLeads[i]).then((res) =>{
-                            let lead_data = res.data;
-                            let set_={
-                                "lead": lead_data,
-                                "campaignPos": i
-                            }
-                            campaignsFiltered.push(set_);
-                            console.log("size en push",campaignsFiltered.length);
-
-                        }).catch(error=>{
-                            console.log("Error en la captura de data en la lista de leads--WizardLending")
-                        })
-                    }
-                }
-*/
-                //ordenamos las campañas por monto maximo de lead
-                //this.campaingsListAux.sort(function(a, b){return b.lead.maximumLoan-a.lead.maximumLoan});
-                console.log("..6..");
-                console.log("CAMPAÑAS RECIBIDOS DEL MES (ordenadas):");
-                console.log(this.campaingsListAux);
-                console.log("size:", this.campaingsListAux.length);
-
-                if(this.campaingsListAux.length==1){ //ubicar en arreglo en las posicion central
-                console.log("igual a 1");
-                console.log("..7..");
-                    let posArrCampaign=this.campaingsListAux[0].campaignPos;
-                    let dataCamp={
-                        "pos":1,
-                        "data":{
-                            "imageSource":"@/images/educativo.jpg",
-                            "name":this.person.campaigns[posArrCampaign].name,
-                            "active":this.person.campaigns[posArrCampaign].active,
-                            "endDate":this.person.campaigns[posArrCampaign].endDate,
-                            "idCampaign":this.person.campaigns[posArrCampaign].idCampaign,
-                            "idCurrency": this.person.campaigns[posArrCampaign].idCurrency,
-                            "month": this.person.campaigns[posArrCampaign].month,
-                            "startDate": this.person.campaigns[posArrCampaign].startDate,
-                            "idLead":this.campaingsListAux[0].lead
-                        }
-                    }
-                    console.log("..8..");
-                    this.fillAvailableCampaigns(dataCamp);
-                }else if (this.campaingsListAux.length>1){
-                    console.log("mayor a 1");
-                    console.log("..7..");
-                    for(let i=0; i<3;i++){
-                        if(this.campaingsListAux.length>i){
-                           let posArrCampaign=this.campaingsListAux[i].campaignPos;
-                            let dataCamp={
-                                "pos":i,
-                                "data":{
-                                    "imageSource":"@/images/educativo.jpg",
-                                    "name":this.person.campaigns[posArrCampaign].name,
-                                    "active":this.person.campaigns[posArrCampaign].active,
-                                    "endDate":this.person.campaigns[posArrCampaign].endDate,
-                                    "idCampaign":this.person.campaigns[posArrCampaign].idCampaign,
-                                    "idCurrency": this.person.campaigns[posArrCampaign].idCurrency,
-                                    "month": this.person.campaigns[posArrCampaign].month,
-                                    "startDate": this.person.campaigns[posArrCampaign].startDate,
-                                    "idLead":this.campaingsListAux[i].lead
-                                }
-                            } 
-                            this.fillAvailableCampaigns(dataCamp);
-                            console.log("..8..");
-                        }
-                    }
-
-                }else{
-                    //tras filtrar campañas, no hay para este mes
-                    console.log("no tiene campañas");
-                    console.log("..7..");
-                    this.person.activeCampaigns=false;
-                }
-            }
-
-            
-            
-        }
-
     }
-
 }
 </script>
