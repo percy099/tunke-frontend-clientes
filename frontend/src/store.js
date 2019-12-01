@@ -5,6 +5,39 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    availableCampaigns:[ //fillAvailableCampaigns availableCampaigns
+      {
+        imageSource:"@/images/hipotecario.jpg",
+        name:"Préstamo con Garantía Hipotecaria",
+        active:'',
+        endDate:'',
+        idCampaign:'',
+        idCurrency: '',
+        month: '',
+        startDate: '',
+        idLead:-1
+      },{
+        imageSource:"@/images/vehicular.jpeg",
+        name:"Campaña numero 2",
+        active:'',
+        endDate:'',
+        idCampaign:'',
+        idCurrency: '',
+        month: '',
+        startDate: '',
+        idLead:-1
+      },{
+        imageSource:"@/images/educativo.jpg",
+        name:"Préstamos para estudios",
+        active:'',
+        endDate:'',
+        idCampaign:'',
+        idCurrency: '',
+        month: '',
+        startDate: '',
+        idLead:-1
+      }
+    ],
     flagErrorLead:false,
     termsLead:[],
     selectedFirstButton:false, /* false: "pidelo aqui"  true:"simulation"*/
@@ -105,6 +138,19 @@ export default new Vuex.Store({
     simulationList:[]
   },
   mutations: {
+    setAvailableCampaigns(state,campaignsData){
+      if (campaignsData.pos<3){
+        state.availableCampaigns[campaignsData.pos].imageSource=campaignsData.data.imageSource;
+        state.availableCampaigns[campaignsData.pos].name=campaignsData.data.name;
+        state.availableCampaigns[campaignsData.pos].active=campaignsData.data.active;
+        state.availableCampaigns[campaignsData.pos].endDate=campaignsData.data.endDate;
+        state.availableCampaigns[campaignsData.pos].idCampaign=campaignsData.data.idCampaign;
+        state.availableCampaigns[campaignsData.pos].idCurrency=campaignsData.data.idCurrency;
+        state.availableCampaigns[campaignsData.pos].month=campaignsData.data.month;
+        state.availableCampaigns[campaignsData.pos].startDate=campaignsData.data.startDate;
+        state.availableCampaigns[campaignsData.pos].idLead=campaignsData.data.idLead;
+      }
+    },
     setShowModalSchedule(state, showModalSchedule){
       state.showModalSchedule.status = showModalSchedule.status;
       state.showModalSchedule.simulation = showModalSchedule.simulation;
@@ -341,6 +387,9 @@ export default new Vuex.Store({
     //flagErrorLead setFlagErrorLead
     setFlagErrorLead(context,data){
       context.commit('fillFlagErrorLead',data);
+    },
+    fillAvailableCampaigns(context,data){
+      context.commit('setAvailableCampaigns',data);
     }
   }
 })

@@ -13,8 +13,7 @@
                     </figcaption>
                 </figure>
                 <div class="titleCamp">
-                    <h5 align="center">Préstamo con Garantía Hipotecaria</h5>
-                    <!--h5 align="center">Hipotecaria</h5-->
+                    <h5 align="center">{{availableCampaigns[0].name}}</h5>
                 </div>      
                 <div class="listing">
                     <h4>El préstamo que necesitas en muy pocos pasos. ¡Consíguelo ahora!</h4>
@@ -31,7 +30,7 @@
                     </figcaption>
                 </figure>
                 <div class="titleCamp">
-                    <h5 align="center">{{campaignsActive[0].name}}</h5>
+                    <h5 align="center">{{availableCampaigns[1].name}}</h5>
                     <h5 align="center"></h5>
                 </div>      
                 <div class="listing">
@@ -51,8 +50,7 @@
                     </figcaption>
                 </figure>
                 <div class="titleCamp">
-                    <h5 align="center">Préstamos para estudios</h5>
-                    <!--h5 align="center">estudios</h5-->
+                    <h5 align="center">{{availableCampaigns[2].name}}</h5>
                 </div>      
                 <div class="listing">
                     <h4>Aprovecha la oportunidad e incrementa tu talento con este préstamo pensado para ti.</h4>
@@ -79,7 +77,8 @@ import ModalStep2Lending from '@/components/ModalStep2Lending.vue'
 export default {
     data(){
         return {
-            showModal:false,
+            showModal:false
+            /*,
             campaignsActive:[
                 {
                     active:'',
@@ -107,16 +106,16 @@ export default {
                     month: '',
                     name: '',
                     startDate: ''
-                },
+                }
 
-            ]
+            ]*/
         };
     },
     computed:{
-        ...mapState(['person'])
+        ...mapState(['person','availableCampaigns']) //fillAvailableCampaigns availableCampaigns
     },
     methods:{
-        ...mapActions(['changeCurrency']),
+        ...mapActions(['changeCurrency','fillAvailableCampaigns']),
         disableWindow: function(){
             this.showModal=false;
         },
@@ -125,13 +124,13 @@ export default {
         },
         fillCampaigns: function(){
             if (this.person.campaigns.length!=0){
-                this.campaignsActive=[];
-                this.campaignsActive=this.person.campaigns;
+                //this.campaignsActive=[];
+                //this.campaignsActive=this.person.campaigns;
             }
         }
     },
     mounted() {
-        this.fillCampaigns();
+        //this.fillCampaigns();
     },
     components:{
         ModalStep2Lending
