@@ -12,13 +12,15 @@
                       <h6 class="ml-5 mt-4">Tipo de documento</h6>
                       <div class="col-sm-4"> <v-select class="inpt" placeholder="   Tipo de documento" v-model="selectedTypeDoc" :required="!selectedTypeDoc" :options="optionsTypeDoc"  label="text" @input="setActiveTypeDocF"/></div>
                       <h6 class="ml-5 mt-4">Número de documento</h6>
-                      <input id="txt_dni" type="text" class="form-control ml-5 mt-1" :maxlength="maxLNumber" :minlength="minLNumber"
+                      <input id="txt_dni" type="text" class="form-control ml-5 mt-1" :maxlength="maxLNumber" :minlength="minLNumber" :disabled='isDisabled'
                       @keypress="isNumber($event)" placeholder="DNI"
                        v-model.trim="$v.dni.$model" :class="{
                          'is-invalid' : $v.dni.$error, 'is-valid' : !$v.dni.$invalid }">
-                      <div class="valid-feedback ml-5">Dni Válido</div>
+                      <div v-if="selectedTypeDoc.value == 1" class="valid-feedback ml-5">Dni Válido</div>
+                      <div v-if="selectedTypeDoc.value == 2" class="valid-feedback ml-5">Carnet de Extranjería Válido</div>
                       <div class="invalid-feedback ml-5">
-                        <span v-if="!$v.dni.required">Dni Requerido. </span>
+                        <span v-if="!$v.dni.required && selectedTypeDoc.value == 1">Dni Requerido. </span>
+                        <span v-if="!$v.dni.required && selectedTypeDoc.value == 2">Carnet de Extranjería Requerido. </span>
                         <span v-if="!$v.dni.minLength">Debe ser de al menos de {{
                           $v.dni.$params.minLength.min}} dígitos </span>
                         <span v-if="!$v.dni.maxLength">Debe ser de al menos de {{
@@ -63,6 +65,7 @@
       data(){
         return {
           selectedTypeDoc:false,
+          enableButton: false,
           optionsTypeDoc: [{
               value:1, text:'DNI'
             },{
@@ -75,16 +78,24 @@
           maxLNumber:-1
         };
       },
-      validations: {
-        dni: {
-          required, 
-          minLength: minLength(8),
-          maxLength: maxLength(8),
-          numeric
+      validations() {
+        return {
+          dni: {
+            required, 
+            minLength: minLength(this.minLNumber),
+            maxLength: maxLength(this.maxLNumber),
+            numeric
+          }
         }
       },
       computed:{
-        ...mapState(['person','processId','parameterSetting','activeTypeDoc']) 
+        ...mapState(['person','processId','parameterSetting','activeTypeDoc']),
+        isDisabled: function(){
+            if(this.selectedTypeDoc){
+                this.enableButton = true;
+            }
+    	      return !this.enableButton;
+        }
       },
       methods:{
           ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs']),
