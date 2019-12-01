@@ -357,9 +357,13 @@ export default {
         }   
     },
     mounted() {
-        this.fillShowModalSchedule(false,'');
-        this.updateTypeCurrency();
-        this.setSelectedFirstButton(false);
+        if (!this.person.activeLoans & this.person.activeCampaigns){
+            if(this.person.idLeads.length!=0){
+                this.fillShowModalSchedule(false,'');
+                this.updateTypeCurrency();
+                this.setSelectedFirstButton(false);
+            }
+        }
     },
     components:{
         ModalStep3Lending,

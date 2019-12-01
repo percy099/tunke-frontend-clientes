@@ -226,7 +226,12 @@ export default {
         Loading
     },
     mounted() {
-        this.updateAccounts();   
+        if (!this.person.activeLoans & this.person.activeCampaigns){
+            if(this.person.idLeads.length!=0){
+                this.updateAccounts();  
+            }
+        }
+         
     }
     
 }
