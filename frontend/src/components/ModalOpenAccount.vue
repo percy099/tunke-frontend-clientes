@@ -46,12 +46,12 @@
                                   </ul>
                                   <div class="d-flex justify-content-center mt-3">
 
-                                      <label for="opt1" class="radio" v-if="person.campaigns[0].idCurrency==1" >
+                                      <label for="opt1" class="radio" v-if="currencyCampaignSelected.idCurrency==1" >
                                           <input @click="changeCurr(1)" type="radio" name="rdo" id="opt1" class="hidden" checked="true"/>
                                           <span class="label"></span>Soles
                                       </label>
                                       
-                                      <label for="opt2" class="radio"  v-if="person.campaigns[0].idCurrency==2">
+                                      <label for="opt2" class="radio"  v-if="currencyCampaignSelected.idCurrency==2">
                                           <input @click="changeCurr(2)" type="radio" name="rdo" id="opt2" class="hidden" checked="true"/>
                                           <span class="label"></span>Dólares
                                       </label>
@@ -105,7 +105,7 @@ export default {
         };
     },
     computed:{
-        ...mapState(['person','currency','termsReadLoan','processId','showModalAccount','setShowModalAccount','parameterSetting']) 
+        ...mapState(['person','currency','termsReadLoan','processId','showModalAccount','setShowModalAccount','parameterSetting','currencyCampaignSelected']) 
     },
     methods:{
         ...mapActions(['changeCurrency','setTermsReadLoans']),
@@ -117,8 +117,9 @@ export default {
         },
         openAccount (){
             if (this.acceptTerms){
-                if(this.person.totalAccounts+1<=this.parameterSetting.maxAccountsNumber){
-                        accountDA.doCreateAccount(this.person.idPerson,this.person.campaigns[0].idCurrency).then((res) =>{
+                if(this.person.totalAccounts+1<=this.parameterSetting.maxAccountsNumber){ 
+                                                                                                            //1 hardcodeado: debe depender del tipo de cuenta
+                        accountDA.doCreateAccount(this.person.idPerson,this.currencyCampaignSelected.idCurrency,1,'','','','').then((res) =>{
                             let response_create = res.data;
                             console.log("response open account",response_create);
                             this.$emit('close');

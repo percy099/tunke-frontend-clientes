@@ -6,7 +6,7 @@
             <tab-content title="Identifícate" class="" :before-change="verificationToken">
                <Step1Lending></Step1Lending>
             </tab-content>
-            <tab-content title="Elige tu campaña" class="">
+            <tab-content title="Elige tu campaña" class="" :before-change="updateSimulationVariables">
                 <Step2Lending></Step2Lending>
             </tab-content>
             <tab-content title="Simula tu préstamo" class="" :before-change="validateSimulation">
@@ -45,11 +45,11 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','nameWizardNext','lead','activeShare','activeTerm','activeValueLoan','activeValueLoan','termsLead','flagErrorLead','availableCampaigns'])
+        ...mapState(['person','currency','token','flagRestartTimer','clientAcceptedTerms','nameWizardNext','lead','activeShare','activeTerm','activeValueLoan','activeValueLoan','termsLead','flagErrorLead','availableCampaigns','campaignWindowSelected','currencyCampaignSelected']) 
         
     },
     methods:{
-        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','fillLead','fillTermsLead','setFlagErrorLead','fillAvailableCampaigns']),
+        ...mapActions(['captureResponse','changeFlagTimer','changeClientTerms','fillToken','fillLead','fillTermsLead','setFlagErrorLead','fillAvailableCampaigns','fillcampaignWindowSelected','fillCurrencyCampaignSelected']),
         nextWindow(){
             this.$refs.wizardLendingMod.nextTab();
         },
@@ -123,6 +123,42 @@ export default {
                       })
                 return false;
             }
+        },
+        updateSimulationVariables: function(){
+
+            let leadSelected=this.availableCampaigns[this.campaignWindowSelected].idLead;
+            this.fillLead(leadSelected);
+            console.log("lead actualizado:", this.lead);
+            let min_Periodo=this.lead.minimumPeriod;
+            let max_Periodo=this.lead.maximumPeriod;
+
+            let optionsTerm=[];
+                    for (let period=min_Periodo;period<=max_Periodo;period++){
+                        let resto=period%6;
+                        if(!resto){
+                            let text_period=period + ' meses';
+                            let reg={value: period, text: text_period};
+                            optionsTerm.push(reg);
+                        }             
+                    }
+            this.fillTermsLead(optionsTerm);
+            
+            let currencyType=this.availableCampaigns[this.campaignWindowSelected].idCurrency;
+            let currencyName="";
+
+            if(currencyType==1){
+                currencyName="Soles";
+            }else if(currencyType==2){
+                currencyName="Dólares";
+            }
+
+            let reg={
+                idCurrency:currencyType,
+                name:currencyName
+            }
+
+            this.fillCurrencyCampaignSelected(reg);
+            return true;
         }
     },
     components:{
@@ -143,7 +179,6 @@ export default {
                     let max_Periodo=this.lead.maximumPeriod;
 
                     let optionsTerm=[];
-                    console.log("..1..");
                     for (let period=min_Periodo;period<=max_Periodo;period++){
                         let resto=period%6;
                         if(!resto){
@@ -166,11 +201,6 @@ export default {
 
                 })
 
-                //fillAvailableCampaigns availableCampaigns
-                let moment = require('moment');
-                moment.locale('es-es');
-                let todayMonth=moment().format("MMMM");
-                console.log(todayMonth);
                 console.log("Person campaigns length" , this.person.campaigns.length);
                 let campaignsFiltered=[]; //las campañas del mes actual
                 if (this.person.campaigns.length==0){
@@ -234,6 +264,8 @@ export default {
                         })
                         
                     }
+                    console.log("campañas filtradas",campaignsFiltered);
+                    console.log("size:",campaignsFiltered.length);
                 }
             }
 

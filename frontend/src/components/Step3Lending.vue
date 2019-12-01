@@ -33,7 +33,7 @@
                 </div>
                 <div class="row"> 
                     <div class="col-sm-3"><h3></h3></div>
-                    <div class="col-sm-3"><input disabled type="text" class="form-control inpt" v-model="selectedCurrency" @input="setActiveTypeCurrencyF"></div>
+                    <div class="col-sm-3"><input disabled type="text" class="form-control inpt" v-model="currencyCampaignSelected.name" @input="setActiveTypeCurrencyF"></div>
                     <div class=" col-sm-3 slidecontainer">
                         <h5>{{minLoan}}</h5>
                         <input type="range"  :min="minLoan" :max="maxLoan" step="50" v-model="valueLoan"  class="slider" id="myRange">            
@@ -110,12 +110,12 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList','parameterSetting','simulationShareSelected','selectedFirstButton','termsLead'])
+        ...mapState(['person','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList','parameterSetting','simulationShareSelected','selectedFirstButton','termsLead','campaignWindowSelected','availableCampaigns','currencyCampaignSelected']) 
     },
     methods:{
-        ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected','setSelectedFirstButton','fillTermsLead']),
+        ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected','setSelectedFirstButton','fillTermsLead','fillcampaignWindowSelected','fillAvailableCampaigns','fillCurrencyCampaignSelected']),
         loanSolicitude(){
-            if (this.activeShare!=null && this.activeTerm!=null && this.activeValueLoan!=0 && this.activeValueLoan>0){
+            if (this.activeShare.value!=0 && this.activeTerm!=null && this.activeValueLoan!=0 && this.activeValueLoan>0){
                 console.log("monto de prestamo: ",this.activeValueLoan);
                 this.method();
             }else{
@@ -250,14 +250,15 @@ export default {
         },
         setActiveValueLoanF:function(val){
             this.setActiveValueLoans(val);
-        },
+        }/*,
         updateTypeCurrency:function(){
-            if (this.person.campaigns[0].idCurrency==1){
+            console.log("currency:",this.availableCampaigns[this.campaignWindowSelected].idCurrency);
+            if (this.availableCampaigns[this.campaignWindowSelected].idCurrency==1){
                 this.selectedCurrency="Soles";
-            }else if (this.person.campaigns[0].idCurrency==2){
+            }else if (this.availableCampaigns[this.campaignWindowSelected].idCurrency==2){
                 this.selectedCurrency="Dólares";
             }          
-        } , 
+        } */, 
         calculateTCEA :function(amount,comisionAmount, shareBase, termInput,numberExtra){
             let entry=(-1)*amount;
             let arr=[];
@@ -360,7 +361,7 @@ export default {
         if (!this.person.activeLoans & this.person.activeCampaigns){
             if(this.person.idLeads.length!=0){
                 this.fillShowModalSchedule(false,'');
-                this.updateTypeCurrency();
+                //this.updateTypeCurrency();
                 this.setSelectedFirstButton(false);
             }
         }
@@ -379,9 +380,9 @@ export default {
         this.minLoan=this.lead.minimumLoan;
         this.maxLoan=this.lead.maximumLoan; 
         if (this.valueLoan!=''){
-            if (this.person.campaigns[0].idCurrency==1){
+            if (this.availableCampaigns[this.campaignWindowSelected].idCurrency==1){
                     this.selectedCurrencySymbol="S/.";
-            }else if (this.person.campaigns[0].idCurrency==2){
+            }else if (this.availableCampaigns[this.campaignWindowSelected].idCurrency==2){
                     this.selectedCurrencySymbol="$";
             }
         }

@@ -5,6 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    campaignWindowSelected:1,
+    currencyCampaignSelected:{
+      idCurrency:1,
+      name:"Soles"
+    },
     availableCampaigns:[ //fillAvailableCampaigns availableCampaigns
       {
         imageSource:"@/images/hipotecario.jpg",
@@ -63,7 +68,10 @@ export default new Vuex.Store({
     },
     activeTypeDoc:null,
     activeTypeLoan:null,
-    activeShare:null,
+    activeShare:{
+      value:0,
+      text:''
+    },
     activeTerm:null,
     activeTypeCurrency:null,
     activeValueLoan:0,
@@ -145,7 +153,14 @@ export default new Vuex.Store({
     },
     simulationList:[]
   },
-  mutations: {
+  mutations: { 
+    setCampaignWindowSelected(state, data){
+      state.campaignWindowSelected=data;
+    },
+    setCurrencyCampaignSelected(state,data){ 
+      state.currencyCampaignSelected.idCurrency=data.idCurrency;
+      state.currencyCampaignSelected.name=data.name;
+    },
     setResponses(state, responses){
       state.response1=responses[0];
       state.response2=responses[1];
@@ -338,6 +353,12 @@ export default new Vuex.Store({
 
   },
   actions: {
+    fillCurrencyCampaignSelected(context, data){
+      context.commit('setCurrencyCampaignSelected',data);
+    },
+    fillcampaignWindowSelected(context, data){
+      context.commit('setCampaignWindowSelected',data);
+    },
     fill(context,person_data){
         context.commit('fillPersonData',person_data);
     },

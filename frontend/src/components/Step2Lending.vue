@@ -2,14 +2,14 @@
     <div id="step2">
         <div class="hover-table-layout">
             
-            <div class="listing-item">
-            <div class="disabled-item">
+            <div class="listing-item" @click="enableWindow(0)">
+            <div v-bind:class="{'disabled-item':(this.availableCampaigns[0].month=='')}">
                 <figure class="image">
                     <img src="@/images/hipotecario.jpg" alt="image">
                     <figcaption>
-                    <div class="caption">
-                        <h1> </h1>
-                        </div>
+                        <div class="caption">
+                            <h1> </h1>
+                            </div>
                     </figcaption>
                 </figure>
                 <div class="titleCamp">
@@ -20,7 +20,8 @@
                 </div>
             </div>
             </div>
-            <div class="listing-item" @click="enableWindow">
+            <div class="listing-item" @click="enableWindow(1)">
+                <div v-bind:class="{'disabled-item':(this.availableCampaigns[1].month=='')}">
                 <figure class="image">
                     <img src="@/images/vehicular.jpeg" alt="image">
                     <figcaption>
@@ -36,11 +37,10 @@
                 <div class="listing">
                     <h4>Tenemos un plan de cuotas de acuerdo a tus necesidades. ¡Pídelo ya!</h4>
                 </div>
-
+                </div> 
             </div> 
-            <div class="listing-item" >
-                <div class="disabled-item">
-                    
+            <div class="listing-item" @click="enableWindow(2)">
+                <div v-bind:class="{'disabled-item':(this.availableCampaigns[2].month=='')}">
                 <figure class="image">
                     <img src="@/images/educativo.jpg" alt="image">
                     <figcaption>
@@ -57,6 +57,11 @@
                 </div>
             </div> 
             </div>
+        </div>
+        <div class="row">
+            <div class="col-4" @click="changeSelectCampaign(0)"><hr v-bind:class="{'selected':(this.campaignWindowSelected==0)}"></div>
+            <div class="col-4" @click="changeSelectCampaign(1)"><hr v-bind:class="{'selected':(this.campaignWindowSelected==1)}"></div>
+            <div class="col-4" @click="changeSelectCampaign(2)"><hr v-bind:class="{'selected':(this.campaignWindowSelected==2)}"></div>            
         </div>
         <!--Ventana modal de información de la campaña-->  
         <ModalStep2Lending v-if="showModal" @close="disableWindow">
@@ -78,59 +83,30 @@ export default {
     data(){
         return {
             showModal:false
-            /*,
-            campaignsActive:[
-                {
-                    active:'',
-                    endDate:'',
-                    idCampaign:'',
-                    idCurrency: '',
-                    month: '',
-                    name: '',
-                    startDate: ''
-                },
-                {
-                    active:'',
-                    endDate:'',
-                    idCampaign:'',
-                    idCurrency: '',
-                    month: '',
-                    name: '',
-                    startDate: ''
-                },
-                {
-                    active:'',
-                    endDate:'',
-                    idCampaign:'',
-                    idCurrency: '',
-                    month: '',
-                    name: '',
-                    startDate: ''
-                }
-
-            ]*/
         };
     },
     computed:{
-        ...mapState(['person','availableCampaigns']) //fillAvailableCampaigns availableCampaigns
+        ...mapState(['person','availableCampaigns','campaignWindowSelected']) 
     },
     methods:{
-        ...mapActions(['changeCurrency','fillAvailableCampaigns']),
+        ...mapActions(['changeCurrency','fillAvailableCampaigns','fillcampaignWindowSelected']),
         disableWindow: function(){
             this.showModal=false;
         },
-        enableWindow: function(){
-            this.showModal=true;
-        },
-        fillCampaigns: function(){
-            if (this.person.campaigns.length!=0){
-                //this.campaignsActive=[];
-                //this.campaignsActive=this.person.campaigns;
+        enableWindow: function(campaignOption){           
+            if(this.availableCampaigns[campaignOption].month!=''){
+                this.fillcampaignWindowSelected(campaignOption);
+                console.log("en step2 ventana:",this.campaignWindowSelected);
+                this.showModal=true;
             }
+        },
+        changeSelectCampaign : function(campaignOption){           
+            if(this.availableCampaigns[campaignOption].month!=''){
+                this.fillcampaignWindowSelected(campaignOption);
+            }    
         }
     },
     mounted() {
-        //this.fillCampaigns();
     },
     components:{
         ModalStep2Lending

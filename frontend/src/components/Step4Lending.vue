@@ -73,7 +73,7 @@ export default {
         };
     },
     computed:{
-        ...mapState(['person',,'lead','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList','selectedFirstButton']) //showModalAccount
+        ...mapState(['person',,'lead','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList','selectedFirstButton','currencyCampaignSelected','campaignWindowSelected','availableCampaigns'])
     },
     methods:{
         ...mapActions(['changeCurrency','setActiveAccountLoans','setShowModalAccount','setSimulationShareSelected','setSelectedFirstButton']),
@@ -87,7 +87,7 @@ export default {
                   let response_create = res.data;
                   this.optionsAccount=[];                
                   for (let i=0; i<response_create.accounts.length;i++){
-                      if(this.person.campaigns[0].idCurrency==response_create.accounts[i].idCurrency)
+                      if(this.currencyCampaignSelected.idCurrency==response_create.accounts[i].idCurrency)
                         this.optionsAccount.push(response_create.accounts[i]);
                       else 
                         continue;
@@ -105,7 +105,7 @@ export default {
         requestLoan:function(){
             //validar el tipo de moneda de la cuenta
             
-            if (this.activeAccountLoan!='' && this.activeAccountLoan.idCurrency==this.person.campaigns[0].idCurrency){
+            if (this.activeAccountLoan!='' && this.activeAccountLoan.idCurrency==this.currencyCampaignSelected.idCurrency){
                 let shareLoan=0;
                 let shareTerm=0;
                 //obtain share
@@ -157,12 +157,12 @@ export default {
                 console.log("num meses",shareTerm);                         //plazos
                 console.log("monto",this.activeValueLoan);              //monto
                 console.log("interes tea",this.lead.interestRate); //interes
-                console.log("idcampaign",this.person.campaigns[0].idCampaign);   //id campaña
+                console.log("idcampaign",this.availableCampaigns[this.campaignWindowSelected].idCampaign);   //id campaña   
                 console.log("cuota mensual",shareLoan);             //cuota
                 console.log("idcuenta",this.activeAccountLoan.idAccount);  //idcuenta
                 console.log("comision monto",commissionLoan);                    //comision
                 this.isLoading = true;
-                loanDA.doCreateLoan(this.person.idClient,shareTerm,parseFloat(this.activeValueLoan),parseFloat(this.lead.interestRate),this.person.campaigns[0].idCampaign,this.activeShare.value,shareLoan, this.activeAccountLoan.idAccount, parseFloat(commissionLoan),this.lead.idLead).then((res) =>{
+                loanDA.doCreateLoan(this.person.idClient,shareTerm,parseFloat(this.activeValueLoan),parseFloat(this.lead.interestRate),this.availableCampaigns[this.campaignWindowSelected].idCampaign,this.activeShare.value,shareLoan, this.activeAccountLoan.idAccount, parseFloat(commissionLoan),this.lead.idLead).then((res) =>{
                     this.isLoading = false;
                     let response_create = res.data;
                     console.log("Resultado query cuentas: ",response_create);
@@ -178,6 +178,7 @@ export default {
                     text: 'Error en la solicitud de préstamo'
                     })
                 })
+                this.hasAccounts=false;
 
             }else{
                 //no tienen el mismo tipo de moneda
