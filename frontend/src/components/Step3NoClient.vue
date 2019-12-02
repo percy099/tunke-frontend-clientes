@@ -1,9 +1,9 @@
 <template>
     <div id="step3">
         <div class="tab">
-            <button id="btnSimple" class="tablinks inactive" v-on:click="openAccount('simpleAccount')">Cuenta Simple  <img class="cards" width="25" src="@/images/credit-cards.png"></button>
-            <button id="btnMillionaire" class="tablinks inactive" v-on:click="openAccount('millionaireAccount')">Cuenta Sueldo <img class="cards" width="25" src="@/images/credit-cards.png"></button>
-            <button id="btnSuperRate" class="tablinks inactive" v-on:click="openAccount('superRate')">Cuenta Fantasy <img class="cards" width="25" src="@/images/credit-cards.png"></button>
+            <button id="btnSimple" class="tablinks inactive" v-on:click="openAccount('simpleAccount')">Cuenta Simple  <img class="cards" width="24" src="@/images/credit-cards.png"></button>
+            <button id="btnMillionaire" class="tablinks inactive" v-on:click="openAccount('millionaireAccount')">Cuenta Sueldo <img class="cards" width="24" src="@/images/credit-cards.png"></button>
+            <button id="btnSuperRate" class="tablinks inactive" v-on:click="openAccount('superRate')">Cuenta Fantasy <img class="cards" width="24" src="@/images/credit-cards.png"></button>
         </div>
         <!-- Tab content -->
         <div id="simpleAccount" class="tabcontent">

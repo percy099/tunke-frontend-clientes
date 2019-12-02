@@ -32,16 +32,16 @@
                 <hr>
                 <div id="checkQuestions2" class="d-flex justify-content-center align-items-center flex-column pl-2 ml-md-5 mt-3">
                     <span class="mr-sm-6">
-                        <input class="mr-2" @click="posCheckBoxQuestions(2,0)" type="radio" name="option2" value="option1"> {{securityQuestions.questions[1].answers[0]}}
+                        <input class="mr-1" @click="posCheckBoxQuestions(2,0)" type="radio" name="option2" value="option1"> {{securityQuestions.questions[1].answers[0]}}
                     </span>
                     <span class="mr-sm-6">
-                        <input class="mr-2" @click="posCheckBoxQuestions(2,1)" type="radio" name="option2" value="option2"> {{securityQuestions.questions[1].answers[1]}}
+                        <input class="mr-1" @click="posCheckBoxQuestions(2,1)" type="radio" name="option2" value="option2"> {{securityQuestions.questions[1].answers[1]}}
                     </span>
                     <span class="mr-sm-6">
-                        <input class="mr-2" @click="posCheckBoxQuestions(2,2)" type="radio" name="option2" value="option3"> {{securityQuestions.questions[1].answers[2]}}
+                        <input class="mr-1" @click="posCheckBoxQuestions(2,2)" type="radio" name="option2" value="option3"> {{securityQuestions.questions[1].answers[2]}}
                     </span>
                     <span class="mr-sm-6">
-                        <input class="mr-2" @click="posCheckBoxQuestions(2,3)" type="radio" name="option2" value="option4"> {{securityQuestions.questions[1].answers[3]}}
+                        <input class="mr-1" @click="posCheckBoxQuestions(2,3)" type="radio" name="option2" value="option4"> {{securityQuestions.questions[1].answers[3]}}
                     </span>
                 </div>
             </div>

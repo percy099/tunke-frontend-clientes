@@ -156,7 +156,7 @@ input[type="radio"]:checked + .label:after {
   .tablinks{
     padding : 0;
     height: 45px;
-    width: 95px;
+    width: 90px;
     font-size : 11px;
   }
 
@@ -231,7 +231,7 @@ input[type="radio"]:checked + .label:after {
   .tablinks{
     padding : 0;
     height: 55px;
-    width: 190px;
+    width: 170px;
     font-size : 16px;
   }
 
