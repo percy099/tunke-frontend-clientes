@@ -70,7 +70,7 @@ export default {
         };
     },
     computed:{
-        ...mapState(['person',,'lead','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList','selectedFirstButton','currencyCampaignSelected','campaignWindowSelected','availableCampaigns','accountsAvailables','hasAccounts']) 
+        ...mapState(['person',,'lead','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList','selectedFirstButton','currencyCampaignSelected','campaignWindowSelected','availableCampaigns','accountsAvailables','hasAccounts']), 
     },
     methods:{
         ...mapActions(['changeCurrency','setActiveAccountLoans','setShowModalAccount','setSimulationShareSelected','setSelectedFirstButton','fillAccountsAvailables','fillHasAccounts']),
@@ -165,7 +165,7 @@ export default {
         },
         desactivaVentana: function(){
             this.showModalAccount=false;
-            this.updateAccounts();
+            //this.updateAccounts();
         },
         activaVentana: function(){
             this.showModalAccount=true;
