@@ -10,10 +10,10 @@
               <form id="form_openAcount" @submit.prevent='enterDni'>
                       <h2 class="text-center mt-5">Ingresa tus datos</h2>
                       <h6 class="ml-5 mt-4">Tipo de documento</h6>
-                      <div class="col-sm-4"> <v-select class="inpt" placeholder="   Tipo de documento" v-model="selectedTypeDoc" :required="!selectedTypeDoc" :options="optionsTypeDoc"  label="text" @input="setActiveTypeDocF"/></div>
+                      <div class="col-sm-4"> <v-select class="inpt" placeholder=" Tipo de documento" v-model="selectedTypeDoc" :required="!selectedTypeDoc" :options="optionsTypeDoc"  label="text" @input="setActiveTypeDocF"/></div>
                       <h6 class="ml-5 mt-4">Número de documento</h6>
                       <input id="txt_dni" type="text" class="form-control ml-5 mt-1" :maxlength="maxLNumber" :minlength="minLNumber" :disabled='isDisabled'
-                      @keypress="isNumber($event)" placeholder="DNI"
+                      @keypress="isNumber($event)" :placeholder="name"
                        v-model.trim="$v.dni.$model" :class="{
                          'is-invalid' : $v.dni.$error, 'is-valid' : !$v.dni.$invalid }">
                       <div v-if="selectedTypeDoc.value == 1" class="valid-feedback ml-5">Dni Válido</div>
@@ -75,7 +75,8 @@
           termsAccept:false,
           termsRead:false,
           minLNumber:-1,
-          maxLNumber:-1
+          maxLNumber:-1,
+          name: ''
         };
       },
       validations() {
@@ -100,7 +101,6 @@
       methods:{
           ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs']),
           enterDni(){
-              //let res = personDA.doDniValidation(this.dni);
               if (this.termsAccept){
                 if(this.activeTypeDoc!=null){
                   personDA.doDniValidation(this.dni).then((res) =>{
@@ -109,8 +109,6 @@
                     this.setActiveProcessId(1);
                       let person_data = res.data;
                       if(person_data.type==1){ //CLIENT
-                        /*alert('Cliente');
-                        console.log(person_data);*/
                         console.log(person_data);
                         this.fill(person_data);
                         router.push('/accountOpeningClient');
@@ -210,10 +208,12 @@
         if(this.selectedTypeDoc && this.selectedTypeDoc.value==1){
           this.minLNumber=8;
           this.maxLNumber=8;
+          this.name = "DNI";
         }
         if(this.selectedTypeDoc && this.selectedTypeDoc.value==2){
           this.minLNumber=12;
           this.maxLNumber=12;
+          this.name = "Carnet de extranjería"
           
         }
       }

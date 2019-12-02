@@ -110,14 +110,41 @@ export default {
         }
     },
     computed:{
-        ...mapState(['person','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList','parameterSetting','simulationShareSelected','selectedFirstButton','termsLead','campaignWindowSelected','availableCampaigns','currencyCampaignSelected']) 
+        ...mapState(['person','lead','activeTypeLoan','activeShare','activeTerm','activeTypeCurrency','activeValueLoan','showModalSchedule','simulationList','parameterSetting','simulationShareSelected','selectedFirstButton','termsLead','campaignWindowSelected','availableCampaigns','currencyCampaignSelected','accountsAvailables','hasAccounts']) 
     },
     methods:{
-        ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected','setSelectedFirstButton','fillTermsLead','fillcampaignWindowSelected','fillAvailableCampaigns','fillCurrencyCampaignSelected']),
+        ...mapActions(['changeCurrency','fillLead','setActiveTypeLoans','setActiveShares','setActiveTerms','setActiveTypeCurrencys','setActiveValueLoans','fillShowModalSchedule','fillSimulationsData','setSimulationShareSelected','setSelectedFirstButton','fillTermsLead','fillcampaignWindowSelected','fillAvailableCampaigns','fillCurrencyCampaignSelected','fillAccountsAvailables','fillHasAccounts']),
         loanSolicitude(){
             if (this.activeShare.value!=0 && this.activeTerm!=null && this.activeValueLoan!=0 && this.activeValueLoan>0){
-                console.log("monto de prestamo: ",this.activeValueLoan);
-                this.method();
+                
+                //actualizar las cuentas
+                
+                loanDA.doRequestAccountsByClient(this.person.idClient).then((res) =>{ 
+                    //console.log(res.data);
+                    let response_create = res.data;
+                    let optionsAccount=[];            
+                    for (let i=0; i<response_create.accounts.length;i++){
+                        console.log("currency campaign selected",this.currencyCampaignSelected.idCurrency);
+                        if(this.currencyCampaignSelected.idCurrency==response_create.accounts[i].idCurrency){
+                            optionsAccount.push(response_create.accounts[i]);
+                            this.fillHasAccounts(true);
+                        }
+                        else 
+                            continue;
+                        //this.hasAccounts = true;
+                    }
+                    this.fillAccountsAvailables(optionsAccount);
+                    console.log("aoooooo en step3:",this.accountsAvailables);
+                    this.method();
+                }).catch(error=>
+                {
+                    Swal.fire({
+                    title: 'Error',
+                    type: 'error',
+                    text: 'Error en la captura de cuentas por cliente'
+                    })
+                })
+                //this.method();
             }else{
                 Swal.fire({
                       title: 'Datos incompletos',
@@ -216,10 +243,7 @@ export default {
                   
             if (this.activeShare.value==2){                          //cuota extraordinaria
                 //buscar si hay julio y diciembre
-                numberExtra=this.findExtraMonths(termInput); //0, 1, 2
-                /*if (numberExtra==0){
-                    shareBase=-1; //ya se vera que se hace
-                }*/
+                numberExtra=this.findExtraMonths(termInput); //0, 1, 2...
             }
 
             shareBase=amount*(Math.pow(1+tem,termInput+numberExtra)*tem)/(Math.pow(1+tem,termInput+numberExtra)-1);
@@ -359,7 +383,7 @@ export default {
     },
     mounted() {
         if (!this.person.activeLoans & this.person.activeCampaigns){
-            if(this.person.idLeads.length!=0){
+            if(this.person.leads.length!=0){
                 this.fillShowModalSchedule(false,'');
                 //this.updateTypeCurrency();
                 this.setSelectedFirstButton(false);

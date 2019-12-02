@@ -238,7 +238,7 @@ export default {
               datenext=this.addDays(dateAdded,30);  
               if (this.activeShare.value==2){
                 month=moment(datenext).format("MM");
-                console.log("aer",month);
+                
                 if (month=="07" || month=="12"){
                         amortization_=shareCalculatedExtra-parseFloat(interestCampaign)-this.comisionAmount;
                 }else{
@@ -251,7 +251,6 @@ export default {
 
               if((i+2==this.termSelected) && (amortization_!=amountBalance)){
                   amortization_=parseFloat(amountBalance);
-                  //fee=parseFloat(amortization_)+parseFloat(interestCampaign)+parseFloat(this.comisionAmount);
               }
             }
 

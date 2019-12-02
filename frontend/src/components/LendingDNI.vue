@@ -9,10 +9,10 @@
               <form id="form_openAcount" @submit.prevent='enterDni'>
                       <h2 class="text-center mt-5">Ingresa tus datos</h2>
                       <h6 class="ml-5 mt-4">Tipo de documento</h6>
-                      <div class="col-sm-4"> <v-select class="inpt" placeholder=" Tipo de documento" v-model="selectedTypeDoc" :required="!selectedTypeDoc" :options="optionsTypeDoc"  label="text" @input="setActiveTypeDocF"/></div>
+                      <div class="col-sm-4"> <v-select class="inpt" placeholder="   Tipo de documento" v-model="selectedTypeDoc" :required="!selectedTypeDoc" :options="optionsTypeDoc"  label="text" @input="setActiveTypeDocF"/></div>
                       <h6 class="ml-5 mt-4">Número de documento</h6>
                       <input id="txt_dni" type="text" class="form-control ml-5 mt-1" :maxlength="maxLNumber" :minlength="minLNumber" :disabled='isDisabled'
-                      @keypress="isNumber($event)" placeholder="DNI"
+                      @keypress="isNumber($event)" :placeholder='name'
                        v-model.trim="$v.dni.$model" :class="{
                          'is-invalid' : $v.dni.$error, 'is-valid' : !$v.dni.$invalid }">
                       <div v-if="selectedTypeDoc.value == 1" class="valid-feedback ml-5">Dni Válido</div>
@@ -49,30 +49,7 @@
 </style>
 
 <script>
-/*
-window.onload=function(){
-    function ParseURLParameter(Parameter){
-      let FullURL=window.location.search.substring(1);
-      let ParametersArray=FullURL.split('&');
-      for (let i=0; i<ParametersArray.length;i++){
-        let CurrentParameter=ParametersArray[i].split('=');
-        if (CurrentParameter[0]==Parameter){
-          return CurrentParameter[1];
-        }
-      }
-    }
 
-    let PageName=ParseURLParameter('page');
-
-    if (typeof PageName!= 'undefined'){
-      if(PageName=='contact_us'){
-        alert(PageName);
-      }
-    }else{
-      alert('No Page Parameter found...');
-    }
-}
-  */  
     import {mapState} from 'vuex'
     import {mapActions} from 'vuex'
     import router from '@/router.js'
@@ -91,13 +68,14 @@ window.onload=function(){
           optionsTypeDoc: [{
               value:1, text:'DNI'
             },{
-              value:2, text:'Carnét de extranjería'
+              value:2, text:'Carnet de extranjería'
             }],
           dni : '',
           termsAccept:false,
           termsRead:false,
           minLNumber:0,
-          maxLNumber:0
+          maxLNumber:0,
+          name: ''
         };
       },
       validations() {
@@ -110,7 +88,7 @@ window.onload=function(){
           }
         }
       },
-      computed:{//flagErrorLead setFlagErrorLead
+      computed:{
         ...mapState(['person','processId','parameterSetting','activeTypeDoc','flagErrorLead']),
         isDisabled: function(){
             if(this.selectedTypeDoc){
@@ -130,13 +108,9 @@ window.onload=function(){
                   console.log("INGRESE A PRESTAMOS :", this.processId);
                   personDA.doDniValidation(this.dni).then((res) =>{                    
                       let person_data = res.data;
-                      console.log(person_data);
+                      console.log("res_data_personas",person_data);
                       this.fill(person_data);
-                      if(person_data.type==1){ //CLIENT
-                            //#############
-                            //this.getLeadClient();
-
-                            //##############
+                      if(person_data.type==1){ //CLIENT                            
                           router.push('/Lending');
                       }
                       else if(person_data.type==2){//NO CLIENT
@@ -167,28 +141,6 @@ window.onload=function(){
                       })
               }         
           },
-          getLeadClient:function(){
-            console.log("person lead:",this.person.idLead);
-            loanDA.doRequestLead(this.person.idLead).then((res) =>{
-                let lead_data = res.data;
-                //console.log("LEAD: ",lead_data);
-                this.fillLead(lead_data);
-                console.log("LEAD guardado: ",this.lead);
-                //this.fillDataTerms();
-            }).catch(error=>{
-                //this.setFlagErrorLead(true);
-                //console.log("error en la captura del lead");
-                                    
-                    Swal.fire({
-                        title: 'Error',
-                        type: 'error',
-                        text: 'Error en la captura del Lead del cliente'
-                    });
-                    this.$router.push('/');
-                
-
-            })
-        },
           isNumber: function(evt) {
             evt = (evt) ? evt : window.event;
             var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -252,10 +204,12 @@ window.onload=function(){
         if(this.selectedTypeDoc && this.selectedTypeDoc.value==1){
           this.minLNumber=8;
           this.maxLNumber=8;
+          this.name = "DNI"
         }
         if(this.selectedTypeDoc && this.selectedTypeDoc.value==2){
           this.minLNumber=12;
           this.maxLNumber=12;
+          this.name = "Carnet de extranjería"
         }
       }
       

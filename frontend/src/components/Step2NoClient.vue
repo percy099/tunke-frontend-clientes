@@ -15,7 +15,7 @@
                         </div>
                         <input type="text" class="form-control"
                         v-model.trim="$v.phone1.$model" :class="{
-                        'is-invalid' : $v.phone1.$error, 'is-valid':!$v.phone1.$invalid }">
+                        'is-invalid' : $v.phone1.$error || zero == true, 'is-valid':!$v.phone1.$invalid && zero != true}">
                         <div class="valid-feedback">Teléfono Válido</div>
                         <div class="invalid-feedback">
                             <span v-if="!$v.phone1.required">Télefono Principal Requerido. </span>
@@ -24,13 +24,14 @@
                             <span v-if="!$v.phone1.maxLength">Debe ser de {{
                             $v.phone1.$params.maxLength.max}} dígitos. </span>
                             <span v-if="!$v.phone1.numeric">Debe contener solo números. </span>
+                            <span v-if="zero == true"> No debe empezar de 0</span>
                         </div>
                     </div>
                     <div class="form-group xs-12">
                         <label>Teléfono Secundario</label>
                         <input type="text" class="form-control"
                         v-model.trim="$v.phone2.$model" :class="{
-                        'is-invalid' : $v.phone2.$error, 'is-valid':!$v.phone2.$invalid && phone2 != ''}">
+                        'is-invalid' : $v.phone2.$error || zero2 == true, 'is-valid':!$v.phone2.$invalid && phone2 != ''  && zero2 != true}">
                         <div class="valid-feedback">Teléfono Válido!</div>
                         <div class="invalid-feedback">
                             <span v-if="!$v.phone2.minLength">Debe ser de al menos {{
@@ -38,6 +39,7 @@
                             <span v-if="!$v.phone2.maxLength">Debe ser a lo mucho de {{
                             $v.phone2.$params.maxLength.max}} letters. </span>
                             <span v-if="!$v.phone2.numeric">Debe contener solo números. </span>
+                            <span v-if="zero2 == true"> No debe empezar de 0</span>
                         </div>
                     </div>
                     <div class="form-group xs-12">
@@ -90,7 +92,9 @@ export default {
             phone1: '',
             phone2: '',
             email1: '',
-            email2: ''
+            email2: '',
+            zero: false,
+            zero2: false
         }
     },
     validations: {
@@ -124,7 +128,20 @@ export default {
         this.person.email2 = this.email2;
         this.person.cellphone1 = this.phone1;
         this.person.cellphone2 = this.phone2;
-        if(this.$v.email1.$invalid || this.$v.email2.$invalid || this.$v.phone1.$invalid || this.$v.phone2.$invalid){
+        if(this.phone1.substring(0,1) === '0'){
+            this.zero = true;
+            console.log(this.zero);
+        } else {
+            this.zero = false;
+            console.log(this.zero);
+        }
+
+        if(this.phone2.substring(0,1) === '0'){
+            this.zero2 = true;
+        } else {
+            this.zero2 = false;
+        }
+        if(this.$v.email1.$invalid || this.$v.email2.$invalid || this.$v.phone1.$invalid || this.$v.phone2.$invalid || this.zero == true || this.zero2 == true){
             this.setValStep2(false)
             console.log(this.valStep2)
         } else {
