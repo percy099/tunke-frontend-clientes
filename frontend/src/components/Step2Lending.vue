@@ -2,14 +2,13 @@
     <div id="step2">
         <div class="hover-table-layout">
             
-            <div class="listing-item" @click="enableWindow(0)">
-            <div v-bind:class="{'disabled-item':(this.availableCampaigns[0].month=='')}">
+            <div class="listing-item" @click="enableWindow(0)" v-on:mouseover="mouseOver(0)">
+            <div v-bind:class="{'disabled-item':(this.availableCampaigns[0].month=='')}" >
                 <figure class="image">
                     <img src="@/images/hipotecario.jpg" alt="image">
                     <figcaption>
                         <div class="caption">
-                            <h1> </h1>
-                            </div>
+                        </div>
                     </figcaption>
                 </figure>
                 <div class="titleCamp">
@@ -20,7 +19,7 @@
                 </div>
             </div>
             </div>
-            <div class="listing-item" @click="enableWindow(1)">
+            <div class="listing-item" @click="enableWindow(1)" v-on:mouseover="mouseOver(1)">
                 <div v-bind:class="{'disabled-item':(this.availableCampaigns[1].month=='')}">
                 <figure class="image">
                     <img src="@/images/vehicular.jpeg" alt="image">
@@ -39,7 +38,7 @@
                 </div>
                 </div> 
             </div> 
-            <div class="listing-item" @click="enableWindow(2)">
+            <div class="listing-item" @click="enableWindow(2)" v-on:mouseover="mouseOver(2)">
                 <div v-bind:class="{'disabled-item':(this.availableCampaigns[2].month=='')}">
                 <figure class="image">
                     <img src="@/images/educativo.jpg" alt="image">
@@ -59,15 +58,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4" @click="changeSelectCampaign(0)"><hr v-bind:class="{'selected':(this.campaignWindowSelected==0)}"></div>
-            <div class="col-4" @click="changeSelectCampaign(1)"><hr v-bind:class="{'selected':(this.campaignWindowSelected==1)}"></div>
-            <div class="col-4" @click="changeSelectCampaign(2)"><hr v-bind:class="{'selected':(this.campaignWindowSelected==2)}"></div>            
+            <div class="col-4"  @click="changeSelectCampaign(0)"><hr  v-bind:class="{'selected':(this.campaignWindowSelected==0)}"></div>
+            <div class="col-4"  @click="changeSelectCampaign(1)"><hr  v-bind:class="{'selected':(this.campaignWindowSelected==1)}"></div>
+            <div class="col-4"  @click="changeSelectCampaign(2)"><hr  v-bind:class="{'selected':(this.campaignWindowSelected==2)}"></div>            
         </div>
         <!--Ventana modal de información de la campaña-->  
         <ModalStep2Lending v-if="showModal" @close="disableWindow">
             <h3 slot="header">custom header</h3>
         </ModalStep2Lending>
-               
     </div>
 </template>
 
@@ -83,6 +81,7 @@ export default {
     data(){
         return {
             showModal:false
+            
         };
     },
     computed:{
@@ -104,9 +103,12 @@ export default {
             if(this.availableCampaigns[campaignOption].month!=''){
                 this.fillcampaignWindowSelected(campaignOption);
             }    
+        },
+        mouseOver:function (campaignOption) {
+            if(this.availableCampaigns[campaignOption].month!=''){
+                this.fillcampaignWindowSelected(campaignOption);
+            } 
         }
-    },
-    mounted() {
     },
     components:{
         ModalStep2Lending

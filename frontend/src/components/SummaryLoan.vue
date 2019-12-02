@@ -10,29 +10,47 @@
                     <h2>Se depositó con éxito a la siguiente cuenta:</h2>
                 </div>
             </div>
-            <h5 class="text-center mt-5"> {{currentDate}} 8:59pm</h5>
+            
             <div class="row mt-4">
-                <div class="col-4"></div>
-                <div class="col-1">
-                    <h5 class="firstWords">Cuenta:</h5>
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <h5 class="firstWords">Fecha de depósito:</h5>
                 </div>
-                <div class="col-7">
+                <div class="col-6">
+                    <h5>{{currentDate}}</h5>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <h5 class="firstWords">Beneficiario:</h5>
+                </div>
+                <div class="col-6">
                     <h5>{{person.firstName}} {{person.middleName}} {{person.fatherLastname}} {{person.motherLastname}}</h5>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <h5 class="firstWords">Cuenta de depósito:</h5>
+                </div>
+                <div class="col-6">
                     <h5>{{activeAccountLoan.accountNumber}}</h5>
                 </div>
             </div>
-            <br>
-            <div class="row pb-5">
+
+            <div class="row mt-4">
                 <div class="col-3"></div>
-                <div class="col-2 px-0">
+                <div class="col-3">
                     <h5 class="firstWords">Monto del préstamo:</h5>
                 </div>
-                <div class="col-7">
-                    <h5>
-                        {{activeAccountLoan.currencySymbol}} {{activeValueLoan}}
-                    </h5>
+                <div class="col-6">
+                    <h5>{{activeAccountLoan.currencySymbol}} {{activeValueLoan}}</h5>
                 </div>
             </div>
+
         </div>
         <div class="text-center mt-5">
             <button class="btn btn-primary text-white p-2 mt-5"  @click="goPrincipal">Página Principal</button>
@@ -58,7 +76,7 @@ export default {
     },
     mounted(){
         let moment = require('moment');
-        this.currentDate=moment().format("DD/MM/YYYY");
+        this.currentDate=moment().format("DD/MM/YYYY hh:mm A");
     },
     methods:{
         goPrincipal: function(){

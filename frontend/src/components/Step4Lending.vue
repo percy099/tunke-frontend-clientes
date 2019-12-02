@@ -10,7 +10,7 @@
             <div class="col-3"></div>
             <div class="col-6">
                 <div class="my-4 "> 
-                    <v-select v-if="hasAccounts" class="inpt" v-model="selectedAccount" :required="!selectedAccount" :options="optionsAccount"  label="accountNumber" @input="setActiveAccountF"/>
+                    <v-select v-if="hasAccounts" class="inpt" v-model="selectedAccount" :required="!selectedAccount" :options="accountsAvailables"  label="accountNumber" @input="setActiveAccountF"/>
                     <h5 class="noAccounsts" align=center v-else>Usted no cuenta con cuentas de la moneda de la campaña</h5>
                 </div>
             </div>
@@ -63,44 +63,26 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
     data(){
         return {
-            //Accounts
             selectedAccount:false,
-            optionsAccount: [],
             showModalAccount:false,
-            hasAccounts : false,
             typeAccount:'',
             isLoading : false
         };
     },
     computed:{
-        ...mapState(['person',,'lead','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList','selectedFirstButton','currencyCampaignSelected','campaignWindowSelected','availableCampaigns'])
+        ...mapState(['person',,'lead','currency','activeAccountLoan','activeShare','activeTerm','activeValueLoan','parameterSetting','activeAccountLoan','simulationShareSelected','simulationList','selectedFirstButton','currencyCampaignSelected','campaignWindowSelected','availableCampaigns','accountsAvailables','hasAccounts']), 
     },
     methods:{
-        ...mapActions(['changeCurrency','setActiveAccountLoans','setShowModalAccount','setSimulationShareSelected','setSelectedFirstButton']),
+        ...mapActions(['changeCurrency','setActiveAccountLoans','setShowModalAccount','setSimulationShareSelected','setSelectedFirstButton','fillAccountsAvailables','fillHasAccounts']),
         setActiveAccountF: function(val){
             this.setActiveAccountLoans(val);
-            if(this.activeAccountLoan.idAccountType) {this.typeAccount="Cuenta corriente";}
-        },
-        updateAccounts: function(){
-            loanDA.doRequestAccountsByClient(this.person.idClient).then((res) =>{
-                console.log(res.data);
-                  let response_create = res.data;
-                  this.optionsAccount=[];                
-                  for (let i=0; i<response_create.accounts.length;i++){
-                      if(this.currencyCampaignSelected.idCurrency==response_create.accounts[i].idCurrency)
-                        this.optionsAccount.push(response_create.accounts[i]);
-                      else 
-                        continue;
-                      this.hasAccounts = true;
-                  }
-              }).catch(error=>
-              {
-                  Swal.fire({
-                  title: 'Error',
-                  type: 'error',
-                  text: 'Error en la captura de cuentas por cliente'
-                  })
-              })
+            if(this.activeAccountLoan.idAccountType==1) {
+                this.typeAccount="Cuenta corriente";
+            }else if(this.activeAccountLoan.idAccountType==2) {
+                this.typeAccount="Cuenta Sueldo";
+            }else if(this.activeAccountLoan.idAccountType==3) {
+                this.typeAccount="Cuenta Fantasy";
+            }   
         },
         requestLoan:function(){
             //validar el tipo de moneda de la cuenta
@@ -127,19 +109,10 @@ export default {
                     let tea=this.lead.interestRate;      
                     let tem=Math.pow(1+(tea/100),1/12)-1;
                     let amount=this.activeValueLoan;    
-                    /*
-                    let amortization=amount*(1/shareTerm);
-                    let interesA=amount*tem;
-                    let comisionAmount=amount*this.parameterSetting.commissionPercentage/100;
-                    let shareNumber=amortization+interesA+comisionAmount;
-                    shareLoan=shareNumber.toFixed(2);  //cuota mensual
-                    */
+
                     if (this.activeShare.value==2){                          //cuota extraordinaria
                         //buscar si hay julio y diciembre
-                        numberExtra=this.findExtraMonths(shareTerm); //0, 1, 2
-                        if (numberExtra==0){
-                            shareNumber=-1; //ya se vera que se hace
-                        }
+                        numberExtra=this.findExtraMonths(shareTerm); //0, 1, 2...
                     }
 
                     //calculo de la cuota
@@ -192,12 +165,10 @@ export default {
         },
         desactivaVentana: function(){
             this.showModalAccount=false;
-            this.updateAccounts();
-            //this.setShowModalAccount(false);
+            //this.updateAccounts();
         },
         activaVentana: function(){
             this.showModalAccount=true;
-            //this.setShowModalAccount(true);
         },
         addDays:function (dateIn_, n) {
             let moment = require('moment');
@@ -207,7 +178,6 @@ export default {
         },
         findExtraMonths(termInput){
             let moment = require('moment');
-            console.log("ahhhhhhh:",termInput);
             let month=moment();
             let countExtraMonths=0;
             for (let i=0;i<termInput;i++){
@@ -227,11 +197,6 @@ export default {
         Loading
     },
     mounted() {
-        if (!this.person.activeLoans & this.person.activeCampaigns){
-            if(this.person.idLeads.length!=0){
-                this.updateAccounts();  
-            }
-        }
          
     }
     

@@ -6,17 +6,11 @@
   #step3{
     font-family: 'Montserrat';
   }
-  
-  /* Style the tab */
+
   .tab {
       overflow: hidden;
-      /*border: 1px solid #ccc;
-      background-color: #f1f1f1;*/
     }
     
-
-
-    /* Style the buttons that are used to open the tab content */
   .tab button {
       float: left;
       border-radius: 8px 8px 8px 8px;
@@ -31,7 +25,6 @@
       margin:3.3%;
     }
     
-    /* Change background color of buttons on hover */
     .tab button:hover {
       background-color: #ddd;
     }
@@ -39,8 +32,7 @@
     .inactive{
       background-color: #F5F5F7;
     }
-  
-    /* Create an active/current tablink class */
+
     .active {
       background-color: #ddd;
     }
@@ -48,12 +40,10 @@
     .icons{
       margin: 0;
     }
-  
-    /* Style the tab content */
+
     .tabcontent {
       display: none;
       padding: 6px 12px;
-      /*border: 1px solid #ccc;*/
       border-top: none;
     }
   

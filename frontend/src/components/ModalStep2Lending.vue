@@ -41,7 +41,7 @@
 <script>
 
 import {mapActions,mapState} from 'vuex'
-//fillcampaignWindowSelected  campaignWindowSelected
+
 export default {
     data(){
         return {        
@@ -68,12 +68,6 @@ export default {
     },
     mounted() {
       this.calculateMaxTerm();
-    },
-    updated(){
-      
-    },
-    components:{
-    }
-    
+    }    
 }
 </script>

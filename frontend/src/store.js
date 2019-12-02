@@ -5,12 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    hasAccounts:false,
+    accountsAvailables:'',
     campaignWindowSelected:1,
     currencyCampaignSelected:{
       idCurrency:1,
       name:"Soles"
     },
-    availableCampaigns:[ //fillAvailableCampaigns availableCampaigns
+    availableCampaigns:[ 
       {
         imageSource:"@/images/hipotecario.jpg",
         name:"Préstamo con Garantía Hipotecaria",
@@ -100,16 +102,7 @@ export default new Vuex.Store({
       activeCampaigns:'',
       activeLoans: '',
       campaigns:[],
-      /*{
-          active:'',
-          endDate:'',
-          idCampaign:'',
-          idCurrency: '',
-          month: '',
-          name: '',
-          startDate: ''
-      },*/
-      idLeads:[],
+      leads:[],
       totalAccounts: 0
 
     },
@@ -154,6 +147,13 @@ export default new Vuex.Store({
     simulationList:[]
   },
   mutations: { 
+    setHasAccounts(state, data){ 
+      state.hasAccounts=data;
+    },
+    setAccountsAvailables(state,data){ 
+      state.accountsAvailables=[];
+      state.accountsAvailables=data;
+    },
     setCampaignWindowSelected(state, data){
       state.campaignWindowSelected=data;
     },
@@ -253,7 +253,7 @@ export default new Vuex.Store({
         state.person.campaigns=[];   
         state.person.idLeads=[];   
         state.person.campaigns=person_data.campaigns;
-        state.person.idLeads=person_data.idLeads;
+        state.person.leads=person_data.leads;
       }
     },
     fillResponseCreateAccount(state,response_create){
@@ -353,6 +353,12 @@ export default new Vuex.Store({
 
   },
   actions: {
+    fillHasAccounts(context, data){
+      context.commit('setHasAccounts',data);
+    },    
+    fillAccountsAvailables(context,data){
+      context.commit('setAccountsAvailables',data);
+    },
     fillCurrencyCampaignSelected(context, data){
       context.commit('setCurrencyCampaignSelected',data);
     },

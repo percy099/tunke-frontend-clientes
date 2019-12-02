@@ -109,7 +109,6 @@ export default {
                 "simulation":simulationOption
             }
             this.fillShowModalSchedule(data);
-            //console.log(simulationOption);
         },
         requestLoan: function(simulationOption){
             this.setSimulationShareSelected(simulationOption);
@@ -126,11 +125,6 @@ export default {
     },
     mounted() {
         this.updateData(); 
-    },
-    updated(){
-    },
-    components:{
-        
     }
     
 }
