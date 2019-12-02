@@ -72,7 +72,6 @@ export default {
             const TokenGenerator = require('uuid-token-generator');
             const tokgen = new TokenGenerator(128, TokenGenerator.BASE62);
             let aux= tokgen.generate().substring(0,6).toUpperCase();
-             //this.token.received=aux;
             
             let body={
                 "input":'',
@@ -80,23 +79,19 @@ export default {
             }
             this.fillToken(body);
             console.log(this.token.received);
-            //return this.token.received;
         },
         updateCountdown: function() {
             this.$refs.countdown.updateTime(61);
         },
         updated: function (status) {
-            //console.log(status);    //{"value": 144, "seconds": 24, "minutes": 2, "hours": 0}
             if(status.value==-1){
                 this.timerOff=true;
                 this.tokenSended=false;
-                //this.updateCountdown();
                 this.$refs.countdown.updateTime(61);
             }
             if(this.flagRestartTimer){
                 this.timerOff=true;
                 this.tokenSended=false;
-                //this.updateCountdown();
                 this.$refs.countdown.updateTime(60-status.value);
                 this.changeFlagTimer(false);
             }

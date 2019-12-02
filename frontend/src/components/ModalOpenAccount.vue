@@ -96,6 +96,7 @@ import {mapActions,mapState} from 'vuex'
 import ReusableOpenAccount from '@/components/Step2Client.vue'
 import Swal from 'sweetalert2'
 import * as accountDA from '@/dataAccess/accountDA.js';
+import * as loanDA from '@/dataAccess/loanDA.js'
 
 export default {
     data(){
@@ -105,10 +106,10 @@ export default {
         };
     },
     computed:{
-        ...mapState(['person','currency','termsReadLoan','processId','showModalAccount','setShowModalAccount','parameterSetting','currencyCampaignSelected']) 
+        ...mapState(['person','currency','termsReadLoan','processId','showModalAccount','setShowModalAccount','parameterSetting','currencyCampaignSelected','accountsAvailables','hasAccounts']) 
     },
     methods:{
-        ...mapActions(['changeCurrency','setTermsReadLoans']),
+        ...mapActions(['changeCurrency','setTermsReadLoans','fillAccountsAvailables','fillHasAccounts']), 
         changeStateTerms(){
             this.acceptTerms = !this.acceptTerms;
         },
@@ -120,8 +121,31 @@ export default {
                 if(this.person.totalAccounts+1<=this.parameterSetting.maxAccountsNumber){ 
                                                                                                             //1 hardcodeado: debe depender del tipo de cuenta
                         accountDA.doCreateAccount(this.person.idPerson,this.currencyCampaignSelected.idCurrency,1,'','','','').then((res) =>{
-                            let response_create = res.data;
-                            console.log("response open account",response_create);
+                            let response_create = res.data; 
+                                loanDA.doRequestAccountsByClient(this.person.idClient).then((res) =>{
+                                    console.log(res.data);
+                                    let response_create = res.data;
+                                    let optionsAccount=[];                
+                                    for (let i=0; i<response_create.accounts.length;i++){
+                                        console.log("id currency",this.currencyCampaignSelected.idCurrency);
+                                        if(this.currencyCampaignSelected.idCurrency==response_create.accounts[i].idCurrency){
+                                            optionsAccount.push(response_create.accounts[i]);
+                                            this.fillHasAccounts(true);
+                                        }
+                                        else 
+                                            continue;
+                                    }
+                                    this.fillAccountsAvailables(optionsAccount);
+                                    console.log("cuotas disponibles:",this.accountsAvailables);
+                                }).catch(error=>
+                                {
+                                    Swal.fire({
+                                    title: 'Error',
+                                    type: 'error',
+                                    text: 'Error en la captura de cuentas por cliente'
+                                    })
+                                })
+
                             this.$emit('close');
                         }).catch(error=>
                         {
@@ -137,7 +161,6 @@ export default {
                             type: 'error',
                             text: 'Estimado cliente, usted ya cuenta con muchas cuentas abiertas en Tunke.'
                             });
-                    //this.$router.push('/');
                 }
             }else{
               Swal.fire({
@@ -185,9 +208,6 @@ export default {
                         text: 'TUNKE es una empresa privada que brinda servicios financieros en el Perú. En ese sentido, nos comprometemos a mantener la privacidad y la protección de información de nuestros clientes, proveedores y colaboradores de conformidad con lo establecido en la Ley No. 29733, Ley de Protección de datos personales y su reglamento, adoptando para ello las medidas técnicas y organizativas necesarias para evitar la pérdida, mal uso, alteración, acceso no autorizado y robo de los datos personales facilitados por los titulares de datos personales, asimismo garantizando la mejora continua de dichas medidas. En tal contexto, declaramos los siguientes lineamientos que debemos informar previamente a nuestros clientes, proveedores y colaboradores, de forma clara e inequívoca, cuando se recaben sus datos personales a través de cualquiera de nuestros canales:  \n La existencia del tratamiento de datos de carácter personal, la finalidad de la recolección y destinatarios de la información.'
                                 +'\n Carácter obligatorio o facultativo de la respuesta a las preguntas que en su caso les sean planteadas, así como de las consecuencias de la obtención de los datos personales o la negativa a suministrar los mismos.'                      })
         }
-    },
-    mounted() {
-      console.log('mounted');
     },
     components:{
       ReusableOpenAccount

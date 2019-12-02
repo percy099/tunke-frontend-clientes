@@ -75,7 +75,6 @@ export default {
             this.$refs.countdown.updateTime(61);
         },
         updated: function (status) {
-            //console.log(status);    //{"value": 144, "seconds": 24, "minutes": 2, "hours": 0}
             if(status.value==-1){
                 this.timerOff=true;
                 this.tokenSended=false;

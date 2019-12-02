@@ -1,8 +1,5 @@
 #Opening{
     background-image: url(../images/paisaje-lago_bosque.jpg);
-    /*-webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;*/
     background-size: cover;
     background-position: cover;
 }

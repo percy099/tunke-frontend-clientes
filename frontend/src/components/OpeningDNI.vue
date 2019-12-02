@@ -100,7 +100,6 @@
       methods:{
           ...mapActions(['fill','setActiveProcessId','fillParameterSettings','setActiveTypeDocs']),
           enterDni(){
-              //let res = personDA.doDniValidation(this.dni);
               if (this.termsAccept){
                 if(this.activeTypeDoc!=null){
                   personDA.doDniValidation(this.dni).then((res) =>{
@@ -109,8 +108,6 @@
                     this.setActiveProcessId(1);
                       let person_data = res.data;
                       if(person_data.type==1){ //CLIENT
-                        /*alert('Cliente');
-                        console.log(person_data);*/
                         console.log(person_data);
                         this.fill(person_data);
                         router.push('/accountOpeningClient');
