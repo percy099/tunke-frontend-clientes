@@ -165,7 +165,7 @@ export default {
         },
         desactivaVentana: function(){
             this.showModalAccount=false;
-            this.updateAccounts();
+            //this.updateAccounts();
         },
         activaVentana: function(){
             this.showModalAccount=true;
